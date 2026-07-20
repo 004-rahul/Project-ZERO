@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Project Zero — Zoned Graphite theme (Design Bible v3.1).
+   Tokens live in tailwind.config.ts; these variables exist for the rare
+   cases (canvas gradients, scrollbars) Tailwind utilities cannot reach. */
+:root {
+  --accent: #7c3aed;
+  --accent-strong: #6d28d9;
+  --accent-bright: #a78bfa;
+  --zone-header: #101114;
+  --zone-sidebar: #17181c;
+  --zone-canvas: #fafafb;
+  --zone-footer: #0b0c0e;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-zone-canvas font-sans text-base text-ink antialiased;
+}
+
+/* Focus is a designed state — never suppressed (Design Bible §25). */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
