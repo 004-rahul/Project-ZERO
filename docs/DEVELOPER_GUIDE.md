@@ -174,48 +174,94 @@ correlation id and tenant context.
 
 ## 5. Run it locally
 
-### 5.1 Fastest path — backend + frontend, no Docker (works on this machine)
+### 5.1 Prerequisites
+
+| Tool | Version | For |
+|---|---|---|
+| .NET SDK | 8.0.x | Backend |
+| Node.js | 20+ | Frontend |
+| Python | 3.11+ | AI Engine |
+| Docker (optional) | any recent | Full-stack / infra containers |
+
+### 5.2 Run each project **on its own**
+
+Each app boots independently — you do **not** need the others running to start
+one. What each needs from its neighbours (and how it behaves when they are
+absent) is in the independence matrix at the end of this section.
+
+**A) Backend API — standalone**
 
 ```powershell
-# Terminal 1 — backend API (runs even without PostgreSQL)
 cd backend
 dotnet run --project src/ProjectZero.Api
 #   → http://localhost:5080/api/v1/platform/info
-#   → http://localhost:5080/swagger   (Development only)
-#   → http://localhost:5080/health/live  and  /health/ready
-
-# Terminal 2 — frontend
-cd frontend
-npm install     # first time only
-npm run dev
-#   → http://localhost:3000  (landing → /login → /register → /dashboard)
+#   → http://localhost:5080/swagger        (Development only)
+#   → http://localhost:5080/health/live     (liveness — always green)
+#   → http://localhost:5080/health/ready    (readiness — DB check skipped if no DB)
 ```
+Runs with **no database**: leave `ConnectionStrings:Database` empty and the
+readiness probe simply omits the PostgreSQL check. No frontend or AI Engine
+needed.
 
-Point the frontend at the API by creating `frontend/.env.local`:
+**B) Frontend — standalone**
 
+```powershell
+cd frontend
+npm install            # first time only
+npm run dev
+#   → http://localhost:3000   (landing → /login → /register → /dashboard)
+```
+Boots with **nothing else running** — every page renders (the UI is static in
+Sprint 1). To talk to a live API, point it at the backend by creating
+`frontend/.env.local`:
 ```
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5080
 ```
 
-### 5.2 Full stack with Docker (machines/CI that have Docker)
-
-```powershell
-docker compose -f docker/docker-compose.yml up --build
-#   API  → http://localhost:8080
-#   PostgreSQL → localhost:5432
-#   (Redis, RabbitMQ, AI Engine join this file in Sprint 2)
-```
-
-### 5.3 AI Engine (skeleton today; full build Sprint 2)
+**C) AI Engine — standalone** *(skeleton today; full build Sprint 2)*
 
 ```powershell
 cd ai-engine
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\activate         # Windows  (source .venv/bin/activate on macOS/Linux)
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
-#   → http://localhost:8000/health/live  ·  /docs
+#   → http://localhost:8000/health/live   ·   http://localhost:8000/docs
 ```
+Boots on its own. It is normally reached **only** by the backend's AI Gateway
+(never the browser) — but you can hit its health/docs directly while developing.
+
+**D) Infrastructure only (PostgreSQL now; Redis + RabbitMQ in Sprint 2)**
+
+With Docker — run just the datastores, then run the apps bare-metal against them:
+```powershell
+docker compose -f docker/docker-compose.yml up postgres
+#   PostgreSQL → localhost:5432
+```
+Without Docker — install PostgreSQL locally and set the connection string in
+`backend/src/ProjectZero.Api/appsettings.Development.json`.
+
+### 5.3 Run the whole stack together (Docker)
+
+```powershell
+docker compose -f docker/docker-compose.yml up --build
+#   API        → http://localhost:8080
+#   PostgreSQL → localhost:5432
+#   (Redis, RabbitMQ, AI Engine join this compose file in Sprint 2)
+```
+
+### 5.4 Independence matrix — what each service needs
+
+| Run this | Hard dependency to boot | Talks to (when present) | If a neighbour is missing |
+|---|---|---|---|
+| **Backend API** | none (DB optional) | PostgreSQL, AI Engine | readiness skips the DB check; AI features (Sprint 2+) return a clear error |
+| **Frontend** | none | Backend API | pages still render; live API calls fail and surface a handled error state |
+| **AI Engine** | none | PostgreSQL, Redis, RabbitMQ | boots; real intelligence work needs providers, wired in Sprint 2 |
+| **PostgreSQL** | — | — | — |
+
+The rule of thumb: **start what you're working on.** Frontend work needs only
+the frontend; API work needs only the API; end-to-end testing is when you bring
+up the whole stack (5.3).
 
 ---
 
