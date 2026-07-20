@@ -4,7 +4,7 @@
 |---|---|
 | **Document** | Project Zero Experience & Design Bible |
 | **Document Number** | 04 of 06 |
-| **Version** | 3.0 |
+| **Version** | 3.1 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Design (Founders / Design Lead) |
 | **Audience** | Designers, frontend engineers, product managers, accessibility reviewers, brand/marketing |
@@ -19,7 +19,8 @@
 | 0.x | UI direction notes: inspired by Linear, Stripe, GitHub, Vercel, ChatGPT; enterprise-first; dark-first; decisions over dashboards. |
 | 1.0 | Design System v1.0 (tokens, components, accessibility, governance) and the Experience & Motion Design Specification v1.0 (deep-space identity, particle AI, motion language). |
 | 2.0 | First consolidated Experience & Design Bible. |
-| 3.0 | **This document.** Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
+| 3.0 | Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
+| 3.1 | **This document.** Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
 
 ---
 
@@ -33,7 +34,7 @@
 6. [Design Principles and Goals](#6-design-principles-and-goals)
 7. [The AI Identity — Particle Intelligence](#7-the-ai-identity--particle-intelligence)
 8. [The Mission Control Workspace](#8-the-mission-control-workspace)
-9. [Design Language — Layered Dark Theme](#9-design-language--layered-dark-theme)
+9. [Design Language — Zoned Graphite Theme](#9-design-language--zoned-graphite-theme)
 10. [Color System](#10-color-system)
 11. [Typography](#11-typography)
 12. [Design Tokens](#12-design-tokens)
@@ -110,7 +111,7 @@ The experience must evoke: **confidence** (the system knows what it's doing), **
 
 The visual identity represents **trust, intelligence, precision, and enterprise reliability**. The platform should appear modern without chasing design trends — built for a 10-year documentation horizon, the brand must age well.
 
-Identity pillars: **dark-first presentation; premium typography; restrained color usage; purposeful motion.** Together they create a professional environment suitable for long working sessions. White space, typography, spacing, and alignment are the primary design tools; color and motion are reserved for meaning (state, focus, feedback).
+Identity pillars: **zoned graphite presentation (dark chrome framing a light workspace); premium typography; restrained color usage; purposeful motion.** Together they create a professional environment suitable for long working sessions. White space, typography, spacing, and alignment are the primary design tools; color and motion are reserved for meaning (state, focus, feedback).
 
 ---
 
@@ -124,31 +125,31 @@ Identity pillars: **dark-first presentation; premium typography; restrained colo
 
 ## 7. The AI Identity — Particle Intelligence
 
-### 7.1 One AI, One Identity
+### 7.1 One AI, One Identity — The Signature Face
 
-Project Zero exposes **one persistent AI identity across the entire platform**. Users do not meet multiple assistants — they interact with a single evolving **particle-based intelligence**. This replaces the earlier static "dotted face" concept with a *living* particle presence: the face forms from particles when engaged and dissolves back after tasks complete.
+Project Zero exposes **one persistent AI identity across the entire platform**: a **particle-formed android face** — the platform's visual signature. It is deliberately **not human and not cartoon**: a geometric mask assembled from particles, with a sculpted skull-and-jaw silhouette, **glowing almond eye slits** (never round "dot" eyes), and a **thin neutral mouth line** (never a smile). Faint structural lines connect nearby particles, giving the mask wireframe depth, and the head **turns gently in 3D** while active.
 
-The identity must appear **alive but never distracting** — presence without performance.
+The identity's defining behavior is **formation and dissolution**: when engaged, particles assemble into the face; when idle or searching, the face dissolves into a calm particle constellation. This formation moment is the ownable, memorable signature. The identity must appear **alive but never distracting** — presence without performance.
 
 ### 7.2 AI States
 
-The particle identity has seven canonical states, each with a distinct visual signature and mapped color (Section 10.3):
+The identity has seven canonical states, each with a distinct motion signature and mapped color (Section 10.3). **The eyes carry the state color.**
 
 | State | When | Visual Behavior |
 |---|---|---|
-| **Idle** | No active task | Loose, slow particle drift; minimal glow |
-| **Listening** | User is typing/speaking | Particles gather attentively toward the input |
-| **Thinking** | Reasoning in progress | Concentrated particle motion; Thinking color |
-| **Researching** | Retrieval/knowledge search running | Particles trace outward paths (searching) |
-| **Speaking** | Response streaming | Rhythmic pulse synchronized with output |
-| **Warning** | Attention needed | Amber signature; sharpened motion |
-| **Success** | Task completed | Green resolution; particles settle |
+| **Idle** | No active task | Face dissolved — loose constellation drift; dim neutral |
+| **Listening** | User is typing/speaking | Face forms; eyes ignite in the accent color; attentive stillness |
+| **Thinking** | Reasoning in progress | Formed face; concentrated particle swirl; Thinking color |
+| **Researching** | Retrieval/knowledge search running | Face dissolves outward — particles trace searching paths; Knowledge color |
+| **Speaking** | Response streaming | Formed face; eyes pulse rhythmically with output; mouth line shimmers |
+| **Warning** | Attention needed | Formed face; amber eyes; sharpened motion |
+| **Success** | Task completed | Formed face settles; green eyes; particles calm |
 
 **Future:** collaborative multi-agent visualizations — multiple particle entities coordinating — reserved for the multi-agent roadmap.
 
 ### 7.3 Usage Rules
 
-The AI identity appears wherever the platform itself is acting (workspace, long-running operations, login). It never becomes a mascot: no anthropomorphic gimmicks, no idle chatter, no decorative appearances on static screens.
+The identity appears wherever the platform itself is acting: the login/registration screens (anonymous state only — Section 19.1), the header status chip, beside AI responses in the workspace, and during long-running operations. It never becomes a mascot: no anthropomorphic gimmicks, no idle chatter, no decorative appearances on static screens — and never a smile.
 
 ---
 
@@ -164,47 +165,55 @@ Requirements:
 
 ---
 
-## 9. Design Language — Layered Dark Theme
+## 9. Design Language — Zoned Graphite Theme
 
-The interface is a **layered dark theme with distinct depth per zone** — depth communicates hierarchy:
+The interface is a **zone-based theme**: dark graphite chrome (header, sidebar, footer) framing a **light, calm workspace canvas** — visually distinct zones make the product's structure legible at a glance:
 
-| Layer | Surface | Color |
+| Zone | Surface | Color |
 |---|---|---|
-| Header | Near-black | Deep Space `#050816` |
-| Sidebar / navigation | Dark navy | between Deep Space and Workspace |
-| Workspace canvas | Blue-black | `#081120` |
-| Surfaces (panels) | Elevated | `#101A2E` |
-| Cards (highest content layer) | Most elevated | `#16233D` |
+| Header | Graphite Ink | `#101114` |
+| Sidebar / navigation | Graphite Panel | `#17181C` |
+| Workspace canvas | Neutral White | `#FAFAFB` |
+| Surfaces / cards | Porcelain | `#FFFFFF` (hairline borders `#E8E8EA`) |
+| Footer / status bar | Deep Graphite | `#0B0C0E` |
 
-Visual identity elements: **deep-space theme, layered depth, soft glass surfaces, floating cards, subtle glow, premium typography, purposeful whitespace.** Neon accents are reserved exclusively for **state changes and focus** — never ambient decoration.
+Visual identity elements: **zoned depth, calm neutral surfaces, hairline borders, two subtle elevation levels, premium typography, purposeful whitespace.** The violet accent is reserved exclusively for **interaction, active states, focus, and the AI presence** — never ambient decoration. Dark surfaces survive only in the chrome zones and the auth/landing hero panels.
+
+*(Decision record: the v3.0 "deep-space layered dark" theme was replaced by this zoned system by founder decision on 2026-07-20, after interactive preview review — deep blues, emerald/gold, and full-dark canvases were explicitly rejected in favor of a neutral, industry-standard premium system.)*
 
 ---
 
 ## 10. Color System
 
-### 10.1 Background Palette (Canonical Values)
+### 10.1 Zone Palette (Canonical Values)
 
 | Token | Hex | Use |
 |---|---|---|
-| `bg.deep-space` | `#050816` | Header, deepest layer |
-| `bg.workspace` | `#081120` | Main canvas |
-| `bg.surface` | `#101A2E` | Panels, containers |
-| `bg.elevated` | `#16233D` | Cards, elevated content |
+| `zone.header` | `#101114` | Top header bar (Graphite Ink) |
+| `zone.sidebar` | `#17181C` | Left navigation (Graphite Panel) |
+| `zone.canvas` | `#FAFAFB` | Main workspace background |
+| `zone.footer` | `#0B0C0E` | Footer / status bar (Deep Graphite) |
+| `surface.card` | `#FFFFFF` | Cards, panels, chat bubbles |
+| `border.default` | `#E8E8EA` | Hairline separation on light surfaces |
+| `text.ink` | `#17181C` | Primary text on light surfaces |
+| `text.muted` | `#5F6168` | Secondary text on light surfaces |
 
-### 10.2 Semantic Palette (Canonical Values)
+### 10.2 Accent and Semantic Palette (Canonical Values)
 
 | Token | Hex | Meaning |
 |---|---|---|
-| `semantic.intelligence` | `#28E7FF` (Cyan) | AI activity, the intelligence accent |
-| `semantic.thinking` | `#7B61FF` (Purple) | Reasoning in progress |
-| `semantic.knowledge` | `#4FA3FF` (Blue) | Knowledge, sources, retrieval |
-| `semantic.success` | `#2EE59D` (Green) | Success, completion, approval |
-| `semantic.warning` | `#F7B955` (Amber) | Warnings, attention |
-| `semantic.error` | `#FF5D73` (Red) | Errors, failures, rejection |
+| `accent` | `#7C3AED` (Violet) | Primary actions, active navigation, focus, AI presence |
+| `accent.strong` | `#6D28D9` | Hover/pressed accent; accent text on light surfaces |
+| `accent.bright` | `#A78BFA` | Accent on dark surfaces; formed-face particles |
+| `semantic.thinking` | `#8B5CF6` | Reasoning in progress |
+| `semantic.knowledge` | `#0E7490` (light surfaces) / `#22A3BF` (dark surfaces) | Knowledge, sources, retrieval, citations |
+| `semantic.success` | `#16A34A` | Success, completion, approval |
+| `semantic.warning` | `#D97706` | Warnings, attention |
+| `semantic.error` | `#DC2626` | Errors, failures, rejection |
 
 ### 10.3 Accent-to-State Mapping
 
-Primary accents — **Cyan, Purple, Teal, Amber, Green, Red** — communicate **AI state, warnings, success, focus, activity, and confidence**. Teal supplements cyan for secondary activity indication. Colors map to the AI states in Section 7.2 (Thinking→Purple, Researching→Blue/Teal, Success→Green, Warning→Amber, Error→Red, active intelligence→Cyan).
+One violet accent carries all interaction; semantic colors carry state — color is never decorative. The AI identity's **eyes** map to state: Listening/Speaking→`accent`, Thinking→`semantic.thinking`, Researching→`semantic.knowledge`, Success→`semantic.success`, Warning→`semantic.warning`, Error→`semantic.error`, Idle→neutral `#8B8D95`.
 
 ### 10.4 Token Scales
 
@@ -219,8 +228,8 @@ The token system defines full scales for systematic use: **Primary 50–900**, *
 ## 11. Typography
 
 - **Font family:** **Inter**. Fallback stack: System UI, Segoe UI, Roboto, Arial.
-- **Type scale:** Display; Heading 1–6; Body Large; Body; Small; Caption.
-- **Character:** premium, restrained, highly legible on dark surfaces; generous line height for long sessions; responsive typography scales with breakpoints (Section 24).
+- **Type scale (industry standard):** 11 / 12 / 13 / **14 (base)** / 16 / 18 / 22 / 28px; weights 400 / 500 / 600 / 700; tight letter-spacing (−0.01 to −0.02em) on headings only; tabular numerals for metrics.
+- **Character:** premium, restrained, highly legible on both light canvas and dark chrome; generous line height for long sessions; responsive typography scales with breakpoints (Section 24). Single family — no decorative or serif faces.
 - Typography is a primary design tool (Section 5): hierarchy is achieved through scale and weight before color or decoration.
 
 ---
@@ -251,7 +260,7 @@ Every visual property in the product resolves to a token — color (Section 10),
 
 **Icons.** Style: **outline** primary, **filled** limited (active/selected states). Sizes: **16, 20, 24, 32, 48px**. Rules: consistent stroke width; pixel-aligned; accessible labels on meaningful icons; **decorative icons hidden from screen readers**.
 
-**Illustration.** Restrained and purposeful: illustrations appear in empty states, onboarding, and errors — rendered in the deep-space visual language (particle motifs, line work in semantic colors). No stock-style decorative art.
+**Illustration.** Restrained and purposeful: illustrations appear in empty states, onboarding, and errors — rendered in the graphite visual language (particle motifs, line work in accent and semantic colors). No stock-style decorative art.
 
 ---
 
@@ -343,9 +352,13 @@ Rules: the sidebar is the persistent spine (dark navy layer); the workspace (AI)
 
 ## 19. Key Experiences
 
-### 19.1 Login Experience
+### 19.1 Login and Registration (Anonymous by Rule)
 
-**Animated intelligence visualization on the left; minimal authentication on the right.** The particle identity is alive on the login screen — the first impression is the living platform. After successful login, **the dashboard assembles** — panels compose into place (fast, purposeful, under the motion rules) rather than popping in.
+**Split layout: the signature face on the left (dark graphite panel), minimal authentication on the right (light).** The particle face is alive and attentive on the auth screens — the first impression is the living platform.
+
+**The anonymity rule (binding):** before authentication the platform cannot know who the user is; pre-auth surfaces must never display personalized claims, activity summaries, or user data of any kind. Auth-screen copy is generic product messaging only. Personalization begins after sign-in, when **the dashboard assembles** — panels compose into place (fast, purposeful, under the motion rules) rather than popping in.
+
+Registration is a **three-step onboarding** — Account → Organization → Connect tools — with a visible step indicator, matching the onboarding workflow (*Product Bible* §9.2). SSO options (Google, Microsoft, GitHub) appear above the email form on both screens.
 
 ### 19.2 The AI Workspace Experience
 
@@ -358,6 +371,10 @@ Each stage may surface as state (AI identity states, progress motion, evidence p
 ### 19.3 The Decision Experience
 
 Decision Briefs present: recommendation up front; evidence cards with navigable citations; confidence displayed honestly (including *low* confidence); approve/reject controls; audit metadata (model, prompt version) available on inspection — trust through visible mechanics, not claims.
+
+### 19.4 The Public Landing Experience
+
+The public site is part of the product's credibility: a premium animated marketing surface in the same design language (graphite hero, violet accent, light feature sections). Canonical structure: sticky translucent navigation → animated hero with the particle constellation and a floating product shot → customer strip → animated stats → feature grid (Connect · Remember · Answer · Decide · Govern · Provider-agnostic) → "how it works" three steps → dark trust/security section → four-tier pricing (Professional highlighted) → closing CTA → footer. Flow: Landing → Get started → Registration (3 steps) → Dashboard; returning users Landing → Log in → Dashboard. All motion obeys the Motion System (Section 15), including scroll-reveals and reduced-motion alternatives.
 
 ---
 
@@ -468,7 +485,7 @@ Accessibility review is a stage in the component lifecycle (Section 27) and a re
 
 > **Users should recognize Project Zero from its experience alone — even without the logo.**
 
-The layered deep-space surfaces, the particle intelligence, the evidence-forward answers, and the calm purposeful motion together form an identity no competitor screenshot could be mistaken for.
+The zoned graphite surfaces, the violet accent, the signature particle face, the evidence-forward answers, and the calm purposeful motion together form an identity no competitor screenshot could be mistaken for.
 
 ---
 

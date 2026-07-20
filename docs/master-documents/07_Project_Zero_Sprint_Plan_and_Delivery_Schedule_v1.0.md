@@ -118,7 +118,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 |---|---|
 | **Repo/DevOps** | Git repository with the fixed structure (`backend/ frontend/ ai-engine/ shared/ docker/ infrastructure/ docs/`); branch protection on `main`; PR template with DoD checklist; GitHub Actions CI: build → static analysis (analyzers/linters, formatting) → unit tests → dependency scan. Warnings are errors on protected branches |
 | **Backend** | `ProjectZero.sln`; first module skeleton with Clean Architecture layers (Domain/Application/Infrastructure/Presentation) and enforced project references (dependency rule physically impossible to violate); DI composition root; configuration binding with startup validation; Serilog structured logging with correlation-ID middleware; global exception middleware with the standard error envelope; health check endpoints; API versioning scaffold (`/api/v1`) |
-| **Frontend** | Next.js + TypeScript + Tailwind scaffold; **the design system as code**: all color tokens (deep-space backgrounds `#050816/#081120/#101A2E/#16233D`, semantic palette), Inter typography scale, spacing scale (4px base), radius/elevation tokens wired into Tailwind config; base layout shell (header/sidebar/workspace layers); dark-first theme |
+| **Frontend** | Next.js + TypeScript + Tailwind scaffold; **the design system as code**: all approved v3.1 tokens (Zoned Graphite: header `#101114`, sidebar `#17181C`, canvas `#FAFAFB`, footer `#0B0C0E`; Violet accent `#7C3AED`; semantic palette), Inter typography scale, spacing scale (4px base), radius/elevation tokens wired into Tailwind config; base layout shell (header/sidebar/canvas/footer zones); signature particle-face component |
 | **Infra** | Docker Compose: API + PostgreSQL; containerized local run documented |
 | **Docs/QA** | `docs/` seeded with the master library + ADR template; test projects created (unit + integration); architecture-conformance tests (layer dependency rules) running in CI |
 
@@ -140,7 +140,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 
 | Workstream | Scope |
 |---|---|
-| **Backend** | Tenant context: established at authentication, carried through every layer, propagated to the AI Engine (`OrganizationId`/`WorkspaceId` on every internal request); **global query filters** at the data layer so an unfiltered tenant query is impossible by default (ADR-10); tenant-prefixed cache-key convention (`{org}:{ws}:domain:key`) enforced in the cache provider; EF Core migrations pipeline with a tested rollback path per migration |
+| **Backend** | Tenant context: established at authentication, carried through every layer, propagated to the AI Engine (`OrganizationId`/`WorkspaceId` on every internal request); **global query filters** at the data layer so an unfiltered tenant query is impossible by default (ADR-10); tenant-prefixed cache-key convention (`{org}:{ws}:domain:key`) enforced in the cache provider; SQL-script migration pipeline per ADR-016 (versioned `V{NNNN}__` scripts, DbUp-based `ProjectZero.Database.Migrator`, `schema_versions` journal, rollback script per migration, CI drift check between scripts and EF entity configurations); data-access two-lane policy per ADR-017 (EF Core simple reads; Dapper SPs/parameterized SQL for bulk, with explicit tenant scope on raw statements) |
 | **Feature flags** | Flag foundation: per-organization flag storage, cached evaluation in the application layer, audit on change — the future licensing enforcement mechanism (ADR-15) |
 | **Frontend** | Component library first wave: Button (all six states), Input family, Card, Alert/Toast, Skeleton/shimmer loaders, empty-state component — each documented with anatomy/variants/states/accessibility notes (*Design Bible* §27) |
 | **QA** | Full test pyramid operational in CI: unit, integration (Testcontainers or Compose-backed), API-contract tests, and the seed of the security suite; coverage reporting with "no decrease on protected branches" gate |
@@ -470,7 +470,7 @@ What must be true before Project Zero is shown to a real company as a product (t
 - [ ] The critical loop works live: connect → ingest → ask → evidence-backed answer → Decision Brief → approve/reject
 - [ ] Every AI answer shows evidence, navigable citations, and honest confidence — including low confidence
 - [ ] Zero states, loading states, and error states are all designed experiences; nothing dead-ends
-- [ ] The interface reads as the Design Bible intends: layered dark theme, purposeful motion, Mission Control — not an admin panel
+- [ ] The interface reads as the Design Bible v3.1 intends: zoned graphite theme, violet accent, signature particle face, purposeful motion, Mission Control — not an admin panel
 
 **Trust & security (what their technical evaluator will ask)**
 - [ ] Tenant isolation explained *and demonstrated* (the test suite is a sales asset)
