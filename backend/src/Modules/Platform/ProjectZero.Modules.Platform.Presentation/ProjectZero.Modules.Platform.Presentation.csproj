@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectZero.Modules.Platform.Application\ProjectZero.Modules.Platform.Application.csproj" />
+    <ProjectReference Include="..\ProjectZero.Modules.Platform.Infrastructure\ProjectZero.Modules.Platform.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\ProjectZero.BuildingBlocks.Web\ProjectZero.BuildingBlocks.Web.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
