@@ -1,0 +1,41 @@
+# Project Zero — local development stack (Sprint 1 scope: API + PostgreSQL).
+# Redis, RabbitMQ, and the AI Engine join in Sprint 2 (Sprint Plan, Block A).
+#
+# NOTE: the primary dev machine currently has no Docker; these files are the
+# canonical environment definition for machines/CI that do. Without Docker,
+# run the API directly: `dotnet run --project backend/src/ProjectZero.Api`.
+
+name: projectzero
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: projectzero
+      POSTGRES_USER: projectzero
+      POSTGRES_PASSWORD: projectzero_dev_only
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U projectzero -d projectzero"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Database: "Host=postgres;Port=5432;Database=projectzero;Username=projectzero;Password=projectzero_dev_only"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
