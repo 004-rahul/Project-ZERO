@@ -4,7 +4,7 @@
 |---|---|
 | **Document** | Project Zero Experience & Design Bible |
 | **Document Number** | 04 of 06 |
-| **Version** | 3.1 |
+| **Version** | 3.2 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Design (Founders / Design Lead) |
 | **Audience** | Designers, frontend engineers, product managers, accessibility reviewers, brand/marketing |
@@ -20,7 +20,8 @@
 | 1.0 | Design System v1.0 (tokens, components, accessibility, governance) and the Experience & Motion Design Specification v1.0 (deep-space identity, particle AI, motion language). |
 | 2.0 | First consolidated Experience & Design Bible. |
 | 3.0 | Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
-| 3.1 | **This document.** Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
+| 3.1 | Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
+| 3.2 | **This document.** Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
 
 ---
 
@@ -372,7 +373,47 @@ Each stage may surface as state (AI identity states, progress motion, evidence p
 
 Decision Briefs present: recommendation up front; evidence cards with navigable citations; confidence displayed honestly (including *low* confidence); approve/reject controls; audit metadata (model, prompt version) available on inspection — trust through visible mechanics, not claims.
 
-### 19.4 The Public Landing Experience
+### 19.4 The Public Landing Experience (v3.2 — the Organism landing)
+
+**Design premise (founder decision, 2026-08-02):** visitors will not connect company
+data to an unknown product, and template marketing pages create no interest. The
+landing must therefore (a) let visitors **try the product on the page** with zero
+signup, and (b) carry a signature visual no competitor can copy.
+
+**Landing-scoped Aurora palette** (selected via comparative color R&D; product
+interior keeps Zoned Graphite §10): near-black `void #080709`; iridescent accent ramp
+**violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A`**; bright `#D9A1F5`, strong
+`#C55FD6`, pink `#E4599C`. Material language is **glossy 3D**: glass panels with
+specular top edges, sheen sweeps on CTAs, cursor-tracked 3D tilt with glare.
+
+**Canonical structure:**
+
+1. **Hero — the Organism.** One continuous particle system fills the hero and morphs
+   on a timed cycle through the product story: scattered dust (the problem) → the
+   Signature Face → tool orbit (Connect) → memory torus (Remember) → the word
+   "PROOF." (Answer) → the Z mark. Particles never reset between shapes; a live
+   caption names each formation; particles react to the cursor. The **headline is
+   left-aligned** (impact copy, word-by-word blur reveal, iridescent gradient
+   keyword) with the organism biased to the right; the copy block counter-parallaxes
+   the cursor for depth.
+2. **Connector marquee** — infinite, masked edges.
+3. **Pinned scroll story** — the Signature Face stays fixed while three chapters
+   (Connect / Remember / Answer) scroll past; the face moves through its real AI
+   states (listening → thinking → speaking). Stacks statically on small screens.
+4. **Live demo** — suggested business questions; the question types itself, the face
+   changes state, evidence cards land with sources, the answer streams, a confidence
+   bar fills. Honest label: synthetic sample workspace. No signup, no backend.
+5. **Capabilities** — six glossy 3D tilt cards + count-up stats.
+6. **Closing CTA → footer.** Four-tier pricing moves to a dedicated page (V1.1).
+
+Flow: Landing → Get started → Registration (3 steps) → Dashboard; returning users
+Landing → Log in → Dashboard. Custom cursor and magnetic buttons on fine pointers
+only. All motion obeys §15 — the Organism is the AI presence (permitted ambient
+identity, like the Signature Face), every other animation explains state, and every
+effect has a reduced-motion alternative (static formed face, stacked chapters,
+instant text).
+
+#### 19.4.1 Superseded v3.1 structure (historical)
 
 The public site is part of the product's credibility: a premium animated marketing surface in the same design language (graphite hero, violet accent, light feature sections). Canonical structure: sticky translucent navigation → animated hero with the particle constellation and a floating product shot → customer strip → animated stats → feature grid (Connect · Remember · Answer · Decide · Govern · Provider-agnostic) → "how it works" three steps → dark trust/security section → four-tier pricing (Professional highlighted) → closing CTA → footer. Flow: Landing → Get started → Registration (3 steps) → Dashboard; returning users Landing → Log in → Dashboard. All motion obeys the Motion System (Section 15), including scroll-reveals and reduced-motion alternatives.
 

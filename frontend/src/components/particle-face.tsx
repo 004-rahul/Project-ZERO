@@ -24,6 +24,8 @@ interface ParticleFaceProps {
   size?: number;
   /** Draw constellation/wireframe lines (skip on very small sizes). */
   lines?: boolean;
+  /** Per-state color overrides (e.g. the landing page's Aurora palette). */
+  palette?: Partial<Record<AiState, string>>;
   className?: string;
 }
 
@@ -120,10 +122,18 @@ function hexA(hex: string, a: number): string {
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
 }
 
-export function ParticleFace({ state = "idle", size = 320, lines = true, className }: ParticleFaceProps) {
+export function ParticleFace({
+  state = "idle",
+  size = 320,
+  lines = true,
+  palette,
+  className,
+}: ParticleFaceProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const stateRef = useRef<AiState>(state);
   stateRef.current = state;
+  const paletteRef = useRef(palette);
+  paletteRef.current = palette;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -152,7 +162,7 @@ export function ParticleFace({ state = "idle", size = 320, lines = true, classNa
       const st = stateRef.current;
       const P = STATES[st];
       const isFace = FACE_STATES.has(st);
-      const color = P.color;
+      const color = paletteRef.current?.[st] ?? P.color;
       t += 0.016;
 
       let sa: number;

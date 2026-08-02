@@ -30,6 +30,17 @@ body {
   outline-offset: 2px;
 }
 
+/* Landing custom cursor (§19.4): the CustomCursor component adds .pz-cursor
+   to <body> only on fine pointers without reduced-motion. */
+@media (pointer: fine) {
+  body.pz-cursor,
+  body.pz-cursor a,
+  body.pz-cursor button,
+  body.pz-cursor input {
+    cursor: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

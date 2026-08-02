@@ -18,6 +18,15 @@ const config: Config = {
           footer: "#0B0C0E",
         },
         card: "#FFFFFF",
+        void: "#080709",
+        aurora: {
+          violet: "#C084FC",
+          magenta: "#E45FBC",
+          amber: "#F2A65A",
+          bright: "#D9A1F5",
+          strong: "#C55FD6",
+          pink: "#E4599C",
+        },
         ink: "#17181C",
         muted: "#5F6168",
         faint: "#989AA2",
@@ -62,6 +71,7 @@ const config: Config = {
         "2xl": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em" }],
         "3xl": ["36px", { lineHeight: "42px", letterSpacing: "-0.025em" }],
         "4xl": ["52px", { lineHeight: "56px", letterSpacing: "-0.03em" }],
+        hero: ["clamp(44px,6.2vw,88px)", { lineHeight: "1.03", letterSpacing: "-0.04em" }],
       },
       spacing: {
         // 4px base grid (Design Bible §13)
@@ -91,11 +101,37 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-12px)" },
         },
+        "word-in": {
+          from: { opacity: "0", filter: "blur(14px)", transform: "translateY(28px)" },
+          to: { opacity: "1", filter: "blur(0)", transform: "translateY(0)" },
+        },
+        marquee: {
+          to: { transform: "translateX(-50%)" },
+        },
+        drip: {
+          "0%": { transform: "scaleY(0)", transformOrigin: "top" },
+          "55%": { transform: "scaleY(1)", transformOrigin: "top" },
+          "56%": { transformOrigin: "bottom" },
+          "100%": { transform: "scaleY(0)", transformOrigin: "bottom" },
+        },
+        sheen: {
+          from: { transform: "translateX(-160%) skewX(-18deg)" },
+          to: { transform: "translateX(260%) skewX(-18deg)" },
+        },
+        "gradient-x": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
       animation: {
         "fade-up": "fade-up .8s ease both",
         "glow-pulse": "glow-pulse 6s ease-in-out infinite",
         floaty: "floaty 9s ease-in-out infinite",
+        "word-in": "word-in 1s cubic-bezier(.2,.7,.2,1) both",
+        marquee: "marquee 26s linear infinite",
+        drip: "drip 1.9s ease-in-out infinite",
+        sheen: "sheen .9s ease",
+        "gradient-x": "gradient-x 7s ease-in-out infinite",
       },
     },
   },
