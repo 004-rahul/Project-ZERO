@@ -31,7 +31,7 @@ export function TiltCard({ children, className }: { children: ReactNode; classNa
       ref={cardRef}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className={`group relative overflow-hidden rounded-lg border border-line bg-card p-6 shadow-card transition-[border-color,box-shadow] duration-300 will-change-transform [transform-style:preserve-3d] hover:border-accent/40 hover:shadow-lift ${className ?? ""}`}
+      className={`group relative overflow-hidden rounded-lg border border-white/70 bg-white/65 p-6 shadow-card backdrop-blur-xl transition-[border-color,box-shadow] duration-300 will-change-transform [transform-style:preserve-3d] hover:border-accent/40 hover:shadow-lift ${className ?? ""}`}
     >
       <div
         aria-hidden

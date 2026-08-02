@@ -35,12 +35,12 @@ export function Hero() {
         className="pointer-events-none absolute right-[-10%] top-64 h-[380px] w-[620px] rounded-full bg-warning/[.07] blur-[110px]"
       />
 
-      <div className="relative mx-auto w-full max-w-[1920px] px-5 sm:px-8 lg:px-[5vw]">
-        <div className="mx-auto max-w-3xl text-center">
+      <div className="relative mx-auto grid w-full max-w-[1920px] grid-cols-12 items-center gap-8 px-5 sm:px-8 lg:px-[5vw]">
+        <div className="col-span-12 lg:col-span-6">
           <p className="animate-word-in text-xs font-extrabold uppercase tracking-[.28em] text-accent-strong">
             Enterprise Intelligence Platform
           </p>
-          <h1 className="mt-6 text-hero font-black text-ink">
+          <h1 className="mt-6 max-w-2xl text-hero font-black text-ink">
             {HEADLINE.map(({ word, accent, br }) => {
               delay += 0.09;
               return (
@@ -57,7 +57,7 @@ export function Hero() {
             })}
           </h1>
           <p
-            className="mx-auto mt-6 max-w-xl animate-word-in text-lg font-medium leading-relaxed text-muted"
+            className="mt-6 max-w-xl animate-word-in text-lg font-medium leading-relaxed text-muted"
             style={{ animationDelay: ".85s" }}
           >
             Project Zero connects the work apps your team already uses, remembers everything your
@@ -70,7 +70,7 @@ export function Hero() {
             </a>
           </p>
           <div
-            className="mt-8 flex flex-wrap justify-center gap-4 animate-word-in"
+            className="mt-8 flex flex-wrap gap-4 animate-word-in"
             style={{ animationDelay: "1.05s" }}
           >
             <GlossyButton href="/register">Start free</GlossyButton>
@@ -79,7 +79,7 @@ export function Hero() {
             </GlossyButton>
           </div>
           <ul
-            className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 animate-word-in"
+            className="mt-8 flex flex-wrap gap-x-6 gap-y-2 animate-word-in"
             style={{ animationDelay: "1.25s" }}
           >
             {PROOF_POINTS.map((point) => (
@@ -91,7 +91,7 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="mt-16 animate-word-in" style={{ animationDelay: ".6s" }}>
+        <div className="col-span-12 mt-12 animate-word-in lg:col-span-6 lg:mt-0" style={{ animationDelay: ".6s" }}>
           <HeroShowcase />
         </div>
       </div>

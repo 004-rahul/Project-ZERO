@@ -106,7 +106,7 @@ export function HeroShowcase() {
   }, []);
 
   return (
-    <div className="relative mx-auto h-[460px] w-full max-w-[880px] sm:h-[500px] [perspective:1400px]">
+    <div className="relative mx-auto h-[460px] w-full max-w-[640px] sm:h-[510px] [perspective:1400px]">
       {/* dashed orbit rings */}
       <div
         aria-hidden
@@ -127,9 +127,13 @@ export function HeroShowcase() {
         ref={tiltRef}
         className="relative h-full w-full transition-transform duration-300 ease-out [transform-style:preserve-3d]"
       >
-        {/* the product window */}
-        <div className="absolute left-1/2 top-1/2 w-[94%] max-w-[720px] rounded-lg border border-line bg-card shadow-[0_30px_90px_rgba(23,24,28,.16),0_2px_8px_rgba(23,24,28,.06)] [transform:translate(-50%,-50%)_translateZ(30px)]">
-          <div className="flex items-center gap-2 rounded-t-lg border-b border-line bg-zone-canvas px-4 py-3">
+        {/* the product window — glass over the pastel washes */}
+        <div className="absolute left-1/2 top-1/2 w-[94%] max-w-[620px] rounded-lg border border-white/70 bg-white/75 shadow-[0_30px_90px_rgba(124,58,237,.16),0_2px_8px_rgba(23,24,28,.06)] backdrop-blur-xl [transform:translate(-50%,-50%)_translateZ(30px)]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-14 rounded-t-lg bg-white/50 [mask-image:linear-gradient(180deg,#fff,transparent)]"
+          />
+          <div className="flex items-center gap-2 rounded-t-lg border-b border-line/80 bg-white/55 px-4 py-3">
             <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
             <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
             <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
@@ -141,7 +145,7 @@ export function HeroShowcase() {
             </span>
           </div>
           <div className="p-5">
-            <div className="flex min-h-[42px] items-center rounded-lg border border-line bg-zone-canvas px-4 py-2.5 text-sm text-ink">
+            <div className="flex min-h-[42px] items-center rounded-lg border border-line bg-white/70 px-4 py-2.5 text-sm text-ink">
               {typed}
               <span className="ml-0.5 inline-block h-4 w-[2px] animate-glow-pulse bg-accent motion-reduce:hidden" />
             </div>
@@ -155,7 +159,7 @@ export function HeroShowcase() {
               {evChips.map((chip) => (
                 <span
                   key={chip}
-                  className="animate-fade-up rounded-lg border border-line bg-zone-canvas px-2.5 py-1 text-xs font-medium text-muted"
+                  className="animate-fade-up rounded-lg border border-line bg-white/70 px-2.5 py-1 text-xs font-medium text-muted"
                 >
                   {chip}
                 </span>
@@ -178,7 +182,7 @@ export function HeroShowcase() {
 
         {/* floating satellites */}
         <div className="absolute left-0 top-8 hidden animate-floaty [transform:translateZ(70px)] sm:block motion-reduce:animate-none">
-          <span className="flex items-center gap-2 rounded-lg border border-line bg-card px-3 py-2 text-xs font-semibold text-ink shadow-lift">
+          <span className="flex items-center gap-2 rounded-lg border border-white/70 bg-white/75 px-3 py-2 text-xs font-semibold text-ink shadow-lift backdrop-blur-xl">
             <IconLink className="h-4 w-4 text-accent" /> 40+ integrations
           </span>
         </div>
@@ -186,7 +190,7 @@ export function HeroShowcase() {
           className="absolute right-0 top-16 hidden animate-floaty [transform:translateZ(85px)] sm:block motion-reduce:animate-none"
           style={{ animationDelay: "-3s" }}
         >
-          <span className="flex items-center gap-2 rounded-lg border border-line bg-card px-3 py-2 text-xs font-semibold text-ink shadow-lift">
+          <span className="flex items-center gap-2 rounded-lg border border-white/70 bg-white/75 px-3 py-2 text-xs font-semibold text-ink shadow-lift backdrop-blur-xl">
             <IconCite className="h-4 w-4 text-accent" /> Every claim cited
           </span>
         </div>
@@ -194,7 +198,7 @@ export function HeroShowcase() {
           className="absolute bottom-14 left-2 hidden animate-floaty [transform:translateZ(80px)] sm:block motion-reduce:animate-none"
           style={{ animationDelay: "-6s" }}
         >
-          <span className="flex items-center gap-2 rounded-lg border border-line bg-card px-3 py-2 text-xs font-semibold text-ink shadow-lift">
+          <span className="flex items-center gap-2 rounded-lg border border-white/70 bg-white/75 px-3 py-2 text-xs font-semibold text-ink shadow-lift backdrop-blur-xl">
             <IconShield className="h-4 w-4 text-accent" /> Audit trail on
           </span>
         </div>
@@ -202,7 +206,7 @@ export function HeroShowcase() {
           className="absolute bottom-6 right-3 hidden animate-floaty [transform:translateZ(60px)] sm:block motion-reduce:animate-none"
           style={{ animationDelay: "-1.5s" }}
         >
-          <span className="flex items-center gap-2 rounded-lg border border-line bg-card px-3 py-2 text-xs font-semibold text-ink shadow-lift">
+          <span className="flex items-center gap-2 rounded-lg border border-white/70 bg-white/75 px-3 py-2 text-xs font-semibold text-ink shadow-lift backdrop-blur-xl">
             <IconZap className="h-4 w-4 text-warning" /> 5-min setup
           </span>
         </div>

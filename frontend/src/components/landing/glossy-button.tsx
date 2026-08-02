@@ -17,8 +17,8 @@ export function GlossyButton({
 }) {
   const cls =
     variant === "primary"
-      ? "group relative block overflow-hidden rounded-lg bg-accent px-6 py-3 text-base font-bold text-white shadow-accent-glow transition-[background-color,box-shadow] duration-300 hover:bg-accent-strong hover:shadow-[0_8px_30px_rgba(124,58,237,.45)]"
-      : "group relative block overflow-hidden rounded-lg border border-line-strong bg-card px-6 py-3 text-base font-semibold text-ink shadow-card transition-colors duration-300 hover:border-accent hover:text-accent";
+      ? "group relative block overflow-hidden rounded-lg bg-accent px-6 py-3 text-base font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,.35),inset_0_1px_0_rgba(255,255,255,.35)] transition-[background-color,box-shadow] duration-300 hover:bg-accent-strong hover:shadow-[0_8px_32px_rgba(124,58,237,.5),inset_0_1px_0_rgba(255,255,255,.35)]"
+      : "group relative block overflow-hidden rounded-lg border border-white/70 bg-white/60 px-6 py-3 text-base font-semibold text-ink shadow-card backdrop-blur-md transition-colors duration-300 hover:border-accent hover:text-accent";
 
   return (
     <Magnetic>

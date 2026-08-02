@@ -192,7 +192,15 @@ function Shell({ children }: { children: React.ReactNode }) {
 
 export default function LandingPage() {
   return (
-    <main className="bg-white text-ink">
+    <main className="relative text-ink">
+      {/* soft pastel washes — the glass surfaces blur over these */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute -left-40 -top-48 h-[680px] w-[680px] animate-drift-1 rounded-full bg-accent/[.14] blur-3xl motion-reduce:animate-none" />
+        <div className="absolute -right-32 top-[32%] h-[560px] w-[560px] animate-drift-2 rounded-full bg-[#EC4899]/[.09] blur-3xl motion-reduce:animate-none" />
+        <div className="absolute bottom-[-240px] left-1/3 h-[700px] w-[700px] animate-drift-3 rounded-full bg-warning/[.09] blur-3xl motion-reduce:animate-none" />
+      </div>
+
+      <div className="relative z-10">
       <LandingNav />
 
       {/* 1 · HERO */}
@@ -202,7 +210,7 @@ export default function LandingPage() {
       <section
         id="integrations"
         aria-label="Social proof"
-        className="border-y border-line bg-zone-canvas py-16"
+        className="border-y border-line/70 py-16"
       >
         <Shell>
           <FadeIn>
@@ -223,7 +231,7 @@ export default function LandingPage() {
               {["Code", "Chat", "Docs", "Knowledge", "Tickets", "Cloud drives"].map((cat) => (
                 <span
                   key={cat}
-                  className="rounded-lg border border-line bg-card px-3.5 py-1.5 text-xs font-semibold text-muted shadow-card"
+                  className="rounded-lg border border-white/70 bg-white/65 px-3.5 py-1.5 text-xs font-semibold text-muted shadow-card backdrop-blur-xl"
                 >
                   {cat}
                 </span>
@@ -236,7 +244,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {PROOF_STATS.map((stat, index) => (
               <FadeIn key={stat.label} delay={index * 0.08} className="col-span-12 sm:col-span-4">
-                <div className="rounded-lg border border-line bg-card px-6 py-8 text-center shadow-card">
+                <div className="rounded-lg border border-white/70 bg-white/65 px-6 py-8 text-center shadow-card backdrop-blur-xl">
                   <p className="text-4xl font-black tracking-tight text-accent-strong">
                     <CountUp end={stat.end} suffix={stat.suffix} />
                   </p>
@@ -279,7 +287,7 @@ export default function LandingPage() {
       </section>
 
       {/* 4 · HOW IT WORKS (live demo embedded) */}
-      <section id="how" className="border-y border-line bg-zone-canvas py-16 md:py-24">
+      <section id="how" className="border-y border-line/70 py-16 md:py-24">
         <Shell>
           <SectionHead
             kicker="How it works"
@@ -289,7 +297,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {STEPS.map((step, index) => (
               <FadeIn key={step.n} delay={index * 0.08} className="col-span-12 md:col-span-4">
-                <div className="relative h-full rounded-lg border border-line bg-card p-6 shadow-card">
+                <div className="relative h-full rounded-lg border border-white/70 bg-white/65 p-6 shadow-card backdrop-blur-xl">
                   <span className="absolute right-5 top-4 text-4xl font-black text-ink/[.06]">
                     {step.n}
                   </span>
@@ -323,8 +331,8 @@ export default function LandingPage() {
             {PLANS.map((plan, index) => (
               <FadeIn key={plan.name} delay={index * 0.06} className="col-span-12 sm:col-span-6 lg:col-span-3">
                 <div
-                  className={`relative flex h-full flex-col rounded-lg border bg-card p-6 ${
-                    plan.hot ? "border-accent shadow-lift" : "border-line shadow-card"
+                  className={`relative flex h-full flex-col rounded-lg border bg-white/65 p-6 backdrop-blur-xl ${
+                    plan.hot ? "border-accent shadow-lift" : "border-white/70 shadow-card"
                   }`}
                 >
                   {plan.hot && (
@@ -366,13 +374,13 @@ export default function LandingPage() {
       </section>
 
       {/* 6 · TESTIMONIALS */}
-      <section aria-label="Testimonials" className="border-y border-line bg-zone-canvas py-16 md:py-24">
+      <section aria-label="Testimonials" className="border-y border-line/70 py-16 md:py-24">
         <Shell>
           <SectionHead kicker="Testimonials" title="Teams stopped losing what they know." />
           <div className="mt-14 grid grid-cols-12 gap-6">
             {TESTIMONIALS.map((t, index) => (
               <FadeIn key={t.name} delay={index * 0.08} className="col-span-12 md:col-span-4">
-                <figure className="flex h-full flex-col rounded-lg border border-line bg-card p-6 shadow-card">
+                <figure className="flex h-full flex-col rounded-lg border border-white/70 bg-white/65 p-6 shadow-card backdrop-blur-xl">
                   <IconUsers className="h-5 w-5 text-accent" />
                   <blockquote className="mt-4 flex-1 text-md leading-relaxed text-ink">
                     “{t.quote}”
@@ -395,7 +403,7 @@ export default function LandingPage() {
           <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-3">
             {FAQS.map((faq, index) => (
               <FadeIn key={faq.q} delay={index * 0.05}>
-                <details className="group rounded-lg border border-line bg-card shadow-card transition-colors open:border-accent/50">
+                <details className="group rounded-lg border border-white/70 bg-white/65 shadow-card backdrop-blur-xl transition-colors open:border-accent/50">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-md font-bold text-ink [&::-webkit-details-marker]:hidden">
                     {faq.q}
                     <IconChevron className="h-4 w-4 shrink-0 text-muted transition-transform duration-300 group-open:rotate-180" />
@@ -434,7 +442,7 @@ export default function LandingPage() {
       </section>
 
       {/* 9 · FOOTER */}
-      <footer className="border-t border-line bg-white pb-10 pt-16">
+      <footer className="border-t border-line/70 bg-white/60 pb-10 pt-16 backdrop-blur-xl">
         <Shell>
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 md:col-span-5">
@@ -475,6 +483,7 @@ export default function LandingPage() {
           </div>
         </Shell>
       </footer>
+      </div>
     </main>
   );
 }
