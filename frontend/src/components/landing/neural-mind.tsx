@@ -1,39 +1,47 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * NeuralMind — the auth-screen AI visual (Design Bible §19.1).
- * The founder's concept, literally: an organization's data drifts around as
- * an aimless mess — then slowly gathers and organizes itself into a central
- * BRAIN that works (signals travel neuron to neuron), holds, gently
- * dissolves, and reforms. Dots and lines only — no drawn borders:
- * the contour is dots placed evenly ALONG the brain curve, the cortex folds
- * are dotted chains, the interior is filled with neurons.
- * Cycle: drift 2.5s → gather 6s → work 9s → dissolve 2.5s.
+ * NeuralMind — the auth-panel AI visual (Design Bible §19.1), modeled on the
+ * classic wireframe-plexus brain: an anatomical side-profile (frontal lobe,
+ * parietal crown, occipital, a DISTINCT cerebellum and brain stem) built
+ * purely from dots and lines. The canvas fills the whole panel: ambient
+ * bokeh particles drift and twinkle everywhere so no region is blank and
+ * there is no visible bounding box. Story cycle — the organization's data
+ * drifts as a mess, slowly gathers into the central brain, the brain works
+ * (signals travel synapses, sparkles glint), then it releases and reforms.
  * Static (formed) under prefers-reduced-motion.
  */
 
 type Cubic = [number, number, number, number, number, number, number, number];
 
-/* Side-profile brain outline (facing left) in a 100×80 design space. */
+/* Anatomical side-profile brain, facing left, in a 100×90 design space. */
 const OUTLINE: Cubic[] = [
-  [16, 52, 6, 50, 4, 40, 10, 33],
-  [10, 33, 6, 24, 14, 13, 27, 11],
-  [27, 11, 36, 5, 52, 4, 62, 8],
-  [62, 8, 76, 4, 89, 12, 91, 26],
-  [91, 26, 96, 34, 94, 46, 86, 51],
-  [86, 51, 90, 57, 86, 66, 75, 67],
-  [75, 67, 70, 73, 60, 73, 57, 66],
-  [57, 66, 50, 70, 40, 69, 33, 64],
-  [33, 64, 26, 66, 18, 60, 16, 52],
+  [22, 60, 12, 58, 7, 50, 9, 41], // temporal front → forehead
+  [9, 41, 4, 32, 10, 18, 22, 13], // frontal lobe bulge
+  [22, 13, 30, 6, 45, 4, 55, 8], // crown front
+  [55, 8, 63, 4, 76, 6, 83, 14], // crown back
+  [83, 14, 91, 20, 93, 32, 89, 41], // occipital top
+  [89, 41, 92, 47, 89, 53, 83, 55], // occipital lower
+  [83, 55, 80, 56, 78, 57, 78, 59], // notch before cerebellum
+  [78, 59, 86, 60, 87, 70, 79, 73], // cerebellum back
+  [79, 73, 72, 76, 63, 74, 61, 67], // cerebellum belly
+  [61, 67, 59, 70, 57, 73, 54, 78], // stem outer
+  [54, 78, 51, 82, 46, 82, 45, 78], // stem tip
+  [45, 78, 46, 74, 48, 71, 50, 68], // stem inner
+  [50, 68, 42, 70, 32, 68, 26, 64], // temporal underside
+  [26, 64, 24, 63, 23, 62, 22, 60], // close to start
 ];
 
-/* Cortex folds — dotted chains inside the shape. */
+/* Cortical folds + cerebellum striation — dotted chains. */
 const FOLDS: Cubic[] = [
-  [26, 34, 34, 24, 46, 26, 52, 35],
-  [38, 48, 48, 39, 60, 41, 68, 50],
-  [54, 16, 64, 12, 74, 18, 79, 27],
+  [20, 30, 28, 20, 40, 22, 44, 32],
+  [34, 46, 42, 36, 54, 38, 60, 48],
+  [50, 16, 58, 10, 68, 14, 73, 24],
+  [18, 46, 24, 40, 28, 44, 30, 52],
+  [62, 32, 70, 26, 78, 30, 81, 40],
+  [66, 68, 70, 64, 76, 64, 80, 68],
 ];
 
 const evalCubic = (c: Cubic, t: number): [number, number] => {
@@ -45,28 +53,40 @@ const evalCubic = (c: Cubic, t: number): [number, number] => {
 
 const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
-export function NeuralMind({ size = 340, className }: { size?: number; className?: string }) {
+export function NeuralMind({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [dims, setDims] = useState<{ w: number; h: number } | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const measure = () =>
+      setDims({ w: canvas.offsetWidth || 600, h: canvas.offsetHeight || 700 });
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(canvas);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !dims) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = size * dpr;
-    const h = size * dpr;
+    const w = dims.w * dpr;
+    const h = dims.h * dpr;
     canvas.width = w;
     canvas.height = h;
 
-    const s = (w * 0.9) / 100;
-    const ox = w * 0.05;
-    const oy = h * 0.5 - 40 * s;
-    const X = (x: number) => ox + x * s;
-    const Y = (y: number) => oy + y * s;
+    /* brain placement: centered, upper-middle of the panel */
+    const S = (Math.min(w, h) * 0.66) / 100; // px per design unit
+    const bx = w / 2 - 50 * S;
+    const by = h * 0.42 - 45 * S;
+    const X = (x: number) => bx + x * S;
+    const Y = (y: number) => by + y * S;
 
-    /* Path2D for interior sampling only — never drawn */
     const path = new Path2D();
     path.moveTo(X(OUTLINE[0][0]), Y(OUTLINE[0][1]));
     for (const c of OUTLINE) path.bezierCurveTo(X(c[2]), Y(c[3]), X(c[4]), Y(c[5]), X(c[6]), Y(c[7]));
@@ -83,9 +103,10 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
       vy: number;
       z: number;
       stag: number;
-      kind: 0 | 1 | 2; // 0 contour · 1 fold · 2 interior
+      kind: 0 | 1 | 2;
       ph: number;
     }
+    const rand = (a: number, b: number) => a + Math.random() * (b - a);
     const nodes: Neuron[] = [];
     const push = (tx: number, ty: number, kind: 0 | 1 | 2) =>
       nodes.push({
@@ -95,42 +116,53 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
         y: Math.random() * h,
         fx: 0,
         fy: 0,
-        vx: (Math.random() - 0.5) * 0.35 * dpr,
-        vy: (Math.random() - 0.5) * 0.35 * dpr,
+        vx: rand(-0.28, 0.28) * dpr,
+        vy: rand(-0.28, 0.28) * dpr,
         z: Math.random(),
         stag: Math.random(),
         kind,
         ph: Math.random() * 6.283,
       });
 
-    /* contour dots — evenly along every outline segment */
+    /* contour dots — spaced by segment length so density stays even */
     for (const c of OUTLINE) {
-      for (let k = 0; k < 10; k++) {
-        const [x, y] = evalCubic(c, (k + 0.5) / 10);
-        push(X(x) + (Math.random() - 0.5) * dpr, Y(y) + (Math.random() - 0.5) * dpr, 0);
+      const len = Math.hypot(c[6] - c[0], c[7] - c[1]);
+      const k = Math.max(2, Math.min(10, Math.round(len / 3.2)));
+      for (let i = 0; i < k; i++) {
+        const [x, y] = evalCubic(c, (i + 0.5) / k);
+        push(X(x), Y(y), 0);
       }
     }
-    /* fold dots */
     for (const c of FOLDS) {
-      for (let k = 0; k < 8; k++) {
-        const [x, y] = evalCubic(c, (k + 0.5) / 8);
+      for (let i = 0; i < 7; i++) {
+        const [x, y] = evalCubic(c, (i + 0.5) / 7);
         push(X(x), Y(y), 1);
       }
     }
-    /* interior neurons */
     let guard = 0;
     let interior = 0;
-    while (interior < 80 && guard++ < 20000) {
-      const x = ox + Math.random() * 100 * s;
-      const y = oy + Math.random() * 80 * s;
+    while (interior < 68 && guard++ < 20000) {
+      const x = bx + Math.random() * 100 * S;
+      const y = by + Math.random() * 90 * S;
       if (ctx.isPointInPath(path, x, y)) {
         push(x, y, 2);
         interior++;
       }
     }
 
+    /* ambient bokeh — free particles across the whole panel, never join */
+    const ambient = Array.from({ length: 42 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: rand(-0.16, 0.16) * dpr,
+      vy: rand(-0.16, 0.16) * dpr,
+      r: rand(1, 4.6) * dpr,
+      ph: Math.random() * 6.283,
+      soft: Math.random() > 0.55,
+    }));
+
     const edges: [number, number][] = [];
-    const thr = w * 0.1;
+    const thr = 11 * S;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         if (Math.hypot(nodes[i].tx - nodes[j].tx, nodes[i].ty - nodes[j].ty) < thr) edges.push([i, j]);
@@ -138,22 +170,26 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
     }
     const edgesAt = (n: number) => edges.filter((e) => e[0] === n || e[1] === n);
 
-    const pulses = Array.from({ length: 8 }, () => ({
+    const pulses = Array.from({ length: 7 }, () => ({
       edge: Math.floor(Math.random() * edges.length),
       t: Math.random(),
-      speed: 0.8 + Math.random() * 0.7,
+      speed: 0.8 + Math.random() * 0.6,
       from: 0,
     }));
     const flash = new Float32Array(nodes.length);
 
-    /* the story: drift → gather → work → dissolve */
     let mode: "drift" | "gather" | "work" | "dissolve" = "drift";
     let modeT = 0;
     let phase = 0;
     let t = Math.random() * 100;
     let raf = 0;
-    const cx = w / 2;
-    const cy = h / 2;
+
+    const wrap = (p: { x: number; y: number; vx: number; vy: number }) => {
+      if (p.x < -12 * dpr) p.x = w + 10 * dpr;
+      if (p.x > w + 12 * dpr) p.x = -10 * dpr;
+      if (p.y < -12 * dpr) p.y = h + 10 * dpr;
+      if (p.y > h + 12 * dpr) p.y = -10 * dpr;
+    };
 
     const frame = () => {
       t += 0.016;
@@ -161,7 +197,7 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
 
       if (mode === "drift") {
         phase = 0;
-        if (modeT >= 2.5) {
+        if (modeT >= 3) {
           for (const n of nodes) {
             n.fx = n.x;
             n.fy = n.y;
@@ -170,64 +206,87 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
           modeT = 0;
         }
       } else if (mode === "gather") {
-        phase = Math.min(1, modeT / 6);
-        if (modeT >= 6) {
+        phase = Math.min(1, modeT / 6.5);
+        if (modeT >= 6.5) {
           mode = "work";
           modeT = 0;
         }
       } else if (mode === "work") {
         phase = 1;
-        if (modeT >= 9) {
+        if (modeT >= 10) {
           for (const n of nodes) {
-            n.vx = (Math.random() - 0.5) * 0.5 * dpr;
-            n.vy = (Math.random() - 0.5) * 0.5 * dpr;
+            n.vx = rand(-0.4, 0.4) * dpr;
+            n.vy = rand(-0.4, 0.4) * dpr;
           }
           mode = "dissolve";
           modeT = 0;
         }
       } else {
         phase = 0;
-        if (modeT >= 2.5) {
+        if (modeT >= 3) {
           mode = "drift";
           modeT = 0;
         }
       }
 
       ctx.clearRect(0, 0, w, h);
-      const sway = mode === "work" ? 0.025 * Math.sin(t * 0.4) : 0;
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(sway);
-      ctx.translate(-cx, -cy);
 
-      /* neuron positions */
+      /* ambient bokeh — always alive, whole panel */
+      for (const a of ambient) {
+        a.x += a.vx;
+        a.y += a.vy;
+        wrap(a);
+        const tw = 0.5 + 0.5 * Math.sin(t * 1.4 + a.ph);
+        if (a.soft) {
+          const g = ctx.createRadialGradient(a.x, a.y, 0, a.x, a.y, a.r * 3);
+          g.addColorStop(0, `rgba(167,139,250,${0.16 * tw})`);
+          g.addColorStop(1, "rgba(124,58,237,0)");
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(a.x, a.y, a.r * 3, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.globalAlpha = 0.12 + 0.3 * tw;
+          ctx.fillStyle = "#C4B5FD";
+          ctx.beginPath();
+          ctx.arc(a.x, a.y, a.r * 0.55, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+
+      /* neurons: drift everywhere ↔ gather into the brain */
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         if (mode === "drift" || mode === "dissolve") {
           n.x += n.vx;
           n.y += n.vy;
-          if (n.x < 4 * dpr || n.x > w - 4 * dpr) n.vx *= -1;
-          if (n.y < 4 * dpr || n.y > h - 4 * dpr) n.vy *= -1;
+          wrap(n);
         } else if (mode === "gather") {
           const q = easeInOut(Math.min(1, Math.max(0, (phase * 1.4 - n.stag * 0.4) / 1)));
-          const amp = n.kind === 2 ? 2 : 0.9;
+          const amp = n.kind === 2 ? 1.8 : 0.7;
           n.x = n.fx + (n.tx - n.fx) * q + Math.sin(t * 1.1 + n.ph) * amp * dpr * q;
           n.y = n.fy + (n.ty - n.fy) * q + Math.cos(t * 0.9 + n.ph * 1.4) * amp * dpr * q;
         } else {
-          const amp = n.kind === 2 ? 2 : 0.9;
+          const amp = n.kind === 2 ? 1.8 : 0.7;
           n.x = n.tx + Math.sin(t * 1.1 + n.ph) * amp * dpr;
           n.y = n.ty + Math.cos(t * 0.9 + n.ph * 1.4) * amp * dpr;
         }
-        flash[i] = Math.max(0, flash[i] - 0.025);
+        flash[i] = Math.max(0, flash[i] - 0.02);
       }
 
-      /* synapses fade in as the brain gathers */
+      /* random glints on the formed brain (the reference's sparkles) */
+      if (mode === "work" && Math.random() < 0.05) {
+        flash[Math.floor(Math.random() * nodes.length)] = 0.9;
+      }
+
+      /* synapses assemble with the brain */
       const lineA = easeInOut(phase) * easeInOut(phase);
       if (lineA > 0.02) {
         for (const [a, b] of edges) {
           const na = nodes[a];
           const nb = nodes[b];
-          const boost = na.kind === 0 && nb.kind === 0 ? 1.9 : 1;
+          const boost = na.kind === 0 && nb.kind === 0 ? 2 : 1;
           ctx.strokeStyle = `rgba(167,139,250,${(0.05 + 0.08 * ((na.z + nb.z) / 2)) * lineA * boost})`;
           ctx.lineWidth = 1 * dpr;
           ctx.beginPath();
@@ -237,7 +296,7 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
         }
       }
 
-      /* working signals — calm speed, soft trails */
+      /* working signals */
       if (mode === "work") {
         for (const p of pulses) {
           p.t += 0.016 * p.speed;
@@ -249,7 +308,7 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
             p.edge = edges.indexOf(pick);
             p.from = pick[0] === arrived ? 0 : 1;
             p.t = 0;
-            p.speed = 0.8 + Math.random() * 0.7;
+            p.speed = 0.8 + Math.random() * 0.6;
           }
           const [a, b] = edges[p.edge];
           const start = p.from === 0 ? nodes[a] : nodes[b];
@@ -279,11 +338,11 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
         }
       }
 
-      /* neurons — contour dots heavier so the brain outline reads */
+      /* neurons */
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         const f = flash[i];
-        const base = n.kind === 0 ? 2 : n.kind === 1 ? 1.6 : 1.3;
+        const base = n.kind === 0 ? 1.9 : n.kind === 1 ? 1.5 : 1.25;
         const r = (base + 0.9 * n.z + f * 2.4) * dpr;
         if (f > 0.01) {
           const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
@@ -294,15 +353,13 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
           ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
           ctx.fill();
         }
-        const restA = mode === "drift" || mode === "dissolve" ? 0.4 : 0.5;
-        ctx.globalAlpha = (n.kind === 0 ? restA + 0.15 : restA) + 0.35 * n.z + 0.3 * f;
+        ctx.globalAlpha = (n.kind === 0 ? 0.62 : 0.45) + 0.32 * n.z + 0.3 * f;
         ctx.fillStyle = f > 0.3 ? "#E9D5FF" : "#A78BFA";
         ctx.beginPath();
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.globalAlpha = 1;
-      ctx.restore();
     };
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -322,13 +379,12 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
       raf = requestAnimationFrame(loop);
     }
     return () => cancelAnimationFrame(raf);
-  }, [size]);
+  }, [dims]);
 
   return (
     <canvas
       ref={canvasRef}
-      style={{ width: size, height: size }}
-      className={className}
+      className={className ?? "absolute inset-0 h-full w-full"}
       role="img"
       aria-label="Zero — from scattered data to a working brain"
     />
