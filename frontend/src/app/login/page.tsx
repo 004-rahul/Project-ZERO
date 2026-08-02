@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AuthPanel, Divider, Field, SsoButtons } from "@/components/auth-panel";
+import { AuthPanel, AuthSubmit, Divider, Field, SsoButtons } from "@/components/auth-panel";
 
 export const metadata = { title: "Sign in — Project Zero" };
 
@@ -30,12 +30,7 @@ export default function LoginPage() {
           </label>
           <span className="font-semibold text-accent-strong">Forgot password?</span>
         </div>
-        <button
-          type="submit"
-          className="w-full rounded-md bg-gradient-to-br from-accent to-accent-strong py-3 text-base font-bold text-white shadow-accent-glow transition-transform hover:-translate-y-0.5"
-        >
-          Sign in →
-        </button>
+        <AuthSubmit>Sign in →</AuthSubmit>
       </form>
 
       <p className="mt-5 text-center text-xs text-muted">
