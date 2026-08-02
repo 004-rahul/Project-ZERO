@@ -188,27 +188,7 @@ function SectionHead({ kicker, title, sub }: { kicker: string; title: string; su
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="w-full px-6 lg:px-10">{children}</div>;
-}
-
-/** "+" markers where a section border crosses the canvas frame (§19.4 v3.4). */
-function EdgeMarks() {
-  return (
-    <>
-      <span
-        aria-hidden
-        className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 bg-void px-1 text-md font-light leading-none text-white/30"
-      >
-        +
-      </span>
-      <span
-        aria-hidden
-        className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 bg-void px-1 text-md font-light leading-none text-white/30"
-      >
-        +
-      </span>
-    </>
-  );
+  return <div className="mx-auto w-full max-w-[1920px] px-5 sm:px-8 lg:px-[5vw]">{children}</div>;
 }
 
 export default function LandingPage() {
@@ -226,15 +206,11 @@ export default function LandingPage() {
         <CustomCursor />
         <LandingNav />
 
-        {/* everything lives inside a bordered canvas column — the side space
-            is a designed frame, never dead black */}
-        <div className="mx-auto w-full max-w-[1360px] border-x border-white/[.07]">
         {/* 1 · HERO */}
         <Hero />
 
         {/* 2 · SOCIAL PROOF */}
         <section aria-label="Social proof" className="relative border-t border-white/[.07] py-16">
-          <EdgeMarks />
           <Shell>
             <FadeIn>
               <p className="text-center text-sm font-medium text-on-dark-muted">
@@ -268,7 +244,6 @@ export default function LandingPage() {
 
         {/* 3 · FEATURES */}
         <section id="features" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
           <Shell>
             <SectionHead
               kicker="Features"
@@ -299,7 +274,6 @@ export default function LandingPage() {
 
         {/* 4 · HOW IT WORKS (live demo embedded) */}
         <section id="how" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
           <Shell>
             <SectionHead
               kicker="How it works"
@@ -333,7 +307,6 @@ export default function LandingPage() {
 
         {/* 5 · PRICING */}
         <section id="pricing" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
           <Shell>
             <SectionHead
               kicker="Pricing"
@@ -388,7 +361,6 @@ export default function LandingPage() {
 
         {/* 6 · TESTIMONIALS */}
         <section aria-label="Testimonials" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
           <Shell>
             <SectionHead kicker="Testimonials" title="Teams stopped losing what they know." />
             <div className="mt-14 grid grid-cols-12 gap-6">
@@ -412,7 +384,6 @@ export default function LandingPage() {
 
         {/* 7 · FAQ */}
         <section id="faq" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
           <Shell>
             <SectionHead kicker="FAQ" title="Questions security teams ask first." />
             <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-3">
@@ -433,7 +404,6 @@ export default function LandingPage() {
 
         {/* 8 · CTA */}
         <section className="relative overflow-hidden border-t border-white/[.07] py-24 text-center">
-          <EdgeMarks />
           <div
             aria-hidden
             className="pointer-events-none absolute bottom-[-300px] left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(197,95,214,.2),transparent_65%)]"
@@ -459,7 +429,6 @@ export default function LandingPage() {
 
         {/* 9 · FOOTER */}
         <footer className="relative border-t border-white/[.08] pb-10 pt-16">
-          <EdgeMarks />
           <Shell>
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-12 md:col-span-5">
@@ -500,7 +469,6 @@ export default function LandingPage() {
             </div>
           </Shell>
         </footer>
-        </div>
       </div>
     </main>
   );
