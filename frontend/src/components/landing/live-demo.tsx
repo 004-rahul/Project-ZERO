@@ -119,7 +119,7 @@ export function LiveDemo() {
   };
 
   return (
-    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg bg-card shadow-lift md:grid-cols-[240px_1fr]">
+    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg border border-line/80 bg-card shadow-lift md:grid-cols-[240px_1fr]">
       <div className="relative grid place-items-center border-b border-line/70 bg-warning/[.08] p-4 md:border-b-0 md:border-r">
         <ParticleFace state={face} size={210} lines={false} palette={LANDING_FACE} />
       </div>

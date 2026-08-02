@@ -22,25 +22,25 @@ export function LandingNav() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-cream/85 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-zone-header/90 backdrop-blur-xl">
       <div className="flex items-center gap-8 px-5 py-3.5 sm:px-8 lg:px-[4vw]">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35)]">
             Z
           </span>
-          <span className="text-md font-bold text-ink">Project Zero</span>
+          <span className="text-md font-bold text-on-dark">Project Zero</span>
         </Link>
-        <nav className="ml-auto hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
-          <a href="#features" className="transition-colors hover:text-ink">
+        <nav className="ml-auto hidden items-center gap-7 text-sm font-medium text-on-dark-muted lg:flex">
+          <a href="#features" className="transition-colors hover:text-on-dark">
             Features
           </a>
-          <a href="#how" className="transition-colors hover:text-ink">
+          <a href="#how" className="transition-colors hover:text-on-dark">
             How it works
           </a>
-          <a href="#pricing" className="transition-colors hover:text-ink">
+          <a href="#pricing" className="transition-colors hover:text-on-dark">
             Pricing
           </a>
-          <a href="#faq" className="transition-colors hover:text-ink">
+          <a href="#faq" className="transition-colors hover:text-on-dark">
             FAQ
           </a>
         </nav>
@@ -48,7 +48,7 @@ export function LandingNav() {
           <Magnetic className="hidden sm:block">
             <Link
               href="/login"
-              className="block rounded-lg border border-line bg-card px-4 py-2 text-sm font-semibold text-ink shadow-card transition-colors hover:border-accent hover:text-accent"
+              className="block rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-on-dark transition-colors hover:border-accent-bright hover:text-accent-bright"
             >
               Log in
             </Link>

@@ -1,5 +1,6 @@
 "use client";
 
+import { FlowLines } from "./flow-lines";
 import { GlossyButton } from "./glossy-button";
 import { HeroShowcase } from "./hero-showcase";
 import {
@@ -56,8 +57,9 @@ export function Hero() {
   let delay = 0.05;
   return (
     <section className="relative overflow-hidden pb-20 pt-36">
+      <FlowLines />
       {/* floating app tiles — gutters only, scroll with the hero */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 hidden xl:block">
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
         {FLOAT_TILES.map(({ icon: Icon, pos, tone, delay }, i) => (
           <div
             key={i}
