@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { AiOrb } from "@/components/landing/ai-orb";
 import { FlowLines } from "@/components/landing/flow-lines";
+import { NeuralMind } from "@/components/landing/neural-mind";
 
 /**
  * Shared auth layout (Design Bible §19.1 — v4 visual language): the Zero Orb
@@ -27,7 +27,7 @@ export function AuthPanel({
         <FlowLines />
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-[52%] animate-glow-pulse rounded-full bg-[radial-gradient(circle,rgba(124,58,237,.25),transparent_65%)]" />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%]">
-          <AiOrb state="listening" size={340} variant="dark" />
+          <NeuralMind size={400} />
         </div>
 
         <Link href="/" className="relative z-10 flex items-center gap-3">
