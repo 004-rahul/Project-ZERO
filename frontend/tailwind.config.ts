@@ -18,6 +18,7 @@ const config: Config = {
           footer: "#0B0C0E",
         },
         card: "#FFFFFF",
+        cream: "#FAF7F0",
         void: "#080709",
         aurora: {
           violet: "#C084FC",

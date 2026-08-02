@@ -36,32 +36,38 @@ const PROOF_STATS: { end: number; suffix: string; label: string }[] = [
 const FEATURES = [
   {
     icon: IconCite,
+    tone: "bg-accent/10 text-accent",
     title: "Evidence-backed answers",
     body: "Every claim carries citations to the exact pull request, thread, or document — plus an honest confidence score.",
     wide: true,
   },
   {
     icon: IconMemory,
+    tone: "bg-knowledge/10 text-knowledge",
     title: "Permanent memory",
     body: "Decisions, context and history stay searchable long after people move on.",
   },
   {
     icon: IconBrief,
+    tone: "bg-success/10 text-success",
     title: "Decision briefs",
     body: "Board-ready recommendations with evidence, assumptions and reasoning attached.",
   },
   {
     icon: IconLink,
+    tone: "bg-warning/10 text-warning",
     title: "5-minute connectors",
     body: "OAuth in, read-only, revocable — across your code, chat, docs and knowledge tools.",
   },
   {
     icon: IconKey,
+    tone: "bg-accent/10 text-accent",
     title: "Your AI, your keys",
     body: "OpenAI, Anthropic, Azure or local models. Switch by configuration, never migration.",
   },
   {
     icon: IconShield,
+    tone: "bg-knowledge/10 text-knowledge",
     title: "Governance built in",
     body: "Role-based access, approval workflows and a complete audit trail on every AI request.",
     wide: true,
@@ -192,32 +198,8 @@ function Shell({ children }: { children: React.ReactNode }) {
 
 export default function LandingPage() {
   return (
-    <main className="relative text-ink">
-      {/* living background — pastel washes that visibly drift, plus floating shapes */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute -left-40 -top-48 h-[720px] w-[720px] animate-drift-1 rounded-full bg-accent/[.22] blur-3xl motion-reduce:animate-none" />
-        <div className="absolute -right-32 top-[30%] h-[600px] w-[600px] animate-drift-2 rounded-full bg-[#EC4899]/[.15] blur-3xl motion-reduce:animate-none" />
-        <div className="absolute bottom-[-240px] left-1/3 h-[720px] w-[720px] animate-drift-3 rounded-full bg-warning/[.15] blur-3xl motion-reduce:animate-none" />
-        <div className="absolute left-[10%] top-[28%] h-24 w-24 animate-floaty rounded-full border-2 border-dashed border-accent/30 motion-reduce:animate-none" />
-        <div
-          className="absolute right-[7%] top-[16%] h-14 w-14 animate-floaty rounded-full bg-[#EC4899]/20 motion-reduce:animate-none"
-          style={{ animationDelay: "-3s" }}
-        />
-        <div
-          className="absolute bottom-[24%] right-[16%] h-20 w-20 rotate-12 animate-floaty rounded-lg border-2 border-warning/30 motion-reduce:animate-none"
-          style={{ animationDelay: "-6s" }}
-        />
-        <div
-          className="absolute bottom-[30%] left-[5%] h-10 w-10 animate-floaty rounded-full bg-accent/[.15] motion-reduce:animate-none"
-          style={{ animationDelay: "-1.5s" }}
-        />
-        <div
-          className="absolute left-[46%] top-[12%] h-8 w-8 animate-floaty rounded-full border-2 border-accent/25 motion-reduce:animate-none"
-          style={{ animationDelay: "-4.5s" }}
-        />
-      </div>
-
-      <div className="relative z-10">
+    <main className="relative bg-cream text-ink">
+      <div className="relative">
       <LandingNav />
 
       {/* 1 · HERO */}
@@ -248,7 +230,7 @@ export default function LandingPage() {
               {["Code", "Chat", "Docs", "Knowledge", "Tickets", "Cloud drives"].map((cat) => (
                 <span
                   key={cat}
-                  className="rounded-lg bg-accent/[.07] px-3.5 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-accent/[.12] hover:text-ink"
+                  className="rounded-lg border border-transparent bg-card px-3.5 py-1.5 text-xs font-semibold text-muted shadow-card transition-colors hover:border-accent/30 hover:text-ink"
                 >
                   {cat}
                 </span>
@@ -261,7 +243,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {PROOF_STATS.map((stat, index) => (
               <FadeIn key={stat.label} delay={index * 0.08} className="col-span-12 sm:col-span-4">
-                <div className="rounded-lg border border-transparent bg-accent/[.06] px-6 py-8 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
+                <div className="rounded-lg border border-transparent bg-card px-6 py-8 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
                   <p className="text-4xl font-black tracking-tight text-accent-strong">
                     <CountUp end={stat.end} suffix={stat.suffix} />
                   </p>
@@ -291,7 +273,7 @@ export default function LandingPage() {
                 }`}
               >
                 <HoverCard className="h-full">
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-accent/10 text-accent">
+                  <div className={`mb-5 flex h-11 w-11 items-center justify-center rounded-lg ${feature.tone}`}>
                     <feature.icon />
                   </div>
                   <h3 className="text-lg font-extrabold text-ink">{feature.title}</h3>
@@ -314,7 +296,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {STEPS.map((step, index) => (
               <FadeIn key={step.n} delay={index * 0.08} className="col-span-12 md:col-span-4">
-                <div className="relative h-full rounded-lg border border-transparent bg-accent/[.06] p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
+                <div className="relative h-full rounded-lg border border-transparent bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift">
                   <span className="absolute right-5 top-4 text-4xl font-black text-ink/[.06]">
                     {step.n}
                   </span>
@@ -348,8 +330,8 @@ export default function LandingPage() {
             {PLANS.map((plan, index) => (
               <FadeIn key={plan.name} delay={index * 0.06} className="col-span-12 sm:col-span-6 lg:col-span-3">
                 <div
-                  className={`relative flex h-full flex-col rounded-lg border border-transparent p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-white hover:shadow-lift ${
-                    plan.hot ? "bg-accent/[.12] shadow-lift" : "bg-accent/[.06] shadow-card"
+                  className={`relative flex h-full flex-col rounded-lg border p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lift ${
+                    plan.hot ? "border-accent/30 bg-card shadow-lift" : "border-transparent bg-card shadow-card"
                   }`}
                 >
                   {plan.hot && (
@@ -397,7 +379,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {TESTIMONIALS.map((t, index) => (
               <FadeIn key={t.name} delay={index * 0.08} className="col-span-12 md:col-span-4">
-                <figure className="flex h-full flex-col rounded-lg border border-transparent bg-accent/[.06] p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
+                <figure className="flex h-full flex-col rounded-lg border border-transparent bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-lift">
                   <IconUsers className="h-5 w-5 text-accent" />
                   <blockquote className="mt-4 flex-1 text-md leading-relaxed text-ink">
                     “{t.quote}”
@@ -420,7 +402,7 @@ export default function LandingPage() {
           <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-3">
             {FAQS.map((faq, index) => (
               <FadeIn key={faq.q} delay={index * 0.05}>
-                <details className="group rounded-lg border border-transparent bg-accent/[.06] shadow-card transition-all duration-300 hover:border-accent/30 open:border-accent/40 open:bg-white open:shadow-lift">
+                <details className="group rounded-lg border border-transparent bg-card shadow-card transition-all duration-300 hover:border-accent/30 open:border-accent/40 open:shadow-lift">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-md font-bold text-ink [&::-webkit-details-marker]:hidden">
                     {faq.q}
                     <IconChevron className="h-4 w-4 shrink-0 text-muted transition-transform duration-300 group-open:rotate-180" />
@@ -459,7 +441,7 @@ export default function LandingPage() {
       </section>
 
       {/* 9 · FOOTER */}
-      <footer className="border-t border-line/70 bg-white/60 pb-10 pt-16 backdrop-blur-xl">
+      <footer className="border-t border-line/70 pb-10 pt-16">
         <Shell>
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 md:col-span-5">

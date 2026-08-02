@@ -22,7 +22,7 @@ export function LandingNav() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-white/70 shadow-[0_1px_0_rgba(255,255,255,.6)_inset,0_8px_30px_rgba(23,24,28,.05)] backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-cream/85 backdrop-blur-xl">
       <div className="flex items-center gap-8 px-5 py-3.5 sm:px-8 lg:px-[4vw]">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35)]">
@@ -48,7 +48,7 @@ export function LandingNav() {
           <Magnetic className="hidden sm:block">
             <Link
               href="/login"
-              className="block rounded-lg border border-white/70 bg-white/60 px-4 py-2 text-sm font-semibold text-ink shadow-card backdrop-blur-md transition-colors hover:border-accent hover:text-accent"
+              className="block rounded-lg border border-line bg-card px-4 py-2 text-sm font-semibold text-ink shadow-card transition-colors hover:border-accent hover:text-accent"
             >
               Log in
             </Link>

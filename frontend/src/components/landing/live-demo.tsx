@@ -119,8 +119,8 @@ export function LiveDemo() {
   };
 
   return (
-    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg bg-accent/[.05] shadow-lift md:grid-cols-[240px_1fr]">
-      <div className="relative grid place-items-center border-b border-line/70 bg-accent/[.07] p-4 md:border-b-0 md:border-r">
+    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg bg-card shadow-lift md:grid-cols-[240px_1fr]">
+      <div className="relative grid place-items-center border-b border-line/70 bg-warning/[.08] p-4 md:border-b-0 md:border-r">
         <ParticleFace state={face} size={210} lines={false} palette={LANDING_FACE} />
       </div>
 
@@ -136,7 +136,7 @@ export function LiveDemo() {
               key={qa.q}
               type="button"
               onClick={() => run(qa)}
-              className="rounded-lg border border-line bg-white/70 px-3.5 py-2 text-sm text-muted transition-all duration-200 hover:border-accent hover:text-ink hover:shadow-card"
+              className="rounded-lg border border-line bg-cream px-3.5 py-2 text-sm text-muted transition-all duration-200 hover:border-accent hover:text-ink hover:shadow-card"
             >
               {qa.q}
             </button>
@@ -149,7 +149,7 @@ export function LiveDemo() {
             readOnly
             placeholder="Ask about your organization…"
             aria-label="Demo question"
-            className="min-w-0 flex-1 rounded-lg border border-line bg-white/70 px-5 py-3 text-base text-ink outline-none transition-colors placeholder:text-faint focus:border-accent"
+            className="min-w-0 flex-1 rounded-lg border border-line bg-cream px-5 py-3 text-base text-ink outline-none transition-colors placeholder:text-faint focus:border-accent"
           />
           <span className="rounded-lg bg-accent px-5 py-3 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,.35),inset_0_1px_0_rgba(255,255,255,.35)]">
             Ask
@@ -161,7 +161,7 @@ export function LiveDemo() {
             {evidence.map(([src, title]) => (
               <div
                 key={title}
-                className="animate-fade-up rounded-lg border border-line bg-white/70 p-3 text-xs text-muted"
+                className="animate-fade-up rounded-lg border border-line bg-cream p-3 text-xs text-muted"
               >
                 <span className="mb-1 block text-2xs font-extrabold uppercase tracking-[.14em] text-accent-strong">
                   {src}

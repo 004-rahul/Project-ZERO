@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 export function HoverCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`rounded-lg border border-transparent bg-accent/[.06] p-6 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/30 hover:bg-white hover:shadow-lift ${className ?? ""}`}
+      className={`rounded-lg border border-transparent bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/30 hover:shadow-lift ${className ?? ""}`}
     >
       {children}
     </div>
