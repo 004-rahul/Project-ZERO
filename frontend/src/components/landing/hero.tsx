@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Organism, ORGANISM_PHASES, type OrganismPhase } from "./organism";
+import { useEffect, useRef } from "react";
 import { GlossyButton } from "./glossy-button";
+import { HeroShowcase } from "./hero-showcase";
 import { IconCheck } from "./icons";
 
 /**
- * Landing hero (Design Bible §19.4 v3.3): 12-column grid — copy in the left
- * seven columns, the living Organism contained in the right five with a live
- * caption naming what it is forming. Solid Aurora accents, no gradients.
- * The copy block counter-parallaxes the cursor for physical depth.
+ * Landing hero (Design Bible §19.4 v3.4): 12-column grid — copy in the left
+ * seven columns, the self-running product showcase in the right five. Solid
+ * Aurora accents, no gradients. The copy block counter-parallaxes the cursor.
  */
 
 const HEADLINE: { word: string; accent?: boolean; br?: boolean }[] = [
@@ -24,7 +23,6 @@ const HEADLINE: { word: string; accent?: boolean; br?: boolean }[] = [
 const PROOF_POINTS = ["Free plan — no credit card", "5-minute setup", "Your keys, your models"];
 
 export function Hero() {
-  const [phase, setPhase] = useState<OrganismPhase>(ORGANISM_PHASES[1]);
   const copyRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -45,8 +43,8 @@ export function Hero() {
 
   let delay = 0.05;
   return (
-    <section className="relative overflow-hidden pb-16 pt-36">
-      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-12 items-center gap-6 px-6">
+    <section className="relative overflow-hidden px-6 pb-20 pt-36 lg:px-10">
+      <div className="grid grid-cols-12 items-center gap-6">
         <div ref={copyRef} className="col-span-12 transition-transform duration-300 ease-out lg:col-span-7">
           <p className="animate-word-in text-xs font-extrabold uppercase tracking-[.28em] text-aurora-bright">
             Enterprise Intelligence Platform
@@ -93,23 +91,8 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="col-span-12 lg:col-span-5">
-          <div className="relative mx-auto h-[320px] w-full max-w-[560px] sm:h-[420px] lg:h-[540px]">
-            <div
-              aria-hidden
-              className="absolute left-1/2 top-1/2 h-[92%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(197,95,214,.16),rgba(228,95,188,.06)_55%,transparent_72%)]"
-            />
-            <Organism className="absolute inset-0 h-full w-full" centerX={0.5} onPhase={setPhase} />
-            <div className="absolute inset-x-0 -bottom-1 flex items-center justify-center gap-2.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-aurora-bright shadow-[0_0_10px_#D9A1F5]" />
-              <span className="text-2xs uppercase tracking-[.16em] text-on-dark-muted/70">
-                now:{" "}
-                <span key={phase.key} className="inline-block animate-word-in font-semibold text-on-dark-muted">
-                  {phase.label}
-                </span>
-              </span>
-            </div>
-          </div>
+        <div className="col-span-12 animate-word-in lg:col-span-5" style={{ animationDelay: ".5s" }}>
+          <HeroShowcase />
         </div>
       </div>
     </section>
