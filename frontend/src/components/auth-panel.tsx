@@ -25,10 +25,8 @@ export function AuthPanel({
     <main className="grid min-h-screen grid-cols-1 lg:grid-cols-[46fr_54fr]">
       <section className="relative hidden flex-col overflow-hidden bg-zone-header p-9 lg:flex">
         <FlowLines />
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-[52%] animate-glow-pulse rounded-full bg-[radial-gradient(circle,rgba(124,58,237,.25),transparent_65%)]" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%]">
-          <NeuralMind size={400} />
-        </div>
+        <div className="pointer-events-none absolute left-1/2 top-[42%] h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 animate-glow-pulse rounded-full bg-[radial-gradient(circle,rgba(124,58,237,.22),transparent_65%)]" />
+        <NeuralMind className="absolute inset-0 h-full w-full" />
 
         <Link href="/" className="relative z-10 flex items-center gap-3">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35)]">
