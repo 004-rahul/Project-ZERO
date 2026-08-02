@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { Magnetic } from "./magnetic";
 
 /**
- * Landing chrome (Design Bible §19.4 v3.3): a floating glass bar (12px radius)
- * that hides on scroll-down and returns on scroll-up, plus a top scroll-
- * progress line. Anonymous by rule — no personalized content pre-auth (§19.1).
+ * Landing chrome (Design Bible §19.4 v3.5 — light): a floating white glass
+ * bar that hides on scroll-down and returns on scroll-up, plus a violet
+ * scroll-progress line. Anonymous by rule (§19.1).
  */
 export function LandingNav() {
   const [hidden, setHidden] = useState(false);
@@ -30,31 +30,31 @@ export function LandingNav() {
     <>
       <div
         aria-hidden
-        className="fixed left-0 top-0 z-[60] h-0.5 bg-aurora-strong"
+        className="fixed left-0 top-0 z-[60] h-0.5 bg-accent"
         style={{ width: `${progress}%` }}
       />
       <header
-        className={`fixed inset-x-4 top-4 z-50 flex items-center gap-8 rounded-lg border border-white/[.12] bg-void/70 px-5 py-3 shadow-lift backdrop-blur-xl transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] sm:inset-x-6 lg:inset-x-[4vw] lg:px-8 ${
+        className={`fixed inset-x-4 top-4 z-50 flex items-center gap-8 rounded-lg border border-line bg-white/85 px-5 py-3 shadow-card backdrop-blur-xl transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] sm:inset-x-6 lg:inset-x-[4vw] lg:px-8 ${
           hidden ? "-translate-y-24" : "translate-y-0"
         }`}
       >
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-aurora-strong text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,.3)]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white">
             Z
           </span>
-          <span className="text-md font-bold text-on-dark">Project Zero</span>
+          <span className="text-md font-bold text-ink">Project Zero</span>
         </Link>
-        <nav className="ml-auto hidden items-center gap-7 text-sm font-medium text-on-dark-muted lg:flex">
-          <a href="#features" className="transition-colors hover:text-on-dark">
+        <nav className="ml-auto hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
+          <a href="#features" className="transition-colors hover:text-ink">
             Features
           </a>
-          <a href="#how" className="transition-colors hover:text-on-dark">
+          <a href="#how" className="transition-colors hover:text-ink">
             How it works
           </a>
-          <a href="#pricing" className="transition-colors hover:text-on-dark">
+          <a href="#pricing" className="transition-colors hover:text-ink">
             Pricing
           </a>
-          <a href="#faq" className="transition-colors hover:text-on-dark">
+          <a href="#faq" className="transition-colors hover:text-ink">
             FAQ
           </a>
         </nav>
@@ -62,7 +62,7 @@ export function LandingNav() {
           <Magnetic className="hidden sm:block">
             <Link
               href="/login"
-              className="block rounded-lg border border-white/[.16] px-4 py-2 text-sm font-semibold text-on-dark transition-colors hover:bg-white/10"
+              className="block rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent"
             >
               Log in
             </Link>
@@ -70,7 +70,7 @@ export function LandingNav() {
           <Magnetic>
             <Link
               href="/register"
-              className="block rounded-lg bg-aurora-strong px-4 py-2 text-sm font-semibold text-white shadow-[0_4px_18px_rgba(197,95,214,.35),inset_0_1px_0_rgba(255,255,255,.3)] transition-colors hover:bg-aurora-pink"
+              className="block rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white shadow-accent-glow transition-colors hover:bg-accent-strong"
             >
               Start free
             </Link>

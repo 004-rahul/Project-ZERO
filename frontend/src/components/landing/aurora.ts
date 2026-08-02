@@ -1,14 +1,13 @@
 import type { AiState } from "@/components/particle-face";
 
 /**
- * Aurora face-state colors — landing scope only (Design Bible §19.4 v3.2).
- * The product interior keeps the violet identity; the public landing runs the
- * iridescent Aurora ramp (violet → magenta → amber).
+ * Face-state colors for the light landing (Design Bible §19.4 v3.5).
+ * Deep violets read cleanly on white; success keeps the product green.
  */
-export const AURORA_FACE: Partial<Record<AiState, string>> = {
-  idle: "#C084FC",
-  listening: "#D8B4FE",
-  thinking: "#E45FBC",
-  speaking: "#F2A65A",
-  success: "#3DBF71",
+export const LANDING_FACE: Partial<Record<AiState, string>> = {
+  idle: "#7C3AED",
+  listening: "#8B5CF6",
+  thinking: "#6D28D9",
+  speaking: "#7C3AED",
+  success: "#16A34A",
 };

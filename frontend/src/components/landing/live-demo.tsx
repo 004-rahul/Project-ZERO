@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ParticleFace, type AiState } from "@/components/particle-face";
-import { AURORA_FACE } from "./aurora";
+import { LANDING_FACE } from "./aurora";
 
 /**
  * In-page live demo (Design Bible §19.4): visitors try the product before
@@ -119,14 +119,14 @@ export function LiveDemo() {
   };
 
   return (
-    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg border border-white/10 bg-white/[.03] shadow-[0_40px_110px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.14)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,.06),transparent_60%)] md:grid-cols-[240px_1fr]">
-      <div className="relative grid place-items-center border-b border-white/[.07] bg-[radial-gradient(circle_at_50%_45%,rgba(197,95,214,.22),rgba(228,95,188,.08)_60%,transparent_78%)] p-4 md:border-b-0 md:border-r">
-        <ParticleFace state={face} size={210} lines={false} palette={AURORA_FACE} />
+    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg border border-line bg-card shadow-lift md:grid-cols-[240px_1fr]">
+      <div className="relative grid place-items-center border-b border-line bg-accent/[.05] p-4 md:border-b-0 md:border-r">
+        <ParticleFace state={face} size={210} lines={false} palette={LANDING_FACE} />
       </div>
 
       <div className="relative p-7">
-        <p className="mb-4 text-xs text-on-dark-muted">
-          <span className="mr-1.5 text-aurora-amber">●</span>
+        <p className="mb-4 text-xs text-muted">
+          <span className="mr-1.5 text-accent">●</span>
           {status}
         </p>
 
@@ -136,7 +136,7 @@ export function LiveDemo() {
               key={qa.q}
               type="button"
               onClick={() => run(qa)}
-              className="rounded-lg border border-white/[.13] bg-white/5 px-3.5 py-2 text-sm text-on-dark-muted shadow-[inset_0_1px_0_rgba(255,255,255,.08)] transition-all duration-200 hover:border-aurora-bright hover:text-on-dark hover:shadow-[0_4px_18px_rgba(197,95,214,.35)]"
+              className="rounded-lg border border-line bg-zone-canvas px-3.5 py-2 text-sm text-muted transition-all duration-200 hover:border-accent hover:text-ink hover:shadow-card"
             >
               {qa.q}
             </button>
@@ -149,9 +149,9 @@ export function LiveDemo() {
             readOnly
             placeholder="Ask about your organization…"
             aria-label="Demo question"
-            className="min-w-0 flex-1 rounded-lg border border-white/[.13] bg-black/30 px-5 py-3 text-base text-on-dark shadow-[inset_0_2px_6px_rgba(0,0,0,.4)] outline-none transition-colors placeholder:text-on-dark-muted/60 focus:border-aurora-bright"
+            className="min-w-0 flex-1 rounded-lg border border-line bg-zone-canvas px-5 py-3 text-base text-ink outline-none transition-colors placeholder:text-faint focus:border-accent"
           />
-          <span className="rounded-lg bg-aurora-strong px-5 py-3 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.3)]">
+          <span className="rounded-lg bg-accent px-5 py-3 text-sm font-bold text-white shadow-accent-glow">
             Ask
           </span>
         </div>
@@ -161,9 +161,9 @@ export function LiveDemo() {
             {evidence.map(([src, title]) => (
               <div
                 key={title}
-                className="animate-fade-up rounded-lg border border-white/10 bg-white/5 p-3 text-xs text-on-dark-muted"
+                className="animate-fade-up rounded-lg border border-line bg-zone-canvas p-3 text-xs text-muted"
               >
-                <span className="mb-1 block text-2xs font-extrabold uppercase tracking-[.14em] text-aurora-bright">
+                <span className="mb-1 block text-2xs font-extrabold uppercase tracking-[.14em] text-accent-strong">
                   {src}
                 </span>
                 {title}
@@ -172,17 +172,17 @@ export function LiveDemo() {
           </div>
         )}
 
-        {answer && <p className="mt-4 text-md leading-relaxed text-on-dark">{answer}</p>}
+        {answer && <p className="mt-4 text-md leading-relaxed text-ink">{answer}</p>}
 
         {conf !== null && (
           <div className="mt-4">
-            <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+            <div className="h-1.5 overflow-hidden rounded-full bg-line">
               <div
-                className="h-full rounded-full bg-aurora-strong transition-[width] duration-1000 [transition-timing-function:cubic-bezier(.2,.7,.2,1)]"
+                className="h-full rounded-full bg-accent transition-[width] duration-1000 [transition-timing-function:cubic-bezier(.2,.7,.2,1)]"
                 style={{ width: `${conf}%` }}
               />
             </div>
-            <p className="mt-2 text-xs text-on-dark-muted">
+            <p className="mt-2 text-xs text-muted">
               {conf}% · {conf >= 85 ? "High" : "Medium"} confidence — sources cited above
             </p>
           </div>
