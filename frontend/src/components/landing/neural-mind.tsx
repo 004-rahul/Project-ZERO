@@ -3,16 +3,51 @@
 import { useEffect, useRef } from "react";
 
 /**
- * NeuralMind — the auth-screen AI visual (Design Bible §19.1): a two-lobe
- * neural network rotating slowly in 3D. Signal pulses travel along synapses,
- * flare the neuron they arrive at, then jump to a connected edge — the
- * network visibly "thinks". Dark-panel tuned; static under reduced-motion.
+ * NeuralMind — the auth-screen AI visual (Design Bible §19.1): a recognizable
+ * side-profile BRAIN. Neurons are sampled inside a drawn brain silhouette
+ * (frontal lobe, occipital curve, cerebellum), connected by synapses, with
+ * signal pulses traveling edge to edge and flaring each neuron they reach.
+ * Faint cortex folds and a glowing outline keep the shape unmistakable; the
+ * whole brain breathes and sways gently instead of rotating (which would
+ * destroy the silhouette). Static under prefers-reduced-motion.
  */
 
-interface Node3 {
-  x: number;
-  y: number;
-  z: number;
+/** Brain silhouette + cortex folds in a 100×80 design space (facing left). */
+function brainPath(s: number, ox: number, oy: number): Path2D {
+  const p = new Path2D();
+  const M = (x: number, y: number) => p.moveTo(ox + x * s, oy + y * s);
+  const C = (a: number, b: number, c: number, d: number, e: number, f: number) =>
+    p.bezierCurveTo(ox + a * s, oy + b * s, ox + c * s, oy + d * s, ox + e * s, oy + f * s);
+  M(20, 58);
+  C(10, 56, 6, 46, 11, 38);
+  C(6, 30, 12, 18, 24, 14);
+  C(32, 8, 48, 6, 58, 10);
+  C(72, 6, 86, 14, 88, 28);
+  C(94, 36, 92, 48, 84, 54);
+  C(88, 60, 84, 68, 74, 69);
+  C(66, 72, 58, 70, 56, 64);
+  C(50, 66, 42, 66, 36, 63);
+  C(30, 66, 24, 62, 20, 58);
+  p.closePath();
+  return p;
+}
+
+function foldPaths(s: number, ox: number, oy: number): Path2D {
+  const p = new Path2D();
+  const M = (x: number, y: number) => p.moveTo(ox + x * s, oy + y * s);
+  const C = (a: number, b: number, c: number, d: number, e: number, f: number) =>
+    p.bezierCurveTo(ox + a * s, oy + b * s, ox + c * s, oy + d * s, ox + e * s, oy + f * s);
+  M(28, 32);
+  C(36, 24, 46, 26, 52, 34);
+  M(40, 46);
+  C(50, 38, 60, 40, 66, 48);
+  M(22, 44);
+  C(28, 38, 34, 42, 38, 50);
+  M(56, 20);
+  C(64, 16, 72, 20, 76, 28);
+  M(60, 66);
+  C(64, 62, 70, 62, 74, 65);
+  return p;
 }
 
 export function NeuralMind({ size = 340, className }: { size?: number; className?: string }) {
@@ -30,79 +65,84 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
     canvas.width = w;
     canvas.height = h;
 
-    /* ---- build the brain: two lobes + bridge neurons ---- */
-    const nodes: Node3[] = [];
-    const lobe = (cx: number, n: number) => {
-      for (let i = 0; i < n; i++) {
-        const u = Math.random() * Math.PI * 2;
-        const v = Math.acos(2 * Math.random() - 1);
-        const rr = Math.cbrt(Math.random());
-        nodes.push({
-          x: cx + Math.sin(v) * Math.cos(u) * 0.5 * rr,
-          y: Math.sin(v) * Math.sin(u) * 0.72 * rr,
-          z: Math.cos(v) * 0.55 * rr,
-        });
-      }
-    };
-    lobe(-0.38, 21);
-    lobe(0.38, 21);
-    for (let i = 0; i < 5; i++) {
-      nodes.push({ x: (Math.random() - 0.5) * 0.3, y: (Math.random() - 0.5) * 0.7, z: (Math.random() - 0.5) * 0.4 });
+    /* silhouette scaled into the canvas */
+    const s = (w * 0.9) / 100;
+    const ox = w * 0.05;
+    const oy = h * 0.5 - 40 * s;
+    const outline = brainPath(s, ox, oy);
+    const folds = foldPaths(s, ox, oy);
+
+    /* neurons: rejection-sample inside the silhouette */
+    const nodes: { x: number; y: number; z: number }[] = [];
+    let guard = 0;
+    while (nodes.length < 88 && guard++ < 6000) {
+      const x = ox + Math.random() * 100 * s;
+      const y = oy + Math.random() * 80 * s;
+      if (ctx.isPointInPath(outline, x, y)) nodes.push({ x, y, z: Math.random() });
     }
 
     const edges: [number, number][] = [];
+    const thr = w * 0.13;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
-        const a = nodes[i];
-        const b = nodes[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
-        if (d < 0.5) edges.push([i, j]);
+        if (Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y) < thr) edges.push([i, j]);
       }
     }
     const edgesAt = (n: number) => edges.filter((e) => e[0] === n || e[1] === n);
 
-    /* traveling synapse pulses */
-    const pulses = Array.from({ length: 7 }, () => ({
+    const pulses = Array.from({ length: 8 }, () => ({
       edge: Math.floor(Math.random() * edges.length),
       t: Math.random(),
-      speed: 0.5 + Math.random() * 0.7,
+      speed: 0.55 + Math.random() * 0.75,
       from: 0,
     }));
     const flash = new Float32Array(nodes.length);
 
-    const proj = new Array<{ x: number; y: number; d: number }>(nodes.length);
-    let ang = Math.random() * Math.PI * 2;
+    let t = Math.random() * 100;
     let raf = 0;
+    const cx = w / 2;
+    const cy = h / 2;
 
     const frame = () => {
-      ang += 0.0038;
-      const sa = Math.sin(ang);
-      const ca = Math.cos(ang);
-      const scale = Math.min(w, h) * 0.42;
-      const cx = w / 2;
-      const cy = h / 2;
-
+      t += 0.016;
       ctx.clearRect(0, 0, w, h);
 
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        const rx = n.x * ca + n.z * sa;
-        const rz = n.z * ca - n.x * sa;
-        const depth = 1 / (1 + rz * 0.45);
-        proj[i] = { x: cx + rx * scale * depth, y: cy + n.y * scale * depth, d: depth };
-        flash[i] = Math.max(0, flash[i] - 0.025);
-      }
+      /* breathing + gentle sway — silhouette always stays readable */
+      const k = 1 + 0.014 * Math.sin(t * 1.1);
+      const sway = 0.035 * Math.sin(t * 0.5);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(sway);
+      ctx.scale(k, k);
+      ctx.translate(-cx, -cy);
+
+      /* glowing silhouette */
+      ctx.strokeStyle = "rgba(167,139,250,.55)";
+      ctx.lineWidth = 2 * dpr;
+      ctx.shadowColor = "rgba(124,58,237,.8)";
+      ctx.shadowBlur = 16 * dpr;
+      ctx.stroke(outline);
+      ctx.shadowBlur = 0;
+      const fill = ctx.createRadialGradient(cx, cy, 0, cx, cy, w * 0.48);
+      fill.addColorStop(0, "rgba(124,58,237,.16)");
+      fill.addColorStop(1, "rgba(124,58,237,.05)");
+      ctx.fillStyle = fill;
+      ctx.fill(outline);
+
+      /* cortex folds */
+      ctx.strokeStyle = "rgba(167,139,250,.28)";
+      ctx.lineWidth = 1.4 * dpr;
+      ctx.stroke(folds);
 
       /* synapses */
       for (const [a, b] of edges) {
-        const pa = proj[a];
-        const pb = proj[b];
-        const alpha = 0.05 + 0.1 * Math.min(pa.d, pb.d);
-        ctx.strokeStyle = `rgba(167,139,250,${alpha})`;
+        const na = nodes[a];
+        const nb = nodes[b];
+        ctx.strokeStyle = `rgba(167,139,250,${0.07 + 0.08 * ((na.z + nb.z) / 2)})`;
         ctx.lineWidth = 1 * dpr;
         ctx.beginPath();
-        ctx.moveTo(pa.x, pa.y);
-        ctx.lineTo(pb.x, pb.y);
+        ctx.moveTo(na.x, na.y);
+        ctx.lineTo(nb.x, nb.y);
         ctx.stroke();
       }
 
@@ -117,15 +157,15 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
           p.edge = edges.indexOf(pick);
           p.from = pick[0] === arrived ? 0 : 1;
           p.t = 0;
-          p.speed = 0.5 + Math.random() * 0.7;
+          p.speed = 0.55 + Math.random() * 0.75;
         }
         const [a, b] = edges[p.edge];
-        const start = p.from === 0 ? proj[a] : proj[b];
-        const end = p.from === 0 ? proj[b] : proj[a];
+        const start = p.from === 0 ? nodes[a] : nodes[b];
+        const end = p.from === 0 ? nodes[b] : nodes[a];
         const x = start.x + (end.x - start.x) * p.t;
         const y = start.y + (end.y - start.y) * p.t;
         const g = ctx.createRadialGradient(x, y, 0, x, y, 7 * dpr);
-        g.addColorStop(0, "rgba(216,180,254,.95)");
+        g.addColorStop(0, "rgba(233,213,255,.95)");
         g.addColorStop(1, "rgba(124,58,237,0)");
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -135,25 +175,27 @@ export function NeuralMind({ size = 340, className }: { size?: number; className
 
       /* neurons */
       for (let i = 0; i < nodes.length; i++) {
-        const p = proj[i];
+        const n = nodes[i];
         const f = flash[i];
-        const r = (1.6 + 1.2 * p.d + f * 2.4) * dpr;
+        flash[i] = Math.max(0, f - 0.02);
+        const r = (1.3 + 1.1 * n.z + f * 2.6) * dpr;
         if (f > 0.01) {
-          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 4);
-          g.addColorStop(0, `rgba(216,180,254,${0.5 * f})`);
+          const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
+          g.addColorStop(0, `rgba(233,213,255,${0.55 * f})`);
           g.addColorStop(1, "rgba(124,58,237,0)");
           ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, r * 4, 0, Math.PI * 2);
+          ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
           ctx.fill();
         }
-        ctx.globalAlpha = 0.45 + 0.5 * Math.min(1, p.d - 0.3) + 0.3 * f;
+        ctx.globalAlpha = 0.4 + 0.45 * n.z + 0.3 * f;
         ctx.fillStyle = f > 0.3 ? "#E9D5FF" : "#A78BFA";
         ctx.beginPath();
-        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.globalAlpha = 1;
+      ctx.restore();
     };
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
