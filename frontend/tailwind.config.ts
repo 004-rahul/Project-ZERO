@@ -71,7 +71,7 @@ const config: Config = {
         "2xl": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em" }],
         "3xl": ["36px", { lineHeight: "42px", letterSpacing: "-0.025em" }],
         "4xl": ["52px", { lineHeight: "56px", letterSpacing: "-0.03em" }],
-        hero: ["clamp(44px,6.2vw,88px)", { lineHeight: "1.03", letterSpacing: "-0.04em" }],
+        hero: ["clamp(36px,6.2vw,88px)", { lineHeight: "1.05", letterSpacing: "-0.04em" }],
       },
       spacing: {
         // 4px base grid (Design Bible §13)

@@ -54,7 +54,7 @@ const FEATURES = [
   {
     icon: IconLink,
     title: "5-minute connectors",
-    body: "OAuth in, read-only, revocable. GitHub, Slack, Drive and Notion today.",
+    body: "OAuth in, read-only, revocable — across your code, chat, docs and knowledge tools.",
   },
   {
     icon: IconKey,
@@ -74,7 +74,7 @@ const STEPS = [
     n: "01",
     icon: IconLink,
     title: "Connect",
-    body: "Link the tools you already use. OAuth, read-only, revocable any second.",
+    body: "Link the work apps your team already uses. OAuth, read-only, revocable any second.",
   },
   {
     n: "02",
@@ -157,7 +157,7 @@ const FAQS = [
   },
   {
     q: "How long does setup actually take?",
-    a: "About five minutes. You authorize a read-only OAuth connection to GitHub, Slack, Drive or Notion, and ask your first question while the initial sync runs.",
+    a: "About five minutes. You authorize a read-only OAuth connection to your work apps — code, chat, docs, knowledge — and ask your first question while the initial sync runs.",
   },
   {
     q: "Which AI providers are supported?",
@@ -188,27 +188,7 @@ function SectionHead({ kicker, title, sub }: { kicker: string; title: string; su
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="w-full px-6 lg:px-10">{children}</div>;
-}
-
-/** "+" markers where a section border crosses the canvas frame (§19.4 v3.4). */
-function EdgeMarks() {
-  return (
-    <>
-      <span
-        aria-hidden
-        className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 bg-void px-1 text-md font-light leading-none text-white/30"
-      >
-        +
-      </span>
-      <span
-        aria-hidden
-        className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 bg-void px-1 text-md font-light leading-none text-white/30"
-      >
-        +
-      </span>
-    </>
-  );
+  return <div className="mx-auto w-full max-w-[1920px] px-5 sm:px-8 lg:px-[5vw]">{children}</div>;
 }
 
 export default function LandingPage() {
@@ -226,19 +206,19 @@ export default function LandingPage() {
         <CustomCursor />
         <LandingNav />
 
-        {/* everything lives inside a bordered canvas column — the side space
-            is a designed frame, never dead black */}
-        <div className="mx-auto w-full max-w-[1360px] border-x border-white/[.07]">
         {/* 1 · HERO */}
         <Hero />
 
         {/* 2 · SOCIAL PROOF */}
-        <section aria-label="Social proof" className="relative border-t border-white/[.07] py-16">
-          <EdgeMarks />
+        <section
+          id="integrations"
+          aria-label="Social proof"
+          className="relative border-t border-white/[.07] py-16"
+        >
           <Shell>
             <FadeIn>
               <p className="text-center text-sm font-medium text-on-dark-muted">
-                Trusted in pilots by teams that run on GitHub, Slack, Drive and Notion
+                Trusted in pilots by operations-heavy teams — connected to the tools they already use
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
                 {WORDMARKS.map((brand) => (
@@ -249,6 +229,19 @@ export default function LandingPage() {
                     {brand}
                   </span>
                 ))}
+              </div>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+                {["Code", "Chat", "Docs", "Knowledge", "Tickets", "Cloud drives"].map((cat) => (
+                  <span
+                    key={cat}
+                    className="rounded-lg border border-white/[.12] bg-white/[.05] px-3.5 py-1.5 text-xs font-semibold text-on-dark-muted"
+                  >
+                    {cat}
+                  </span>
+                ))}
+                <span className="px-2 text-xs font-semibold text-aurora-bright">
+                  40+ integrations — full list at launch
+                </span>
               </div>
             </FadeIn>
             <div className="mt-14 grid grid-cols-12 gap-6">
@@ -267,8 +260,7 @@ export default function LandingPage() {
         </section>
 
         {/* 3 · FEATURES */}
-        <section id="features" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
+        <section id="features" className="relative border-t border-white/[.07] py-16 md:py-24">
           <Shell>
             <SectionHead
               kicker="Features"
@@ -298,8 +290,7 @@ export default function LandingPage() {
         </section>
 
         {/* 4 · HOW IT WORKS (live demo embedded) */}
-        <section id="how" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
+        <section id="how" className="relative border-t border-white/[.07] py-16 md:py-24">
           <Shell>
             <SectionHead
               kicker="How it works"
@@ -332,8 +323,7 @@ export default function LandingPage() {
         </section>
 
         {/* 5 · PRICING */}
-        <section id="pricing" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
+        <section id="pricing" className="relative border-t border-white/[.07] py-16 md:py-24">
           <Shell>
             <SectionHead
               kicker="Pricing"
@@ -387,8 +377,7 @@ export default function LandingPage() {
         </section>
 
         {/* 6 · TESTIMONIALS */}
-        <section aria-label="Testimonials" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
+        <section aria-label="Testimonials" className="relative border-t border-white/[.07] py-16 md:py-24">
           <Shell>
             <SectionHead kicker="Testimonials" title="Teams stopped losing what they know." />
             <div className="mt-14 grid grid-cols-12 gap-6">
@@ -411,8 +400,7 @@ export default function LandingPage() {
         </section>
 
         {/* 7 · FAQ */}
-        <section id="faq" className="relative border-t border-white/[.07] py-24">
-          <EdgeMarks />
+        <section id="faq" className="relative border-t border-white/[.07] py-16 md:py-24">
           <Shell>
             <SectionHead kicker="FAQ" title="Questions security teams ask first." />
             <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-3">
@@ -432,8 +420,7 @@ export default function LandingPage() {
         </section>
 
         {/* 8 · CTA */}
-        <section className="relative overflow-hidden border-t border-white/[.07] py-24 text-center">
-          <EdgeMarks />
+        <section className="relative overflow-hidden border-t border-white/[.07] py-16 md:py-24 text-center">
           <div
             aria-hidden
             className="pointer-events-none absolute bottom-[-300px] left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(197,95,214,.2),transparent_65%)]"
@@ -459,7 +446,6 @@ export default function LandingPage() {
 
         {/* 9 · FOOTER */}
         <footer className="relative border-t border-white/[.08] pb-10 pt-16">
-          <EdgeMarks />
           <Shell>
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-12 md:col-span-5">
@@ -474,7 +460,7 @@ export default function LandingPage() {
                 </p>
               </div>
               {[
-                { head: "Product", links: ["Features", "How it works", "Pricing", "FAQ"] },
+                { head: "Product", links: ["Features", "Integrations", "Pricing", "FAQ"] },
                 { head: "Security", links: ["Trust Center", "Tenant isolation", "Audit trail", "DPA"] },
                 { head: "Company", links: ["About", "Contact", "Privacy", "Terms"] },
               ].map((col) => (
@@ -500,7 +486,6 @@ export default function LandingPage() {
             </div>
           </Shell>
         </footer>
-        </div>
       </div>
     </main>
   );

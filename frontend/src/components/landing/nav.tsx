@@ -34,7 +34,7 @@ export function LandingNav() {
         style={{ width: `${progress}%` }}
       />
       <header
-        className={`fixed left-1/2 top-4 z-50 flex w-[min(1360px,95vw)] -translate-x-1/2 items-center gap-8 rounded-lg border border-white/[.12] bg-void/70 px-6 py-3 shadow-lift backdrop-blur-xl transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] ${
+        className={`fixed inset-x-4 top-4 z-50 flex items-center gap-8 rounded-lg border border-white/[.12] bg-void/70 px-5 py-3 shadow-lift backdrop-blur-xl transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] sm:inset-x-6 lg:inset-x-[4vw] lg:px-8 ${
           hidden ? "-translate-y-24" : "translate-y-0"
         }`}
       >
@@ -58,8 +58,8 @@ export function LandingNav() {
             FAQ
           </a>
         </nav>
-        <div className="flex items-center gap-3">
-          <Magnetic>
+        <div className="ml-auto flex items-center gap-3 lg:ml-0">
+          <Magnetic className="hidden sm:block">
             <Link
               href="/login"
               className="block rounded-lg border border-white/[.16] px-4 py-2 text-sm font-semibold text-on-dark transition-colors hover:bg-white/10"
