@@ -49,6 +49,11 @@ export function Hero() {
   let delay = 0.1;
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pb-16 pt-28">
+      {/* stage glow behind the organism — the right side is never raw black */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-[2%] top-1/2 h-[76vmin] w-[76vmin] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(197,95,214,.15),rgba(228,95,188,.06)_55%,transparent_70%)]"
+      />
       <Organism className="absolute inset-0 h-full w-full" centerX={centerX} onPhase={setPhase} />
       {/* readability shade over the organism — void-toned, left and bottom */}
       <div
@@ -58,7 +63,7 @@ export function Hero() {
 
       <div
         ref={copyRef}
-        className="relative z-10 mx-auto w-full max-w-6xl px-7 transition-transform duration-300 ease-out md:px-14"
+        className="relative z-10 mx-auto w-full max-w-7xl px-7 transition-transform duration-300 ease-out md:px-14"
       >
         <p className="animate-word-in text-xs font-extrabold uppercase tracking-[.3em] text-aurora-bright">
           Enterprise Intelligence Platform

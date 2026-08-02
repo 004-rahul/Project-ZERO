@@ -122,6 +122,18 @@ const config: Config = {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "drift-1": {
+          "0%, 100%": { transform: "translate(0,0) scale(1)" },
+          "50%": { transform: "translate(70px,50px) scale(1.08)" },
+        },
+        "drift-2": {
+          "0%, 100%": { transform: "translate(0,0) scale(1)" },
+          "50%": { transform: "translate(-60px,-40px) scale(.94)" },
+        },
+        "drift-3": {
+          "0%, 100%": { transform: "translate(0,0) scale(1)" },
+          "50%": { transform: "translate(-50px,-60px) scale(1.05)" },
+        },
       },
       animation: {
         "fade-up": "fade-up .8s ease both",
@@ -132,6 +144,9 @@ const config: Config = {
         drip: "drip 1.9s ease-in-out infinite",
         sheen: "sheen .9s ease",
         "gradient-x": "gradient-x 7s ease-in-out infinite",
+        "drift-1": "drift-1 26s ease-in-out infinite",
+        "drift-2": "drift-2 32s ease-in-out infinite",
+        "drift-3": "drift-3 38s ease-in-out infinite",
       },
     },
   },

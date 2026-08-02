@@ -50,7 +50,7 @@ export function ScrollStory() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const wide = window.innerWidth > 860;
-    setFaceSize(Math.min(360, window.innerWidth * 0.7));
+    setFaceSize(Math.min(480, window.innerWidth * 0.7));
     if (reduced || !wide) return;
     setPinned(true);
 
@@ -72,19 +72,27 @@ export function ScrollStory() {
       <div
         className={
           pinned
-            ? "sticky top-0 mx-auto grid h-screen max-w-5xl grid-cols-2 items-center gap-8 overflow-hidden px-8"
-            : "mx-auto grid max-w-5xl grid-cols-1 items-center gap-8 px-8 py-16 md:grid-cols-2"
+            ? "sticky top-0 mx-auto grid h-screen max-w-6xl grid-cols-2 items-center gap-10 overflow-hidden px-8"
+            : "mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-8 py-16 md:grid-cols-2"
         }
       >
         <div className="relative grid place-items-center">
           <div
             aria-hidden
-            className="absolute h-[120%] w-[120%] rounded-full bg-[radial-gradient(circle,rgba(197,95,214,.14),transparent_65%)]"
+            className="absolute h-[130%] w-[130%] rounded-full bg-[radial-gradient(circle,rgba(197,95,214,.2),rgba(228,95,188,.07)_55%,transparent_70%)]"
           />
           <ParticleFace state={pinned ? CHAPTERS[idx].state : "idle"} size={faceSize} palette={AURORA_FACE} />
         </div>
 
         <div className={pinned ? "relative h-[340px]" : "space-y-14"}>
+          {pinned && (
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-4 -top-28 select-none text-[230px] font-black leading-none text-transparent [-webkit-text-stroke:1.5px_rgba(255,255,255,.07)]"
+            >
+              0{idx + 1}
+            </span>
+          )}
           {CHAPTERS.map((ch, i) => (
             <div
               key={ch.stage}

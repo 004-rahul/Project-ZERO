@@ -119,9 +119,9 @@ export function LiveDemo() {
   };
 
   return (
-    <div className="relative mx-auto mt-12 grid max-w-3xl grid-cols-1 overflow-hidden rounded-xl border border-white/10 bg-white/[.03] shadow-[0_40px_110px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.14)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,.06),transparent_60%)] md:grid-cols-[200px_1fr]">
-      <div className="relative grid place-items-center border-b border-white/[.07] bg-[radial-gradient(circle_at_50%_45%,rgba(197,95,214,.13),transparent_70%)] p-4 md:border-b-0 md:border-r">
-        <ParticleFace state={face} size={170} lines={false} palette={AURORA_FACE} />
+    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-xl border border-white/10 bg-white/[.03] shadow-[0_40px_110px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.14)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,.06),transparent_60%)] md:grid-cols-[240px_1fr]">
+      <div className="relative grid place-items-center border-b border-white/[.07] bg-[radial-gradient(circle_at_50%_45%,rgba(197,95,214,.22),rgba(228,95,188,.08)_60%,transparent_78%)] p-4 md:border-b-0 md:border-r">
+        <ParticleFace state={face} size={210} lines={false} palette={AURORA_FACE} />
       </div>
 
       <div className="relative p-7">

@@ -228,7 +228,8 @@ export function ParticleFace({
           y: py,
           part: src.part,
           a: 0.25 + 0.6 * Math.min(1, Math.max(0, (c.z + 1) / 2)),
-          s: 1.9 * depth * (w / 640),
+          // floor keeps dots visible on small canvases (demo/story sizes)
+          s: Math.max(1.15, 1.9 * depth * (w / 640)),
         };
 
         if (isFace && src.part === "eye") {

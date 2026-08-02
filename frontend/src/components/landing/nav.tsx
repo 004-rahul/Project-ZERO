@@ -34,7 +34,7 @@ export function LandingNav() {
         style={{ width: `${progress}%` }}
       />
       <header
-        className={`fixed left-1/2 top-3.5 z-50 flex w-[min(960px,94vw)] -translate-x-1/2 items-center gap-6 rounded-full border border-white/[.13] bg-white/5 px-5 py-2.5 shadow-lift backdrop-blur-xl transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] ${
+        className={`fixed left-1/2 top-3.5 z-50 flex w-[min(1100px,94vw)] -translate-x-1/2 items-center gap-6 rounded-full border border-white/[.13] bg-white/5 px-5 py-2.5 shadow-lift backdrop-blur-xl transition-transform duration-500 [transition-timing-function:cubic-bezier(.2,.7,.2,1)] ${
           hidden ? "-translate-y-[84px]" : "translate-y-0"
         }`}
       >

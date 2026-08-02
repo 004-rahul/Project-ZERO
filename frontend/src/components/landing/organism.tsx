@@ -70,7 +70,7 @@ export function Organism({ className, centerX = 0.5, onPhase }: OrganismProps) {
     };
     size();
 
-    const N = window.innerWidth < 760 ? 700 : 1400;
+    const N = window.innerWidth < 760 ? 700 : window.innerWidth > 1600 ? 2000 : 1500;
     const shuffle = <T,>(a: T[]): T[] => {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -252,13 +252,11 @@ export function Organism({ className, centerX = 0.5, onPhase }: OrganismProps) {
     const onResize = () => size();
     window.addEventListener("resize", onResize);
 
-    let rot = 0;
     let t = 0;
     let raf = 0;
 
     const frame = (now: number) => {
       t += 0.016;
-      rot += 0.0018;
 
       if (!reduced) {
         const elapsed = now - phaseStart;
@@ -289,7 +287,8 @@ export function Organism({ className, centerX = 0.5, onPhase }: OrganismProps) {
       const scale = Math.min(W, H) * 0.36;
       const cx = W * centerRef.current;
       const cy = H / 2;
-      const ang = faceW > 0.5 ? 0.3 * Math.sin(t * 0.35) : rot;
+      // oscillate — never spin flat shapes edge-on to the camera
+      const ang = faceW > 0.5 ? 0.3 * Math.sin(t * 0.35) : 0.35 * Math.sin(t * 0.22);
       const sa = Math.sin(ang);
       const ca = Math.cos(ang);
       const [r1, g1, b1] = mixHex(PHASE_COLORS[sceneA], PHASE_COLORS[sceneB], m);
@@ -381,7 +380,7 @@ export function Organism({ className, centerX = 0.5, onPhase }: OrganismProps) {
       for (let i = 0; i < N; i++) {
         const pr = proj[i];
         const base = P[i];
-        const r = base.sz * (W / 1400) * 2.1;
+        const r = base.sz * (W / 1400) * 2.4;
         let al = 0.32 + 0.55 * Math.min(1, Math.max(0, (base.z + 1) / 2));
         if (pr.role === 1) al = 0.95;
         else if (pr.role === 2) al = 0.5;
