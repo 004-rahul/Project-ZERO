@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { GlossyButton } from "./glossy-button";
 import { HeroShowcase } from "./hero-showcase";
 import { IconCheck } from "./icons";
 
 /**
- * Landing hero (Design Bible §19.4 v3.4): 12-column grid — copy in the left
- * seven columns, the self-running product showcase in the right five. Solid
- * Aurora accents, no gradients. The copy block counter-parallaxes the cursor.
+ * Landing hero (Design Bible §19.4 v3.5 — light): centered headline over a
+ * large self-running product window — the screenshot-led hero pattern.
+ * Soft violet and amber washes keep the white canvas from feeling flat.
  */
 
 const HEADLINE: { word: string; accent?: boolean; br?: boolean }[] = [
@@ -23,48 +22,31 @@ const HEADLINE: { word: string; accent?: boolean; br?: boolean }[] = [
 const PROOF_POINTS = ["Free plan — no credit card", "5-minute setup", "Your keys, your models"];
 
 export function Hero() {
-  const copyRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const onMove = (e: MouseEvent) => {
-      const el = copyRef.current;
-      if (!el) return;
-      const dx = e.clientX / window.innerWidth - 0.5;
-      const dy = e.clientY / window.innerHeight - 0.5;
-      el.style.transform = `translate(${dx * -8}px, ${dy * -6}px)`;
-    };
-    if (fine && !reduced) window.addEventListener("mousemove", onMove);
-    return () => {
-      if (fine && !reduced) window.removeEventListener("mousemove", onMove);
-    };
-  }, []);
-
   let delay = 0.05;
   return (
     <section className="relative overflow-hidden pb-20 pt-36">
-      {/* soft aurora light beams — solid colors, heavy blur */}
+      {/* soft pastel washes */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-44 right-[6%] h-[460px] w-[820px] rotate-[18deg] animate-drift-2 rounded-full bg-aurora-strong/10 blur-[110px] motion-reduce:animate-none"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[-10%] top-1/3 h-[380px] w-[700px] -rotate-[14deg] animate-drift-3 rounded-full bg-aurora-magenta/[.07] blur-[110px] motion-reduce:animate-none"
+        className="pointer-events-none absolute right-[-10%] top-64 h-[380px] w-[620px] rounded-full bg-warning/[.07] blur-[110px]"
       />
-      <div className="mx-auto grid w-full max-w-[1920px] grid-cols-12 items-center gap-6 px-5 sm:px-8 lg:px-[5vw]">
-        <div ref={copyRef} className="col-span-12 transition-transform duration-300 ease-out lg:col-span-7">
-          <p className="animate-word-in text-xs font-extrabold uppercase tracking-[.28em] text-aurora-bright">
+
+      <div className="relative mx-auto grid w-full max-w-[1920px] grid-cols-12 items-center gap-8 px-5 sm:px-8 lg:px-[5vw]">
+        <div className="col-span-12 lg:col-span-6">
+          <p className="animate-word-in text-xs font-extrabold uppercase tracking-[.28em] text-accent-strong">
             Enterprise Intelligence Platform
           </p>
-          <h1 className="mt-6 max-w-2xl text-hero font-black text-on-dark">
+          <h1 className="mt-6 max-w-2xl text-hero font-black text-ink">
             {HEADLINE.map(({ word, accent, br }) => {
               delay += 0.09;
               return (
                 <span key={word}>
                   <span
-                    className={`inline-block animate-word-in ${accent ? "text-aurora-magenta" : ""}`}
+                    className={`inline-block animate-word-in ${accent ? "text-accent" : ""}`}
                     style={{ animationDelay: `${delay}s` }}
                   >
                     {word}
@@ -75,19 +57,22 @@ export function Hero() {
             })}
           </h1>
           <p
-            className="mt-6 max-w-lg animate-word-in text-lg font-medium leading-relaxed text-on-dark-muted"
+            className="mt-6 max-w-xl animate-word-in text-lg font-medium leading-relaxed text-muted"
             style={{ animationDelay: ".85s" }}
           >
             Project Zero connects the work apps your team already uses, remembers everything your
             team knows, and answers business questions with citations and confidence scores.{" "}
             <a
               href="#integrations"
-              className="whitespace-nowrap font-semibold text-aurora-bright underline-offset-4 transition-colors hover:text-on-dark hover:underline"
+              className="whitespace-nowrap font-semibold text-accent underline-offset-4 transition-colors hover:underline"
             >
               See all integrations →
             </a>
           </p>
-          <div className="mt-8 flex flex-wrap gap-4 animate-word-in" style={{ animationDelay: "1.05s" }}>
+          <div
+            className="mt-8 flex flex-wrap gap-4 animate-word-in"
+            style={{ animationDelay: "1.05s" }}
+          >
             <GlossyButton href="/register">Start free</GlossyButton>
             <GlossyButton href="#how" variant="ghost">
               See how it works ↓
@@ -98,15 +83,15 @@ export function Hero() {
             style={{ animationDelay: "1.25s" }}
           >
             {PROOF_POINTS.map((point) => (
-              <li key={point} className="flex items-center gap-2 text-sm text-on-dark-muted">
-                <IconCheck className="h-4 w-4 text-aurora-violet" />
+              <li key={point} className="flex items-center gap-2 text-sm text-muted">
+                <IconCheck className="h-4 w-4 text-accent" />
                 {point}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="col-span-12 animate-word-in lg:col-span-5" style={{ animationDelay: ".5s" }}>
+        <div className="col-span-12 mt-12 animate-word-in lg:col-span-6 lg:mt-0" style={{ animationDelay: ".6s" }}>
           <HeroShowcase />
         </div>
       </div>

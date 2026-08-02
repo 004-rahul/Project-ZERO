@@ -22,7 +22,9 @@
 | 3.0 | Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
 | 3.1 | Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
 | 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
-| 3.3 | **This document.** Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid at 1280px, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients** — solid Aurora accents (particle canvas and faint ambient glows are the only multi-hue surfaces); Inter loaded via `next/font`. Organism contained in the hero's right five columns with oscillating (never edge-on) rotation. 2026-08-02. |
+| 3.3 | Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients**; Inter loaded via `next/font`. 2026-08-02. |
+| 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
+| 3.5 | **This document.** Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
 
 ---
 
@@ -381,11 +383,13 @@ data to an unknown product, and template marketing pages create no interest. The
 landing must therefore (a) let visitors **try the product on the page** with zero
 signup, and (b) carry a signature visual no competitor can copy.
 
-**Landing-scoped Aurora palette** (selected via comparative color R&D; product
-interior keeps Zoned Graphite §10): near-black `void #080709`; iridescent accent ramp
-**violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A`**; bright `#D9A1F5`, strong
-`#C55FD6`, pink `#E4599C`. Material language is **glossy 3D**: glass panels with
-specular top edges, sheen sweeps on CTAs, cursor-tracked 3D tilt with glare.
+**Palette (v3.5 — light):** the landing uses the product's own light identity (§10):
+white `#FFFFFF` and canvas `#FAFAFB` alternating bands, ink `#17181C`, muted
+`#5F6168`, hairline `#E8E8EA`, **Violet `#7C3AED` accent** (strong `#6D28D9`).
+Material language: white cards with soft shadows that deepen on hover, subtle
+violet tint fills (`accent/5–10`), pastel washes behind the hero, sheen sweeps on
+primary CTAs, gentle 3D tilt with a violet glare. The Aurora dark palette (v3.2)
+is retired for the landing.
 
 **Canonical structure (v3.3 — fixed nine-section order, 12-column grid at 1280px,
 8px spacing rhythm, 12px radius, outline icons, realistic copy, no gradients —

@@ -99,7 +99,7 @@ const config: Config = {
         },
         floaty: {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-12px)" },
+          "50%": { transform: "translateY(-18px)" },
         },
         "word-in": {
           from: { opacity: "0", filter: "blur(14px)", transform: "translateY(28px)" },
@@ -124,15 +124,15 @@ const config: Config = {
         },
         "drift-1": {
           "0%, 100%": { transform: "translate(0,0) scale(1)" },
-          "50%": { transform: "translate(70px,50px) scale(1.08)" },
+          "50%": { transform: "translate(150px,90px) scale(1.14)" },
         },
         "drift-2": {
           "0%, 100%": { transform: "translate(0,0) scale(1)" },
-          "50%": { transform: "translate(-60px,-40px) scale(.94)" },
+          "50%": { transform: "translate(-130px,-70px) scale(.88)" },
         },
         "drift-3": {
           "0%, 100%": { transform: "translate(0,0) scale(1)" },
-          "50%": { transform: "translate(-50px,-60px) scale(1.05)" },
+          "50%": { transform: "translate(-100px,-120px) scale(1.1)" },
         },
       },
       animation: {
@@ -144,9 +144,9 @@ const config: Config = {
         drip: "drip 1.9s ease-in-out infinite",
         sheen: "sheen .9s ease",
         "gradient-x": "gradient-x 7s ease-in-out infinite",
-        "drift-1": "drift-1 26s ease-in-out infinite",
-        "drift-2": "drift-2 32s ease-in-out infinite",
-        "drift-3": "drift-3 38s ease-in-out infinite",
+        "drift-1": "drift-1 16s ease-in-out infinite",
+        "drift-2": "drift-2 20s ease-in-out infinite",
+        "drift-3": "drift-3 24s ease-in-out infinite",
       },
     },
   },
