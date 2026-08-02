@@ -15,7 +15,7 @@ import {
 } from "@/components/landing/icons";
 import { LiveDemo } from "@/components/landing/live-demo";
 import { LandingNav } from "@/components/landing/nav";
-import { TiltCard } from "@/components/landing/tilt-card";
+import { HoverCard } from "@/components/landing/hover-card";
 
 /**
  * Public landing page (Design Bible §19.4 v3.5 — light, screenshot-led).
@@ -193,11 +193,28 @@ function Shell({ children }: { children: React.ReactNode }) {
 export default function LandingPage() {
   return (
     <main className="relative text-ink">
-      {/* soft pastel washes — the glass surfaces blur over these */}
+      {/* living background — pastel washes that visibly drift, plus floating shapes */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute -left-40 -top-48 h-[680px] w-[680px] animate-drift-1 rounded-full bg-accent/[.14] blur-3xl motion-reduce:animate-none" />
-        <div className="absolute -right-32 top-[32%] h-[560px] w-[560px] animate-drift-2 rounded-full bg-[#EC4899]/[.09] blur-3xl motion-reduce:animate-none" />
-        <div className="absolute bottom-[-240px] left-1/3 h-[700px] w-[700px] animate-drift-3 rounded-full bg-warning/[.09] blur-3xl motion-reduce:animate-none" />
+        <div className="absolute -left-40 -top-48 h-[720px] w-[720px] animate-drift-1 rounded-full bg-accent/[.22] blur-3xl motion-reduce:animate-none" />
+        <div className="absolute -right-32 top-[30%] h-[600px] w-[600px] animate-drift-2 rounded-full bg-[#EC4899]/[.15] blur-3xl motion-reduce:animate-none" />
+        <div className="absolute bottom-[-240px] left-1/3 h-[720px] w-[720px] animate-drift-3 rounded-full bg-warning/[.15] blur-3xl motion-reduce:animate-none" />
+        <div className="absolute left-[10%] top-[28%] h-24 w-24 animate-floaty rounded-full border-2 border-dashed border-accent/30 motion-reduce:animate-none" />
+        <div
+          className="absolute right-[7%] top-[16%] h-14 w-14 animate-floaty rounded-full bg-[#EC4899]/20 motion-reduce:animate-none"
+          style={{ animationDelay: "-3s" }}
+        />
+        <div
+          className="absolute bottom-[24%] right-[16%] h-20 w-20 rotate-12 animate-floaty rounded-lg border-2 border-warning/30 motion-reduce:animate-none"
+          style={{ animationDelay: "-6s" }}
+        />
+        <div
+          className="absolute bottom-[30%] left-[5%] h-10 w-10 animate-floaty rounded-full bg-accent/[.15] motion-reduce:animate-none"
+          style={{ animationDelay: "-1.5s" }}
+        />
+        <div
+          className="absolute left-[46%] top-[12%] h-8 w-8 animate-floaty rounded-full border-2 border-accent/25 motion-reduce:animate-none"
+          style={{ animationDelay: "-4.5s" }}
+        />
       </div>
 
       <div className="relative z-10">
@@ -231,7 +248,7 @@ export default function LandingPage() {
               {["Code", "Chat", "Docs", "Knowledge", "Tickets", "Cloud drives"].map((cat) => (
                 <span
                   key={cat}
-                  className="rounded-lg border border-white/70 bg-white/65 px-3.5 py-1.5 text-xs font-semibold text-muted shadow-card backdrop-blur-xl"
+                  className="rounded-lg bg-accent/[.07] px-3.5 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-accent/[.12] hover:text-ink"
                 >
                   {cat}
                 </span>
@@ -244,7 +261,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {PROOF_STATS.map((stat, index) => (
               <FadeIn key={stat.label} delay={index * 0.08} className="col-span-12 sm:col-span-4">
-                <div className="rounded-lg border border-white/70 bg-white/65 px-6 py-8 text-center shadow-card backdrop-blur-xl">
+                <div className="rounded-lg border border-transparent bg-accent/[.06] px-6 py-8 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
                   <p className="text-4xl font-black tracking-tight text-accent-strong">
                     <CountUp end={stat.end} suffix={stat.suffix} />
                   </p>
@@ -269,17 +286,17 @@ export default function LandingPage() {
               <FadeIn
                 key={feature.title}
                 delay={index * 0.05}
-                className={`col-span-12 sm:col-span-6 ${
+                className={`col-span-12 h-full sm:col-span-6 ${
                   feature.wide ? "lg:col-span-6" : "lg:col-span-3"
-                } h-full [perspective:1200px]`}
+                }`}
               >
-                <TiltCard className="h-full">
+                <HoverCard className="h-full">
                   <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-accent/10 text-accent">
                     <feature.icon />
                   </div>
                   <h3 className="text-lg font-extrabold text-ink">{feature.title}</h3>
                   <p className="mt-2 text-base leading-relaxed text-muted">{feature.body}</p>
-                </TiltCard>
+                </HoverCard>
               </FadeIn>
             ))}
           </div>
@@ -297,7 +314,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {STEPS.map((step, index) => (
               <FadeIn key={step.n} delay={index * 0.08} className="col-span-12 md:col-span-4">
-                <div className="relative h-full rounded-lg border border-white/70 bg-white/65 p-6 shadow-card backdrop-blur-xl">
+                <div className="relative h-full rounded-lg border border-transparent bg-accent/[.06] p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
                   <span className="absolute right-5 top-4 text-4xl font-black text-ink/[.06]">
                     {step.n}
                   </span>
@@ -331,8 +348,8 @@ export default function LandingPage() {
             {PLANS.map((plan, index) => (
               <FadeIn key={plan.name} delay={index * 0.06} className="col-span-12 sm:col-span-6 lg:col-span-3">
                 <div
-                  className={`relative flex h-full flex-col rounded-lg border bg-white/65 p-6 backdrop-blur-xl ${
-                    plan.hot ? "border-accent shadow-lift" : "border-white/70 shadow-card"
+                  className={`relative flex h-full flex-col rounded-lg border border-transparent p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-white hover:shadow-lift ${
+                    plan.hot ? "bg-accent/[.12] shadow-lift" : "bg-accent/[.06] shadow-card"
                   }`}
                 >
                   {plan.hot && (
@@ -380,7 +397,7 @@ export default function LandingPage() {
           <div className="mt-14 grid grid-cols-12 gap-6">
             {TESTIMONIALS.map((t, index) => (
               <FadeIn key={t.name} delay={index * 0.08} className="col-span-12 md:col-span-4">
-                <figure className="flex h-full flex-col rounded-lg border border-white/70 bg-white/65 p-6 shadow-card backdrop-blur-xl">
+                <figure className="flex h-full flex-col rounded-lg border border-transparent bg-accent/[.06] p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white hover:shadow-lift">
                   <IconUsers className="h-5 w-5 text-accent" />
                   <blockquote className="mt-4 flex-1 text-md leading-relaxed text-ink">
                     “{t.quote}”
@@ -403,7 +420,7 @@ export default function LandingPage() {
           <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-3">
             {FAQS.map((faq, index) => (
               <FadeIn key={faq.q} delay={index * 0.05}>
-                <details className="group rounded-lg border border-white/70 bg-white/65 shadow-card backdrop-blur-xl transition-colors open:border-accent/50">
+                <details className="group rounded-lg border border-transparent bg-accent/[.06] shadow-card transition-all duration-300 hover:border-accent/30 open:border-accent/40 open:bg-white open:shadow-lift">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-md font-bold text-ink [&::-webkit-details-marker]:hidden">
                     {faq.q}
                     <IconChevron className="h-4 w-4 shrink-0 text-muted transition-transform duration-300 group-open:rotate-180" />
