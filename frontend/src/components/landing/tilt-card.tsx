@@ -31,11 +31,11 @@ export function TiltCard({ children, className }: { children: ReactNode; classNa
       ref={cardRef}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className={`group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.12)] backdrop-blur-xl transition-[border-color,box-shadow] duration-300 will-change-transform [transform-style:preserve-3d] hover:border-aurora-bright/50 hover:shadow-[0_30px_80px_rgba(0,0,0,.6),0_0_40px_rgba(197,95,214,.15),inset_0_1px_0_rgba(255,255,255,.16)] ${className ?? ""}`}
+      className={`group relative overflow-hidden rounded-lg border border-white/10 bg-white/[.04] p-6 shadow-[0_20px_60px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.12)] backdrop-blur-xl transition-[border-color,box-shadow] duration-300 will-change-transform [transform-style:preserve-3d] hover:border-aurora-bright/50 hover:shadow-[0_30px_80px_rgba(0,0,0,.6),0_0_40px_rgba(197,95,214,.15),inset_0_1px_0_rgba(255,255,255,.16)] ${className ?? ""}`}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 [background:radial-gradient(400px_circle_at_var(--gx,50%)_var(--gy,50%),rgba(255,255,255,.14),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100 [background:radial-gradient(400px_circle_at_var(--gx,50%)_var(--gy,50%),rgba(255,255,255,.14),transparent_55%)]"
       />
       {children}
     </div>

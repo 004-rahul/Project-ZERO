@@ -70,7 +70,8 @@ export function Organism({ className, centerX = 0.5, onPhase }: OrganismProps) {
     };
     size();
 
-    const N = window.innerWidth < 760 ? 700 : window.innerWidth > 1600 ? 2000 : 1500;
+    const box = Math.min(canvas.offsetWidth, canvas.offsetHeight) || 480;
+    const N = box < 380 ? 700 : box < 520 ? 1100 : 1500;
     const shuffle = <T,>(a: T[]): T[] => {
       for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

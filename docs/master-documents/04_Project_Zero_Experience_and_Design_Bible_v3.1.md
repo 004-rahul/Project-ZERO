@@ -21,7 +21,8 @@
 | 2.0 | First consolidated Experience & Design Bible. |
 | 3.0 | Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
 | 3.1 | Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
-| 3.2 | **This document.** Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
+| 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
+| 3.3 | **This document.** Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid at 1280px, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients** — solid Aurora accents (particle canvas and faint ambient glows are the only multi-hue surfaces); Inter loaded via `next/font`. Organism contained in the hero's right five columns with oscillating (never edge-on) rotation. 2026-08-02. |
 
 ---
 
@@ -386,25 +387,27 @@ interior keeps Zoned Graphite §10): near-black `void #080709`; iridescent accen
 `#C55FD6`, pink `#E4599C`. Material language is **glossy 3D**: glass panels with
 specular top edges, sheen sweeps on CTAs, cursor-tracked 3D tilt with glare.
 
-**Canonical structure:**
+**Canonical structure (v3.3 — fixed nine-section order, 12-column grid at 1280px,
+8px spacing rhythm, 12px radius, outline icons, realistic copy, no gradients —
+solid Aurora accents):**
 
-1. **Hero — the Organism.** One continuous particle system fills the hero and morphs
-   on a timed cycle through the product story: scattered dust (the problem) → the
-   Signature Face → tool orbit (Connect) → memory torus (Remember) → the word
-   "PROOF." (Answer) → the Z mark. Particles never reset between shapes; a live
-   caption names each formation; particles react to the cursor. The **headline is
-   left-aligned** (impact copy, word-by-word blur reveal, iridescent gradient
-   keyword) with the organism biased to the right; the copy block counter-parallaxes
-   the cursor for depth.
-2. **Connector marquee** — infinite, masked edges.
-3. **Pinned scroll story** — the Signature Face stays fixed while three chapters
-   (Connect / Remember / Answer) scroll past; the face moves through its real AI
-   states (listening → thinking → speaking). Stacks statically on small screens.
-4. **Live demo** — suggested business questions; the question types itself, the face
-   changes state, evidence cards land with sources, the answer streams, a confidence
-   bar fills. Honest label: synthetic sample workspace. No signup, no backend.
-5. **Capabilities** — six glossy 3D tilt cards + count-up stats.
-6. **Closing CTA → footer.** Four-tier pricing moves to a dedicated page (V1.1).
+1. **Hero.** 12-column split: left seven columns carry the left-aligned headline
+   (word-by-word reveal, solid magenta keyword), subcopy, CTAs and proof points;
+   the right five columns contain the **Organism** — one continuous particle system
+   morphing through the product story (dust → Signature Face → tool orbit → memory
+   torus → "PROOF." → Z) with a live caption and oscillating rotation that never
+   turns a formation edge-on. Particles react to the cursor.
+2. **Social proof** — trusted-by wordmarks + three count-up outcome stats.
+3. **Features** — six outline-icon tilt cards in a 3/6-column bento.
+4. **How it works** — Connect / Remember / Ask step cards with the **live demo
+   embedded**: question types itself, face changes state, evidence cards land,
+   answer streams, confidence fills. Honest label: synthetic sample workspace.
+5. **Pricing** — four tiers (Free $0 / Starter $29 / Professional $79 highlighted /
+   Enterprise custom) with realistic plan points.
+6. **Testimonials** — three quote cards (name, role, company size).
+7. **FAQ** — five security-first accordions (native `details`, accessible).
+8. **CTA** — closing headline + primary/ghost actions.
+9. **Footer** — brand column + Product / Security / Company link groups.
 
 Flow: Landing → Get started → Registration (3 steps) → Dashboard; returning users
 Landing → Log in → Dashboard. Custom cursor and magnetic buttons on fine pointers

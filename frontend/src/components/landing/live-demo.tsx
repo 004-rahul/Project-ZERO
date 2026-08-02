@@ -119,7 +119,7 @@ export function LiveDemo() {
   };
 
   return (
-    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-xl border border-white/10 bg-white/[.03] shadow-[0_40px_110px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.14)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,.06),transparent_60%)] md:grid-cols-[240px_1fr]">
+    <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-lg border border-white/10 bg-white/[.03] shadow-[0_40px_110px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.14)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,.06),transparent_60%)] md:grid-cols-[240px_1fr]">
       <div className="relative grid place-items-center border-b border-white/[.07] bg-[radial-gradient(circle_at_50%_45%,rgba(197,95,214,.22),rgba(228,95,188,.08)_60%,transparent_78%)] p-4 md:border-b-0 md:border-r">
         <ParticleFace state={face} size={210} lines={false} palette={AURORA_FACE} />
       </div>
@@ -136,7 +136,7 @@ export function LiveDemo() {
               key={qa.q}
               type="button"
               onClick={() => run(qa)}
-              className="rounded-full border border-white/[.13] bg-white/5 px-3.5 py-2 text-sm text-on-dark-muted shadow-[inset_0_1px_0_rgba(255,255,255,.08)] transition-all duration-200 hover:border-aurora-bright hover:text-on-dark hover:shadow-[0_4px_18px_rgba(197,95,214,.35)]"
+              className="rounded-lg border border-white/[.13] bg-white/5 px-3.5 py-2 text-sm text-on-dark-muted shadow-[inset_0_1px_0_rgba(255,255,255,.08)] transition-all duration-200 hover:border-aurora-bright hover:text-on-dark hover:shadow-[0_4px_18px_rgba(197,95,214,.35)]"
             >
               {qa.q}
             </button>
@@ -149,9 +149,9 @@ export function LiveDemo() {
             readOnly
             placeholder="Ask about your organization…"
             aria-label="Demo question"
-            className="min-w-0 flex-1 rounded-full border border-white/[.13] bg-black/30 px-5 py-3 text-base text-on-dark shadow-[inset_0_2px_6px_rgba(0,0,0,.4)] outline-none transition-colors placeholder:text-on-dark-muted/60 focus:border-aurora-bright"
+            className="min-w-0 flex-1 rounded-lg border border-white/[.13] bg-black/30 px-5 py-3 text-base text-on-dark shadow-[inset_0_2px_6px_rgba(0,0,0,.4)] outline-none transition-colors placeholder:text-on-dark-muted/60 focus:border-aurora-bright"
           />
-          <span className="rounded-full bg-gradient-to-br from-aurora-strong to-aurora-pink px-5 py-3 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.3)]">
+          <span className="rounded-lg bg-aurora-strong px-5 py-3 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.3)]">
             Ask
           </span>
         </div>
@@ -178,7 +178,7 @@ export function LiveDemo() {
           <div className="mt-4">
             <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-aurora-magenta to-aurora-amber transition-[width] duration-1000 [transition-timing-function:cubic-bezier(.2,.7,.2,1)]"
+                className="h-full rounded-full bg-aurora-strong transition-[width] duration-1000 [transition-timing-function:cubic-bezier(.2,.7,.2,1)]"
                 style={{ width: `${conf}%` }}
               />
             </div>
