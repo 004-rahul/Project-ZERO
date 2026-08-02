@@ -58,8 +58,8 @@ export function LandingNav() {
             FAQ
           </a>
         </nav>
-        <div className="flex items-center gap-3">
-          <Magnetic>
+        <div className="ml-auto flex items-center gap-3 lg:ml-0">
+          <Magnetic className="hidden sm:block">
             <Link
               href="/login"
               className="block rounded-lg border border-white/[.16] px-4 py-2 text-sm font-semibold text-on-dark transition-colors hover:bg-white/10"

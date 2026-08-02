@@ -22,6 +22,7 @@ body {
 
 body {
   @apply bg-zone-canvas font-sans text-base text-ink antialiased;
+  overflow-x: clip;
 }
 
 /* Focus is a designed state — never suppressed (Design Bible §25). */

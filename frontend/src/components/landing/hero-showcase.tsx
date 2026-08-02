@@ -180,7 +180,7 @@ export function HeroShowcase() {
         {/* floating satellites */}
         <div className="absolute -left-1 top-6 animate-floaty [transform:translateZ(70px)] motion-reduce:animate-none">
           <span className="flex items-center gap-2 rounded-lg border border-white/[.14] bg-white/[.07] px-3 py-2 text-xs font-semibold text-on-dark shadow-lift backdrop-blur-xl">
-            <IconLink className="h-4 w-4 text-aurora-violet" /> 4 sources connected
+            <IconLink className="h-4 w-4 text-aurora-violet" /> 40+ integrations
           </span>
         </div>
         <div

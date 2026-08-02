@@ -78,8 +78,14 @@ export function Hero() {
             className="mt-6 max-w-lg animate-word-in text-lg font-medium leading-relaxed text-on-dark-muted"
             style={{ animationDelay: ".85s" }}
           >
-            Project Zero connects GitHub, Slack, Drive and Notion, remembers everything your team
-            knows, and answers business questions with citations and confidence scores.
+            Project Zero connects the work apps your team already uses, remembers everything your
+            team knows, and answers business questions with citations and confidence scores.{" "}
+            <a
+              href="#integrations"
+              className="whitespace-nowrap font-semibold text-aurora-bright underline-offset-4 transition-colors hover:text-on-dark hover:underline"
+            >
+              See all integrations →
+            </a>
           </p>
           <div className="mt-8 flex flex-wrap gap-4 animate-word-in" style={{ animationDelay: "1.05s" }}>
             <GlossyButton href="/register">Start free</GlossyButton>
