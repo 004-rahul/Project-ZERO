@@ -30,6 +30,62 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ── Landing surface utilities (§19.4). Structure only — no new colors. ── */
+
+/* Fine technical grid, faded at the edges. */
+.pz-grid {
+  background-image:
+    linear-gradient(to right, rgba(23, 24, 28, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 24, 28, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
+}
+.pz-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 25%, transparent 78%);
+}
+
+/* Very fine grain — kills the flat "gradient poster" look on large fills. */
+.pz-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: radial-gradient(rgba(23, 24, 28, 0.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* Horizontal edge fade for rails and marquees. */
+.pz-fade-x {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* Hairline that fades out at both ends. */
+.pz-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(23, 24, 28, 0.12), transparent);
+}
+
+/* Tabular figures for metrics and prices. */
+.pz-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Drag rails: show intent without a custom cursor layer. */
+.pz-grab {
+  cursor: grab;
+}
+.pz-grab:active {
+  cursor: grabbing;
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

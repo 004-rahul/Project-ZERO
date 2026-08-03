@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { FlowLines } from "@/components/landing/flow-lines";
 import { NeuralMind } from "@/components/landing/neural-mind";
 
 /**
@@ -24,7 +23,7 @@ export function AuthPanel({
   return (
     <main className="grid min-h-screen grid-cols-1 lg:grid-cols-[46fr_54fr]">
       <section className="relative hidden flex-col overflow-hidden bg-zone-header p-9 lg:flex">
-        <FlowLines />
+        <div aria-hidden className="pz-grid-dark pointer-events-none absolute inset-0" />
         <div className="pointer-events-none absolute left-1/2 top-[42%] h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 animate-glow-pulse rounded-full bg-[radial-gradient(circle,rgba(124,58,237,.22),transparent_65%)]" />
         <NeuralMind className="absolute inset-0 h-full w-full" />
 

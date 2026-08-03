@@ -24,7 +24,8 @@
 | 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
 | 3.3 | Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients**; Inter loaded via `next/font`. 2026-08-02. |
 | 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
-| 3.5 | **This document.** Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
+| 4.0 | **This document.** Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). 2026-08-03. |
+| 3.5 | Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
 
 ---
 
@@ -391,9 +392,19 @@ violet tint fills (`accent/5–10`), pastel washes behind the hero, sheen sweeps
 primary CTAs, gentle 3D tilt with a violet glare. The Aurora dark palette (v3.2)
 is retired for the landing.
 
-**Canonical structure (v3.3 — fixed nine-section order, 12-column grid at 1280px,
+**Craft rules (v4.0).** Every section owns a distinct layout language; the shared
+vocabulary is the 1400px grid, numbered mono eyebrows (`01 — FEATURES`), hairline
+rules that fade at the ends, tabular figures for metrics, and the violet accent.
+Banned: centred heading-paragraph-button stacks, uniform three-across card rows,
+borderless white-on-white surfaces. Required: asymmetric splits, at least one
+structural inversion per page (graphite bands), layered depth (offset ghost panels,
+pointer parallax), and a purpose-built interaction per section. Motion budget:
+transform/opacity only, one pinned scrub per page, WebGL idle-loaded and
+desktop-only, every effect with a reduced-motion path (§15.3, §25).
+
+**Canonical structure (fixed nine-section order, 12-column grid,
 8px spacing rhythm, 12px radius, outline icons, realistic copy, no gradients —
-solid Aurora accents):**
+solid accents):**
 
 1. **Hero.** 12-column split: left seven columns carry the left-aligned headline
    (word-by-word reveal, solid magenta keyword), subcopy, CTAs and proof points;
