@@ -24,7 +24,8 @@
 | 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
 | 3.3 | Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients**; Inter loaded via `next/font`. 2026-08-02. |
 | 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
-| 4.1 | **This document.** AI identity re-founded (§7 rewritten). The geometric android **Signature Face** is retired outright — a face on a public surface read as a mascot and was rejected in founder review. The identity is now **The Zero Mind**: a human head in profile built from emissive voxels, the cerebrum glowing inside the cranium, a spine of light into the shoulders, and a signature **halo ring** through the head at brow level with lens flares at both extremes. Colour runs the existing ramp along the axis of thought — cyan at the occiput where raw data arrives, magenta at the face where it becomes an answer, gold synapses. Its lifecycle carries the founder's own thesis: scattered drift (an organisation's data is a mess) → slow gather → work → dissolve. Built from founder references `Demos/SS/Identity-1…4`; geometry verified against real profile proportion by offline rasterisation before shipping. State-bearing duties stay with the **Zero Orb** (§7.3). Palette unchanged. 2026-08-03. |
+| 4.2 | **This document.** AI identity re-founded again after founder review scored the voxel profile head −10 (“looks like a cartoon”). **Binding rule added: the identity is never figurative.** Tracing a recognisable object — a face, a brain, a head — in points or lines reads as clip art at any density, and three successive attempts failed the same way. The premium quality in the founder's references comes from *volume, depth and light*, not from resemblance. The identity is now **MindCore**: an abstract volumetric intelligence core in WebGL (~29k GPU points, two draw calls, hand-written GLSL) — a hot nucleus, a coherent accretion vortex drawing data inward, a sparse cold atmosphere, and a crisp counter-rotating ring that **holds through the entire cycle** so a designed element is always on screen. Palette unchanged. 2026-08-03. |
+| 4.1 | AI identity re-founded (§7 rewritten). The geometric android **Signature Face** is retired outright — a face on a public surface read as a mascot and was rejected in founder review. The identity is now **The Zero Mind**: a human head in profile built from emissive voxels, the cerebrum glowing inside the cranium, a spine of light into the shoulders, and a signature **halo ring** through the head at brow level with lens flares at both extremes. Colour runs the existing ramp along the axis of thought — cyan at the occiput where raw data arrives, magenta at the face where it becomes an answer, gold synapses. Its lifecycle carries the founder's own thesis: scattered drift (an organisation's data is a mess) → slow gather → work → dissolve. Built from founder references `Demos/SS/Identity-1…4`; geometry verified against real profile proportion by offline rasterisation before shipping. State-bearing duties stay with the **Zero Orb** (§7.3). Palette unchanged. 2026-08-03. |
 | 4.0 | Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). 2026-08-03. |
 | 3.5 | Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
 
@@ -131,22 +132,33 @@ Identity pillars: **zoned graphite presentation (dark chrome framing a light wor
 
 ## 7. The AI Identity — Particle Intelligence
 
-### 7.1 The Zero Mind — the brand identity
+### 7.1 MindCore — the brand identity
 
-**RETIRED (v4.1): the geometric android Signature Face.** A face rendered on a public surface read as a mascot in founder review and is not to be reintroduced on any surface.
+**BINDING RULE — the identity is never figurative.** No face, no head, no brain, no body, no recognisable object. Three attempts broke this rule (an android particle mask, an anatomical brain, a voxel human profile) and all three were rejected in founder review for the same reason: a traced literal form reads as clip art no matter how dense or how well coloured it is. The premium quality in the reference material (`Demos/SS/Identity-1–4`) comes from **volume, depth and light** — those are the qualities to reproduce, not the subject matter. Resemblance is not the goal; presence is.
 
-The identity is **The Zero Mind** (`landing/ai-identity.tsx`): a **human head in profile, built entirely from emissive voxels** — no drawn border, no solid fill. Its anatomy is deliberate and must be preserved:
+The identity is **MindCore** (`landing/three/mind-core.tsx`): an abstract volumetric intelligence core rendered in **WebGL**, ~29k GPU points in two draw calls driven by a hand-written GLSL shader. Canvas 2D is not sufficient — flat dots cannot produce volume.
 
-- **Real profile proportion.** Crown to chin against occiput to nose tip is near-square (68 × 64 in design units), and crown → hairline → brow → nose base → chin divide the height into quarters, which puts the eye line on the **midpoint**. The **glabella → nasion notch** is mandatory: without that backward dip the nose reads as a bump, not a nose.
-- **The cerebrum inside the cranium**, denser and warmer than the skull around it, with the longitudinal fissure rendered brightest of the folds.
-- **A spine of light** from the brainstem into the shoulders, and a **torso of dim voxels** fading toward the bottom of the frame so the body has mass instead of being an outline.
-- **The halo ring** — the signature element. A shallow ellipse through the head at brow level, cyan on the left arc and violet on the right, with **lens flares at both extremes**. It must stay inside the frame: a flare clipped by the panel edge kills the effect.
-- **Colour follows the axis of thought.** The existing ramp (electric blue → cyan → violet → purple → magenta, plus sparse gold synapses) is mapped occiput-to-nose-tip: cold where raw data arrives, warm where it has become an answer. No new colours.
-- **Voxels, not dots.** Positions snap to a coarse grid as the mind resolves; that is what makes it read as *built* rather than drawn.
+Its four elements, and why each exists:
 
-Its lifecycle carries the founder's thesis literally: **scattered drift** (the organisation's data is a mess) → **slow gather** into a mind → **work** → **dissolve**, repeating. While working, data streams in from the left, glitch-streaks shed off the back of the skull, pulses race the pathways, voxel rain falls from the silhouette, and answers beam out past the face. Formed and static under `prefers-reduced-motion`.
+| Element | Form | Purpose |
+|---|---|---|
+| **Nucleus** | ~7.2k points, radius 0.28, density biased hard inward, white-hot centre | The resolved answer. Small and intense — a large soft core reads as a smudge. |
+| **Accretion vortex** | 20 filaments, all winding the **same** direction, flattening toward the ring plane as they fall in | The inflow. Mixed directions read as floating debris; one direction reads as designed. |
+| **Atmosphere** | ~3.6k dim points on an outer Fibonacci shell | Depth and scale. Kept sparse — a dense shell turns the whole thing into a fuzzy ball. |
+| **Ring** | ~6.4k points, narrow bright annulus, counter-rotating | The one crisp graphic edge; the silhouette hangs off it. **It never scatters.** |
 
-Reference source: `Demos/SS/Identity-1…4`. Geometry is verified by **offline rasterisation before shipping** — the silhouette is looked at, not reasoned about.
+Shader craft that carries the premium read: perspective size attenuation, **depth fog** (this is what makes it volumetric rather than flat), additive radial falloff for bloom with no postprocessing pass, staggered per-particle convergence so the field arrives as a wave, and light racing the filaments inward.
+
+**Lifecycle** — the founder's thesis unchanged: scattered → drawn inward → working → released. Two rules govern it:
+
+- **The ring holds through every phase.** There is always one intentional element on screen, so the scattered state reads as data waiting to be gathered rather than as an unfinished effect.
+- **The scattered state is clumped, never uniform.** Uniform random points render as television static. Clumps read as scattered sources. The scatter volume also stays close to the formed extent — the panel must never fill edge-to-edge with dust.
+
+The resolved core holds ~65% of the cycle: it is the identity, so it owns the screen.
+
+Composition is **fit to the tighter viewport axis** — the auth panel is portrait, and without that scale the outer field is cropped by the left and right edges.
+
+Verification requirement: **the identity is looked at before it ships.** Geometry and shader output are reproduced offline and rendered to an image in the formed, converging and scattered states. Reasoning about particle maths is not review — every rejection in this component's history was visible in one frame.
 
 ### 7.2 AI States
 
@@ -168,14 +180,14 @@ Seven canonical states, each with a distinct motion signature and mapped color (
 
 The identity has exactly two renderings, and they do not overlap:
 
-| | **The Zero Mind** (`ai-identity.tsx`) | **The Zero Orb** (`ai-orb.tsx`) |
+| | **MindCore** (`three/mind-core.tsx`) | **The Zero Orb** (`ai-orb.tsx`) |
 |---|---|---|
 | Role | The brand identity — who Zero *is* | The working presence — what Zero is *doing* |
 | Where | Login and registration panels | Landing surfaces, and beside AI responses in the workspace |
 | Carries | The data-mess → central-mind thesis | The seven canonical states (§7.2) |
-| Form | Human head in profile, voxel-built | Abstract; no face, no anatomy |
+| Form | Abstract volumetric core, WebGL | Abstract; no face, no anatomy |
 
-Rules that bind both: it appears only where the platform itself is acting, never as decoration on a static screen; it never becomes a mascot — no anthropomorphic gimmicks, no idle chatter, no smile, no eye contact with the viewer (the Mind is in profile precisely so it is *thinking*, not watching); and it never renders anything personalized on an auth surface (§19.1 anonymity rule). Every animation path has a `prefers-reduced-motion` equivalent.
+Rules that bind both: **neither may be figurative** (§7.1); it appears only where the platform itself is acting, never as decoration on a static screen; it never becomes a mascot — no anthropomorphic gimmicks, no idle chatter; and it never renders anything personalized on an auth surface (§19.1 anonymity rule). Every animation path has a `prefers-reduced-motion` equivalent.
 
 The landing's orb treatment is **founder-approved and frozen** — changes to the AI presence apply to the auth surfaces unless the founder says otherwise.
 
@@ -382,7 +394,7 @@ Rules: the sidebar is the persistent spine (dark navy layer); the workspace (AI)
 
 ### 19.1 Login and Registration (Anonymous by Rule)
 
-**Split layout: the Zero Mind on the left (dark graphite panel), minimal authentication on the right (light).** The Mind (§7.1) assembles itself out of scattered data as the visitor arrives — the first impression is the thesis of the product, not a logo.
+**Split layout: MindCore on the left (dark graphite panel), minimal authentication on the right (light).** The core (§7.1) draws scattered data inward as the visitor arrives — the first impression is the thesis of the product, not a logo.
 
 **The anonymity rule (binding):** before authentication the platform cannot know who the user is; pre-auth surfaces must never display personalized claims, activity summaries, or user data of any kind. Auth-screen copy is generic product messaging only. Personalization begins after sign-in, when **the dashboard assembles** — panels compose into place (fast, purposeful, under the motion rules) rather than popping in.
 
