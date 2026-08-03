@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { NeuralMind } from "@/components/landing/neural-mind";
+import { AiIdentity } from "@/components/landing/ai-identity";
 
 /**
- * Shared auth layout (Design Bible §19.1 — v4 visual language): the Zero Orb
- * listening on a deep graphite panel with flow lines, the form on the warm
- * cream canvas inside a bordered white card. ANONYMITY RULE: nothing
- * personalized may render here — the platform cannot know who the user is
- * before sign-in.
+ * Shared auth layout (Design Bible §19.1 — v4 visual language): the Zero
+ * identity — a synthetic mind assembling itself out of scattered data — on a
+ * deep graphite panel, with the form on the warm cream canvas inside a bordered
+ * white card. ANONYMITY RULE: nothing personalized may render here — the
+ * platform cannot know who the user is before sign-in.
  */
 export function AuthPanel({
   headline,
@@ -24,8 +24,7 @@ export function AuthPanel({
     <main className="grid min-h-screen grid-cols-1 lg:grid-cols-[46fr_54fr]">
       <section className="relative hidden flex-col overflow-hidden bg-zone-header p-9 lg:flex">
         <div aria-hidden className="pz-grid-dark pointer-events-none absolute inset-0" />
-        <div className="pointer-events-none absolute left-1/2 top-[42%] h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 animate-glow-pulse rounded-full bg-[radial-gradient(circle,rgba(124,58,237,.22),transparent_65%)]" />
-        <NeuralMind className="absolute inset-0 h-full w-full" />
+        <AiIdentity className="absolute inset-0 h-full w-full" />
 
         <Link href="/" className="relative z-10 flex items-center gap-3">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35)]">

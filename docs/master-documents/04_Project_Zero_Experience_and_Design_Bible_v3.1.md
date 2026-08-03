@@ -24,7 +24,8 @@
 | 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
 | 3.3 | Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients**; Inter loaded via `next/font`. 2026-08-02. |
 | 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
-| 4.0 | **This document.** Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). 2026-08-03. |
+| 4.1 | **This document.** AI identity re-founded (§7 rewritten). The geometric android **Signature Face** is retired outright — a face on a public surface read as a mascot and was rejected in founder review. The identity is now **The Zero Mind**: a human head in profile built from emissive voxels, the cerebrum glowing inside the cranium, a spine of light into the shoulders, and a signature **halo ring** through the head at brow level with lens flares at both extremes. Colour runs the existing ramp along the axis of thought — cyan at the occiput where raw data arrives, magenta at the face where it becomes an answer, gold synapses. Its lifecycle carries the founder's own thesis: scattered drift (an organisation's data is a mess) → slow gather → work → dissolve. Built from founder references `Demos/SS/Identity-1…4`; geometry verified against real profile proportion by offline rasterisation before shipping. State-bearing duties stay with the **Zero Orb** (§7.3). Palette unchanged. 2026-08-03. |
+| 4.0 | Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). 2026-08-03. |
 | 3.5 | Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
 
 ---
@@ -130,15 +131,26 @@ Identity pillars: **zoned graphite presentation (dark chrome framing a light wor
 
 ## 7. The AI Identity — Particle Intelligence
 
-### 7.1 One AI, One Identity — The Signature Face
+### 7.1 The Zero Mind — the brand identity
 
-Project Zero exposes **one persistent AI identity across the entire platform**: a **particle-formed android face** — the platform's visual signature. It is deliberately **not human and not cartoon**: a geometric mask assembled from particles, with a sculpted skull-and-jaw silhouette, **glowing almond eye slits** (never round "dot" eyes), and a **thin neutral mouth line** (never a smile). Faint structural lines connect nearby particles, giving the mask wireframe depth, and the head **turns gently in 3D** while active.
+**RETIRED (v4.1): the geometric android Signature Face.** A face rendered on a public surface read as a mascot in founder review and is not to be reintroduced on any surface.
 
-The identity's defining behavior is **formation and dissolution**: when engaged, particles assemble into the face; when idle or searching, the face dissolves into a calm particle constellation. This formation moment is the ownable, memorable signature. The identity must appear **alive but never distracting** — presence without performance.
+The identity is **The Zero Mind** (`landing/ai-identity.tsx`): a **human head in profile, built entirely from emissive voxels** — no drawn border, no solid fill. Its anatomy is deliberate and must be preserved:
+
+- **Real profile proportion.** Crown to chin against occiput to nose tip is near-square (68 × 64 in design units), and crown → hairline → brow → nose base → chin divide the height into quarters, which puts the eye line on the **midpoint**. The **glabella → nasion notch** is mandatory: without that backward dip the nose reads as a bump, not a nose.
+- **The cerebrum inside the cranium**, denser and warmer than the skull around it, with the longitudinal fissure rendered brightest of the folds.
+- **A spine of light** from the brainstem into the shoulders, and a **torso of dim voxels** fading toward the bottom of the frame so the body has mass instead of being an outline.
+- **The halo ring** — the signature element. A shallow ellipse through the head at brow level, cyan on the left arc and violet on the right, with **lens flares at both extremes**. It must stay inside the frame: a flare clipped by the panel edge kills the effect.
+- **Colour follows the axis of thought.** The existing ramp (electric blue → cyan → violet → purple → magenta, plus sparse gold synapses) is mapped occiput-to-nose-tip: cold where raw data arrives, warm where it has become an answer. No new colours.
+- **Voxels, not dots.** Positions snap to a coarse grid as the mind resolves; that is what makes it read as *built* rather than drawn.
+
+Its lifecycle carries the founder's thesis literally: **scattered drift** (the organisation's data is a mess) → **slow gather** into a mind → **work** → **dissolve**, repeating. While working, data streams in from the left, glitch-streaks shed off the back of the skull, pulses race the pathways, voxel rain falls from the silhouette, and answers beam out past the face. Formed and static under `prefers-reduced-motion`.
+
+Reference source: `Demos/SS/Identity-1…4`. Geometry is verified by **offline rasterisation before shipping** — the silhouette is looked at, not reasoned about.
 
 ### 7.2 AI States
 
-The identity has seven canonical states, each with a distinct motion signature and mapped color (Section 10.3). **The eyes carry the state color.**
+Seven canonical states, each with a distinct motion signature and mapped color (Section 10.3). States are carried by the **Zero Orb** (§7.3), not by the Mind — a state-switching face would be expression, and expression is what got the android face retired. The rows below describe orb behaviour; "face forms/dissolves" is historical wording retained for the state semantics.
 
 | State | When | Visual Behavior |
 |---|---|---|
@@ -152,9 +164,20 @@ The identity has seven canonical states, each with a distinct motion signature a
 
 **Future:** collaborative multi-agent visualizations — multiple particle entities coordinating — reserved for the multi-agent roadmap.
 
-### 7.3 Usage Rules
+### 7.3 Usage Rules — two expressions, one identity
 
-The identity appears wherever the platform itself is acting: the login/registration screens (anonymous state only — Section 19.1), the header status chip, beside AI responses in the workspace, and during long-running operations. It never becomes a mascot: no anthropomorphic gimmicks, no idle chatter, no decorative appearances on static screens — and never a smile.
+The identity has exactly two renderings, and they do not overlap:
+
+| | **The Zero Mind** (`ai-identity.tsx`) | **The Zero Orb** (`ai-orb.tsx`) |
+|---|---|---|
+| Role | The brand identity — who Zero *is* | The working presence — what Zero is *doing* |
+| Where | Login and registration panels | Landing surfaces, and beside AI responses in the workspace |
+| Carries | The data-mess → central-mind thesis | The seven canonical states (§7.2) |
+| Form | Human head in profile, voxel-built | Abstract; no face, no anatomy |
+
+Rules that bind both: it appears only where the platform itself is acting, never as decoration on a static screen; it never becomes a mascot — no anthropomorphic gimmicks, no idle chatter, no smile, no eye contact with the viewer (the Mind is in profile precisely so it is *thinking*, not watching); and it never renders anything personalized on an auth surface (§19.1 anonymity rule). Every animation path has a `prefers-reduced-motion` equivalent.
+
+The landing's orb treatment is **founder-approved and frozen** — changes to the AI presence apply to the auth surfaces unless the founder says otherwise.
 
 ---
 
@@ -359,7 +382,7 @@ Rules: the sidebar is the persistent spine (dark navy layer); the workspace (AI)
 
 ### 19.1 Login and Registration (Anonymous by Rule)
 
-**Split layout: the signature face on the left (dark graphite panel), minimal authentication on the right (light).** The particle face is alive and attentive on the auth screens — the first impression is the living platform.
+**Split layout: the Zero Mind on the left (dark graphite panel), minimal authentication on the right (light).** The Mind (§7.1) assembles itself out of scattered data as the visitor arrives — the first impression is the thesis of the product, not a logo.
 
 **The anonymity rule (binding):** before authentication the platform cannot know who the user is; pre-auth surfaces must never display personalized claims, activity summaries, or user data of any kind. Auth-screen copy is generic product messaging only. Personalization begins after sign-in, when **the dashboard assembles** — panels compose into place (fast, purposeful, under the motion rules) rather than popping in.
 
@@ -377,7 +400,7 @@ Each stage may surface as state (AI identity states, progress motion, evidence p
 
 Decision Briefs present: recommendation up front; evidence cards with navigable citations; confidence displayed honestly (including *low* confidence); approve/reject controls; audit metadata (model, prompt version) available on inspection — trust through visible mechanics, not claims.
 
-### 19.4 The Public Landing Experience (v3.2 — the Organism landing)
+### 19.4 The Public Landing Experience (v4.0 — the motion-led composition)
 
 **Design premise (founder decision, 2026-08-02):** visitors will not connect company
 data to an unknown product, and template marketing pages create no interest. The
@@ -406,30 +429,36 @@ desktop-only, every effect with a reduced-motion path (§15.3, §25).
 8px spacing rhythm, 12px radius, outline icons, realistic copy, no gradients —
 solid accents):**
 
-1. **Hero.** 12-column split: left seven columns carry the left-aligned headline
-   (word-by-word reveal, solid magenta keyword), subcopy, CTAs and proof points;
-   the right five columns contain the **Organism** — one continuous particle system
-   morphing through the product story (dust → Signature Face → tool orbit → memory
-   torus → "PROOF." → Z) with a live caption and oscillating rotation that never
-   turns a formation edge-on. Particles react to the cursor.
-2. **Social proof** — trusted-by wordmarks + three count-up outcome stats.
-3. **Features** — six outline-icon tilt cards in a 3/6-column bento.
-4. **How it works** — Connect / Remember / Ask step cards with the **live demo
-   embedded**: question types itself, face changes state, evidence cards land,
-   answer streams, confidence fills. Honest label: synthetic sample workspace.
-5. **Pricing** — four tiers (Free $0 / Starter $29 / Professional $79 highlighted /
-   Enterprise custom) with realistic plan points.
-6. **Testimonials** — three quote cards (name, role, company size).
-7. **FAQ** — five security-first accordions (native `details`, accessible).
-8. **CTA** — closing headline + primary/ghost actions.
-9. **Footer** — brand column + Product / Security / Company link groups.
+1. **Hero.** Asymmetric 6/6 split. Left: a clip-edge masked headline (“Your company /
+   already **knows** / the answer.”) over a numbered eyebrow, with a floating
+   integration pill row — no centred stack. Right: the **Answer Engine** on two
+   offset ghost panels with pointer parallax, and the **Knowledge Lattice** (R3F,
+   light tone) behind it for depth.
+2. **Social proof** — graphite inversion band: wordmark marquee over a divided
+   metric grid with count-up figures.
+3. **Features** — uneven bento (`lg:col-span-8` / `4` alternating, never three
+   across), anchored by a dark panel carrying the **Zero Orb** and cycling
+   Retrieve / Reason / Score / Cite / Audit chips.
+4. **How it works** — a **pinned scroll-scrub** (`lg:h-[280vh]`): a progress spine
+   fills as three bespoke stages swap (converging beams → indexing scan → cited
+   answer), then the visitor drives the **live demo** themselves. Honest label:
+   synthetic sample workspace. Stacks below `lg` so mobile never fights a sticky
+   viewport.
+5. **Pricing** — four tiers; the featured tier **breaks the row** (taller, inverted,
+   lifted by `lg:-mb-3`) instead of merely being outlined.
+6. **Testimonials** — a draggable rail with per-card vertical offset and an
+   oversized serif quote mark.
+7. **FAQ** — split: a sticky statement on the left, a numbered accordion with an
+   animated plus→minus on the right.
+8. **CTA** — graphite finale with the dark-tone lattice and the orb in `speaking`.
+9. **Footer** — link columns under a 26vw `ZERO` watermark.
 
-Flow: Landing → Get started → Registration (3 steps) → Dashboard; returning users
-Landing → Log in → Dashboard. Custom cursor and magnetic buttons on fine pointers
-only. All motion obeys §15 — the Organism is the AI presence (permitted ambient
-identity, like the Signature Face), every other animation explains state, and every
-effect has a reduced-motion alternative (static formed face, stacked chapters,
-instant text).
+Content lives in `landing/content.ts`, motion in `landing/primitives.tsx`, so
+presentation changes never touch copy. Flow: Landing → Get started → Registration
+(3 steps) → Dashboard; returning users Landing → Log in → Dashboard. All motion
+obeys §15 — the orb is the AI presence (permitted ambient identity), every other
+animation explains state, and every effect has a reduced-motion alternative
+(stacked chapters, instant text, formed-and-static canvases).
 
 #### 19.4.1 Superseded v3.1 structure (historical)
 
