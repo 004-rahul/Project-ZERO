@@ -22,9 +22,10 @@
 | 3.0 | Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
 | 3.1 | Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
 | 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
-| 3.3 | Landing brought under a founder-supplied structured brief (§19.4 structure list revised): fixed nine-section order **Hero → Social proof → Features → How it works (live demo embedded) → Pricing → Testimonials → FAQ → CTA → Footer**; 12-column grid, 8px spacing rhythm, 12px radius, outline icons only, realistic marketing copy, **no gradients**; Inter loaded via `next/font`. 2026-08-02. |
+| 3.3 | Landing brought under a founder-supplied structured brief. **Structure list superseded and cleared in v5.0 — see §19.4. The layout details formerly recorded in this row are void and must not be used as a specification.** 2026-08-02. |
 | 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
-| 4.2 | **This document.** AI identity re-founded again after founder review scored the voxel profile head −10 (“looks like a cartoon”). **Binding rule added: the identity is never figurative.** Tracing a recognisable object — a face, a brain, a head — in points or lines reads as clip art at any density, and three successive attempts failed the same way. The premium quality in the founder's references comes from *volume, depth and light*, not from resemblance. The identity is now **MindCore**: an abstract volumetric intelligence core in WebGL (~29k GPU points, two draw calls, hand-written GLSL) — a hot nucleus, a coherent accretion vortex drawing data inward, a sparse cold atmosphere, and a crisp counter-rotating ring that **holds through the entire cycle** so a designed element is always on screen. Palette unchanged. 2026-08-03. |
+| 5.0 | **This document.** Landing specification CLEARED (§19.4). Every prior "redesign from scratch" complied with the written prescription in that section and so reproduced the same page; the specification itself was the blocker. Section 19.4 now records only the non-stylistic constraints (anonymity, accessibility, performance, copy ownership) and explicitly specifies no layout, grid, type scale, ornament or motion vocabulary. Theme remains Deep Teal / Ice Cyan. All landing section components and the UI kit were deleted alongside it. 2026-08-15. |
+| 4.2 | AI identity re-founded again after founder review scored the voxel profile head −10 (“looks like a cartoon”). **Binding rule added: the identity is never figurative.** Tracing a recognisable object — a face, a brain, a head — in points or lines reads as clip art at any density, and three successive attempts failed the same way. The premium quality in the founder's references comes from *volume, depth and light*, not from resemblance. The identity is now **MindCore**: an abstract volumetric intelligence core in WebGL (~29k GPU points, two draw calls, hand-written GLSL) — a hot nucleus, a coherent accretion vortex drawing data inward, a sparse cold atmosphere, and a crisp counter-rotating ring that **holds through the entire cycle** so a designed element is always on screen. Palette unchanged. 2026-08-03. |
 | 4.1 | AI identity re-founded (§7 rewritten). The geometric android **Signature Face** is retired outright — a face on a public surface read as a mascot and was rejected in founder review. The identity is now **The Zero Mind**: a human head in profile built from emissive voxels, the cerebrum glowing inside the cranium, a spine of light into the shoulders, and a signature **halo ring** through the head at brow level with lens flares at both extremes. Colour runs the existing ramp along the axis of thought — cyan at the occiput where raw data arrives, magenta at the face where it becomes an answer, gold synapses. Its lifecycle carries the founder's own thesis: scattered drift (an organisation's data is a mess) → slow gather → work → dissolve. Built from founder references `Demos/SS/Identity-1…4`; geometry verified against real profile proportion by offline rasterisation before shipping. State-bearing duties stay with the **Zero Orb** (§7.3). Palette unchanged. 2026-08-03. |
 | 4.0 | Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). 2026-08-03. |
 | 3.5 | Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
@@ -412,69 +413,34 @@ Each stage may surface as state (AI identity states, progress motion, evidence p
 
 Decision Briefs present: recommendation up front; evidence cards with navigable citations; confidence displayed honestly (including *low* confidence); approve/reject controls; audit metadata (model, prompt version) available on inspection — trust through visible mechanics, not claims.
 
-### 19.4 The Public Landing Experience (v4.0 — the motion-led composition)
+### 19.4 The Public Landing Experience — DELIBERATELY UNSPECIFIED
 
-**Design premise (founder decision, 2026-08-02):** visitors will not connect company
-data to an unknown product, and template marketing pages create no interest. The
-landing must therefore (a) let visitors **try the product on the page** with zero
-signup, and (b) carry a signature visual no competitor can copy.
+**Status: cleared 2026-08-15 by founder instruction. Do not restore from history.**
 
-**Palette (v3.5 — light):** the landing uses the product's own light identity (§10):
-white `#FFFFFF` and canvas `#FAFAFB` alternating bands, ink `#17181C`, muted
-`#5F6168`, hairline `#E8E8EA`, **Violet `#7C3AED` accent** (strong `#6D28D9`).
-Material language: white cards with soft shadows that deepen on hover, subtle
-violet tint fills (`accent/5–10`), pastel washes behind the hero, sheen sweeps on
-primary CTAs, gentle 3D tilt with a violet glare. The Aurora dark palette (v3.2)
-is retired for the landing.
+This section previously prescribed the landing in detail — a fixed nine-section
+order, a 1400px measure, numbered mono eyebrows, hairline rules that fade at the
+ends, tabular figures, banned and required layout patterns. Every subsequent
+"redesign from scratch" read this section first and complied with it, so each
+attempt reproduced the same page in new colours. The specification was the
+reason the output would not change.
 
-**Craft rules (v4.0).** Every section owns a distinct layout language; the shared
-vocabulary is the 1400px grid, numbered mono eyebrows (`01 — FEATURES`), hairline
-rules that fade at the ends, tabular figures for metrics, and the violet accent.
-Banned: centred heading-paragraph-button stacks, uniform three-across card rows,
-borderless white-on-white surfaces. Required: asymmetric splits, at least one
-structural inversion per page (graphite bands), layered depth (offset ghost panels,
-pointer parallax), and a purpose-built interaction per section. Motion budget:
-transform/opacity only, one pinned scrub per page, WebGL idle-loaded and
-desktop-only, every effect with a reduced-motion path (§15.3, §25).
+It is therefore removed rather than rewritten. **There is currently no approved
+landing composition.** A future design must be derived from the founder's brief
+and from fresh work, not from this document.
 
-**Canonical structure (fixed nine-section order, 12-column grid,
-8px spacing rhythm, 12px radius, outline icons, realistic copy, no gradients —
-solid accents):**
+The only constraints that still bind the public landing are the ones that are
+not stylistic:
 
-1. **Hero.** Asymmetric 6/6 split. Left: a clip-edge masked headline (“Your company /
-   already **knows** / the answer.”) over a numbered eyebrow, with a floating
-   integration pill row — no centred stack. Right: the **Answer Engine** on two
-   offset ghost panels with pointer parallax, and the **Knowledge Lattice** (R3F,
-   light tone) behind it for depth.
-2. **Social proof** — graphite inversion band: wordmark marquee over a divided
-   metric grid with count-up figures.
-3. **Features** — uneven bento (`lg:col-span-8` / `4` alternating, never three
-   across), anchored by a dark panel carrying the **Zero Orb** and cycling
-   Retrieve / Reason / Score / Cite / Audit chips.
-4. **How it works** — a **pinned scroll-scrub** (`lg:h-[280vh]`): a progress spine
-   fills as three bespoke stages swap (converging beams → indexing scan → cited
-   answer), then the visitor drives the **live demo** themselves. Honest label:
-   synthetic sample workspace. Stacks below `lg` so mobile never fights a sticky
-   viewport.
-5. **Pricing** — four tiers; the featured tier **breaks the row** (taller, inverted,
-   lifted by `lg:-mb-3`) instead of merely being outlined.
-6. **Testimonials** — a draggable rail with per-card vertical offset and an
-   oversized serif quote mark.
-7. **FAQ** — split: a sticky statement on the left, a numbered accordion with an
-   animated plus→minus on the right.
-8. **CTA** — graphite finale with the dark-tone lattice and the orb in `speaking`.
-9. **Footer** — link columns under a 26vw `ZERO` watermark.
+- **§19.1 anonymity rule** — nothing personalised may render before sign-in.
+- **§25 accessibility** — WCAG 2.2 AA; focus is a designed state and is never
+  suppressed; every animation has a `prefers-reduced-motion` equivalent.
+- **§15.3 performance budget** — transform/opacity only, WebGL idle-loaded and
+  excluded from first-load JS.
+- **Copy and content** are owned by `landing/content.ts` and are preserved
+  across redesigns unless the founder says otherwise.
 
-Content lives in `landing/content.ts`, motion in `landing/primitives.tsx`, so
-presentation changes never touch copy. Flow: Landing → Get started → Registration
-(3 steps) → Dashboard; returning users Landing → Log in → Dashboard. All motion
-obeys §15 — the orb is the AI presence (permitted ambient identity), every other
-animation explains state, and every effect has a reduced-motion alternative
-(stacked chapters, instant text, formed-and-static canvases).
-
-#### 19.4.1 Superseded v3.1 structure (historical)
-
-The public site is part of the product's credibility: a premium animated marketing surface in the same design language (graphite hero, violet accent, light feature sections). Canonical structure: sticky translucent navigation → animated hero with the particle constellation and a floating product shot → customer strip → animated stats → feature grid (Connect · Remember · Answer · Decide · Govern · Provider-agnostic) → "how it works" three steps → dark trust/security section → four-tier pricing (Professional highlighted) → closing CTA → footer. Flow: Landing → Get started → Registration (3 steps) → Dashboard; returning users Landing → Log in → Dashboard. All motion obeys the Motion System (Section 15), including scroll-reveals and reduced-motion alternatives.
+Nothing about layout, section order, grid, type scale, ornament or motion
+vocabulary is specified here. That is intentional.
 
 ---
 
