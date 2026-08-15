@@ -1,102 +1,98 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { FAQS } from "../content";
-import { Eyebrow, Reveal, Shell } from "../primitives";
+import { MaskLines, Reveal } from "@/components/motion";
+import { Button, Marker, Mono, Section, Shell } from "@/components/ui";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 /**
- * FAQ (Design Bible §19.4): a two-column split — the section statement stays
- * anchored left while the accordion runs right, so the block never reads as a
- * centred stack. One item open at a time, height animated, numbered rows.
+ * FAQ — a split: a fixed position on the left, the questions on the right.
+ *
+ * A centred accordion makes security questions feel like fine print. Anchoring
+ * a standing claim beside them frames the whole list as an argument the
+ * product is making, and the sticky column means that claim stays on screen
+ * for every answer the reader opens.
  */
-
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 export function Faq() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState<number | null>(0);
+  const reduced = useReducedMotion();
 
   return (
-    <section id="faq" className="relative border-t border-line bg-cream py-24 md:py-32">
+    <Section id="faq">
       <Shell>
-        <div className="grid grid-cols-12 gap-x-10 gap-y-12">
-          <div className="col-span-12 lg:col-span-4">
-            <div className="lg:sticky lg:top-28">
-              <Eyebrow index="05">FAQ</Eyebrow>
-              <Reveal delay={0.06}>
-                <h2 className="mt-6 text-[clamp(28px,3.2vw,44px)] font-black leading-[1.04] tracking-[-0.035em] text-ink">
-                  Questions security teams ask first.
-                </h2>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <p className="mt-6 max-w-xs text-base leading-relaxed text-muted">
-                  Straight answers on data handling, providers and access control — the questions
-                  that decide whether a pilot happens.
+        <div className="grid grid-cols-12 gap-y-12 lg:gap-x-16">
+          <div className="col-span-12 lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <Marker index="008" label="Security" />
+              <MaskLines
+                as="h2"
+                className="mt-7 text-[clamp(30px,3.6vw,50px)] font-black leading-[1.0] tracking-[-0.04em] text-ink"
+                lines={[<>Questions security</>, <>teams ask first.</>]}
+              />
+              <Reveal delay={0.1} className="mt-6 max-w-sm">
+                <p className="text-md leading-relaxed text-muted">
+                  Your data stays in your tenant, under your keys, with every answer traceable to
+                  its source.
                 </p>
+              </Reveal>
+              <Reveal delay={0.16} className="mt-8">
+                <Button href="/register" variant="ghost" size="sm" icon="→">
+                  Read the trust center
+                </Button>
               </Reveal>
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-8">
-            <div className="border-t border-line">
-              {FAQS.map((faq, i) => {
-                const isOpen = open === i;
-                return (
-                  <Reveal key={faq.q} delay={i * 0.04}>
-                    <div className="border-b border-line">
-                      <button
-                        type="button"
-                        aria-expanded={isOpen}
-                        onClick={() => setOpen(isOpen ? -1 : i)}
-                        className="group flex w-full items-start gap-5 py-6 text-left"
+          <ul className="col-span-12 border-t border-line lg:col-span-7">
+            {FAQS.map((f, i) => {
+              const on = open === i;
+              return (
+                <li key={f.q} className="border-b border-line">
+                  <h3>
+                    <button
+                      type="button"
+                      onClick={() => setOpen(on ? null : i)}
+                      aria-expanded={on}
+                      className="group flex w-full items-start gap-5 py-6 text-left"
+                    >
+                      <Mono className={`mt-1 shrink-0 ${on ? "text-accent" : "text-faint"}`}>
+                        {String(i + 1).padStart(2, "0")}
+                      </Mono>
+                      <span
+                        className={`flex-1 text-md font-bold leading-snug transition-colors ${
+                          on ? "text-ink" : "text-muted group-hover:text-ink"
+                        }`}
                       >
-                        <span className="pz-num pt-1 text-2xs font-bold tracking-[.18em] text-accent">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span
-                          className={`flex-1 text-lg font-bold leading-snug tracking-[-0.015em] transition-colors ${
-                            isOpen ? "text-accent" : "text-ink group-hover:text-accent"
-                          }`}
-                        >
-                          {faq.q}
-                        </span>
-                        <span
-                          className={`relative mt-1.5 h-4 w-4 shrink-0 transition-colors ${
-                            isOpen ? "text-accent" : "text-muted group-hover:text-accent"
-                          }`}
-                          aria-hidden
-                        >
-                          <span className="absolute left-0 top-1/2 h-[1.5px] w-4 -translate-y-1/2 bg-current" />
-                          <motion.span
-                            className="absolute left-1/2 top-0 h-4 w-[1.5px] -translate-x-1/2 bg-current"
-                            animate={{ scaleY: isOpen ? 0 : 1 }}
-                            transition={{ duration: 0.3, ease: EASE }}
-                          />
-                        </span>
-                      </button>
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.42, ease: EASE }}
-                            className="overflow-hidden"
-                          >
-                            <p className="max-w-2xl pb-7 pl-[52px] pr-8 text-base leading-relaxed text-muted">
-                              {faq.a}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
+                        {f.q}
+                      </span>
+                      <motion.span
+                        aria-hidden
+                        animate={reduced ? undefined : { rotate: on ? 45 : 0 }}
+                        transition={{ duration: DUR.microOut, ease: EASE_OUT }}
+                        className={`mt-0.5 text-lg leading-none ${on ? "text-accent" : "text-faint"}`}
+                      >
+                        +
+                      </motion.span>
+                    </button>
+                  </h3>
+                  <motion.div
+                    initial={false}
+                    animate={reduced ? undefined : { height: on ? "auto" : 0, opacity: on ? 1 : 0 }}
+                    transition={{ duration: DUR.component, ease: EASE_OUT }}
+                    className="overflow-hidden"
+                  >
+                    <p className="max-w-2xl pb-7 pl-[3.4rem] pr-8 text-sm leading-relaxed text-muted">
+                      {f.a}
+                    </p>
+                  </motion.div>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </Shell>
-    </section>
+    </Section>
   );
 }

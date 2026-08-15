@@ -12,14 +12,17 @@ import { Proof } from "@/components/landing/sections/proof";
 import { Testimonials } from "@/components/landing/sections/testimonials";
 
 /**
- * Public landing page (Design Bible §19.4 v4.0).
+ * Public landing page (Design Bible §19.4 · v5.0).
  *
- * Composition: a tonal arc — light editorial hero → graphite proof band →
- * light feature bento → pinned scroll-scrubbed "how it works" with the live
- * demo → pricing with a broken-row featured tier → draggable testimonial rail
- * → split FAQ → graphite finale + footer. Each section owns its own layout
- * language and interaction; the shared vocabulary is the 1400px grid, the
- * numbered eyebrows, the hairline rules and the violet accent.
+ * Composed as a tonal arc rather than a stack of equal blocks — base, deep,
+ * base, raised, base, deep, base, deep — so the eye gets a floor roughly every
+ * other section and the page reads as chapters instead of one long scroll.
+ *
+ * Each section owns a genuinely different structure: an editorial hero, a
+ * measured proof band, a specification index, a pinned sequence, a broken-row
+ * rate card, a single display quote, a split FAQ, and a final inversion. The
+ * shared language is the 1400px measure, the numbered markers, the hairline
+ * system and the ice-cyan accent — not a repeated layout.
  *
  * Anonymous by rule (§19.1): nothing personalized renders pre-authentication.
  */

@@ -1,73 +1,105 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
 import { TESTIMONIALS } from "../content";
-import { DragRail, Eyebrow, Reveal, Shell } from "../primitives";
+import { Marker, Mono, Section, Shell } from "@/components/ui";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 /**
- * Testimonials (Design Bible §19.4): an editorial quote rail the visitor can
- * drag. Oversized quote marks and staggered card offsets break the uniform
- * three-column pattern used elsewhere on the page.
+ * Testimonials — one quote at editorial scale, selected from a rail.
+ *
+ * Three quote cards side by side means all three get skimmed and none get
+ * read. Giving a single quote the full measure at display size makes it
+ * legible as a statement; the other voices stay available as a list the
+ * reader chooses from. The quote mark is set oversized and behind the text,
+ * so it reads as typography rather than as an icon.
  */
-
-const EASE = [0.16, 1, 0.3, 1] as const;
-const OFFSET = ["lg:mt-0", "lg:mt-10", "lg:mt-4"];
-
 export function Testimonials() {
+  const [i, setI] = useState(0);
+  const reduced = useReducedMotion();
+  const t = TESTIMONIALS[i];
+
   return (
-    <section aria-label="Testimonials" className="relative overflow-hidden border-t border-line py-24 md:py-32">
+    <Section tone="deep">
       <Shell>
-        <div className="grid grid-cols-12 items-end gap-x-10 gap-y-6">
-          <div className="col-span-12 lg:col-span-8">
-            <Eyebrow index="04">Testimonials</Eyebrow>
-            <Reveal delay={0.06}>
-              <h2 className="mt-6 max-w-2xl text-[clamp(30px,3.6vw,50px)] font-black leading-[1.02] tracking-[-0.035em] text-ink">
-                Teams stopped losing what they know.
-              </h2>
-            </Reveal>
-          </div>
-          <div className="col-span-12 lg:col-span-4">
-            <Reveal delay={0.12}>
-              <p className="text-2xs font-bold uppercase tracking-[.16em] text-faint lg:text-right">
-                Drag to explore →
-              </p>
-            </Reveal>
-          </div>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <Marker index="007" label="In practice" />
+          <Mono className="text-faint">
+            {String(i + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
+          </Mono>
+        </div>
+
+        <div className="mt-14 grid grid-cols-12 gap-y-12 lg:gap-x-16">
+          <figure className="relative col-span-12 lg:col-span-8">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -left-3 -top-14 select-none font-serif text-[190px] leading-none text-accent/10 lg:-left-10"
+            >
+              &ldquo;
+            </span>
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={i}
+                initial={reduced ? undefined : { opacity: 0, y: 14 }}
+                animate={reduced ? undefined : { opacity: 1, y: 0 }}
+                exit={reduced ? undefined : { opacity: 0, y: -10 }}
+                transition={{ duration: DUR.component, ease: EASE_OUT }}
+                className="relative"
+              >
+                <p className="text-[clamp(24px,3.1vw,44px)] font-extrabold leading-[1.14] tracking-[-0.035em] text-ink">
+                  {t.quote}
+                </p>
+                <figcaption className="mt-8 flex items-center gap-4">
+                  <span className="h-px w-10 bg-accent/60" />
+                  <span>
+                    <span className="block text-sm font-bold text-ink">{t.name}</span>
+                    <span className="block text-sm text-muted">{t.role}</span>
+                  </span>
+                </figcaption>
+              </motion.blockquote>
+            </AnimatePresence>
+          </figure>
+
+          {/* voice rail — the other quotes stay addressable */}
+          <ul className="col-span-12 border-t border-line lg:col-span-4 lg:border-t-0">
+            {TESTIMONIALS.map((q, k) => (
+              <li key={q.name} className="border-b border-line lg:border-b lg:first:border-t">
+                <button
+                  type="button"
+                  onMouseEnter={() => setI(k)}
+                  onFocus={() => setI(k)}
+                  onClick={() => setI(k)}
+                  aria-current={k === i}
+                  className="group flex w-full items-center gap-4 py-5 text-left"
+                >
+                  <Mono className={k === i ? "text-accent" : "text-faint"}>
+                    {String(k + 1).padStart(2, "0")}
+                  </Mono>
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={`block truncate text-sm font-bold transition-colors ${
+                        k === i ? "text-ink" : "text-muted group-hover:text-ink"
+                      }`}
+                    >
+                      {q.name}
+                    </span>
+                    <span className="block truncate text-xs text-faint">{q.role}</span>
+                  </span>
+                  <span
+                    aria-hidden
+                    className={`pz-travel text-accent transition-opacity ${
+                      k === i ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    →
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </Shell>
-
-      <Reveal delay={0.1}>
-        <DragRail className="pz-fade-x mt-14 px-6 md:px-10 lg:px-16">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.figure
-              key={t.name}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className={`relative mr-5 flex w-[86vw] shrink-0 flex-col rounded-xl border border-line bg-card p-8 shadow-card transition-colors hover:border-accent/35 hover:shadow-lift sm:w-[420px] ${OFFSET[i]}`}
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-6 top-3 select-none font-serif text-[92px] leading-none text-accent/10"
-              >
-                &rdquo;
-              </span>
-              <blockquote className="relative flex-1 text-lg font-medium leading-relaxed tracking-[-0.01em] text-ink">
-                {t.quote}
-              </blockquote>
-              <figcaption className="mt-7 flex items-center gap-3 border-t border-line pt-5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/10 text-sm font-black text-accent">
-                  {t.name.charAt(0)}
-                </span>
-                <span>
-                  <span className="block text-sm font-bold text-ink">{t.name}</span>
-                  <span className="mt-0.5 block text-xs text-muted">{t.role}</span>
-                </span>
-              </figcaption>
-            </motion.figure>
-          ))}
-          <span aria-hidden className="w-6 shrink-0 md:w-10 lg:w-16" />
-        </DragRail>
-      </Reveal>
-    </section>
+    </Section>
   );
 }

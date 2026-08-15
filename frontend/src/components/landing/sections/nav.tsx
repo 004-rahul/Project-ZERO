@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Magnetic } from "../primitives";
+import { Magnetic } from "@/components/motion";
+import { Button, Mono } from "@/components/ui";
 
 /**
- * Landing chrome (Design Bible §19.4): a fixed graphite bar with a sliding
- * active-section indicator, a scroll-progress hairline, and a translucency
- * that deepens once the hero is passed. Anonymous by rule (§19.1).
+ * Chrome. The bar itself never changes size or borders on scroll — its
+ * backdrop cross-fades as a separate layer, because toggling a border shifts
+ * every pixel below it and backdrop-blur cannot be transitioned at all.
  */
 
 const LINKS = [
@@ -23,15 +24,15 @@ export function LandingNav() {
   const [solid, setSolid] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => setSolid(v > 0.03));
+  useMotionValueEvent(scrollYProgress, "change", (v) => setSolid(v > 0.02));
 
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
-        const visible = entries
+        const top = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
+        if (top) setActive(top.target.id);
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: [0.01, 0.25, 0.5] },
     );
@@ -44,30 +45,18 @@ export function LandingNav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      {/* The chrome cross-fades as its own layer. Toggling `border-b` shifts
-          every following pixel by 1px on scroll, and `backdrop-blur` cannot be
-          transitioned at all — both read as the bar snapping rather than
-          settling. Opacity on a layer is smooth and costs no layout. */}
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-0 border-b border-white/10 bg-zone-header/90 backdrop-blur-xl transition-opacity duration-500 ease-out ${
+        className={`pointer-events-none absolute inset-0 border-b border-line bg-zone-header/85 backdrop-blur-xl transition-opacity duration-500 ease-out ${
           solid ? "opacity-100" : "opacity-0"
         }`}
       />
       <div className="relative mx-auto flex w-full max-w-[1400px] items-center gap-8 px-6 py-4 md:px-10 lg:px-16">
-        <Link href="/" className="group flex items-center gap-2.5">
-          <span
-            className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-black transition-colors ${
-              solid ? "bg-accent text-void" : "bg-ink text-void"
-            }`}
-          >
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-void">
             Z
           </span>
-          <span
-            className={`text-md font-bold transition-colors ${solid ? "text-on-dark" : "text-ink"}`}
-          >
-            Project Zero
-          </span>
+          <span className="text-md font-bold text-ink">Project Zero</span>
         </Link>
 
         <nav className="relative ml-auto hidden items-center gap-1 lg:flex">
@@ -76,21 +65,13 @@ export function LandingNav() {
               key={id}
               href={href}
               className={`relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
-                solid
-                  ? active === id
-                    ? "text-on-dark"
-                    : "text-on-dark-muted hover:text-on-dark"
-                  : active === id
-                    ? "text-ink"
-                    : "text-muted hover:text-ink"
+                active === id ? "text-ink" : "text-muted hover:text-ink"
               }`}
             >
               {active === id && (
                 <motion.span
                   layoutId="nav-pill"
-                  className={`absolute inset-0 -z-10 rounded-lg ${
-                    solid ? "bg-white/10" : "bg-ink/[.06]"
-                  }`}
+                  className="absolute inset-0 -z-10 rounded-lg bg-raised"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -100,38 +81,31 @@ export function LandingNav() {
         </nav>
 
         <div className="ml-auto flex items-center gap-3 lg:ml-0">
-          <Magnetic strength={0.18}>
+          <Magnetic strength={0.16}>
             <Link
               href="/login"
-              className={`hidden rounded-lg border px-4 py-2 text-sm font-semibold transition-colors sm:block ${
-                solid
-                  ? "border-white/20 text-on-dark hover:bg-white/10"
-                  : "border-line-strong text-ink hover:border-accent hover:text-accent"
-              }`}
+              className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-muted transition-colors hover:text-ink sm:block"
             >
               Log in
             </Link>
           </Magnetic>
-          <Magnetic strength={0.18}>
-            <Link
-              href="/register"
-              className="group relative block overflow-hidden rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-void shadow-[0_4px_18px_rgba(61,219,217,.35),inset_0_1px_0_rgba(255,255,255,.3)] transition-colors hover:bg-accent-strong"
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-white/25 blur-md transition-transform duration-700 group-hover:translate-x-[400%] motion-reduce:hidden"
-              />
+          <Magnetic strength={0.16}>
+            <Button href="/register" size="sm">
               Start free
-            </Link>
+            </Button>
           </Magnetic>
         </div>
       </div>
 
+      {/* read position, not decoration */}
       <motion.div
         aria-hidden
         style={{ scaleX: scrollYProgress }}
         className="h-px origin-left bg-accent"
       />
+      <span className="sr-only">
+        <Mono>navigation</Mono>
+      </span>
     </header>
   );
 }
