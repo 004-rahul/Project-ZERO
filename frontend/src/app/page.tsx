@@ -1,48 +1,29 @@
-import { Curtain } from "@/components/landing/curtain";
-import { SmoothScroll } from "@/components/landing/smooth-scroll";
-import { Cta } from "@/components/landing/sections/cta";
-import { Faq } from "@/components/landing/sections/faq";
-import { Features } from "@/components/landing/sections/features";
-import { Footer } from "@/components/landing/sections/footer";
-import { Hero } from "@/components/landing/sections/hero";
-import { How } from "@/components/landing/sections/how";
-import { LandingNav } from "@/components/landing/sections/nav";
-import { Pricing } from "@/components/landing/sections/pricing";
-import { Proof } from "@/components/landing/sections/proof";
-import { Testimonials } from "@/components/landing/sections/testimonials";
-
 /**
- * Public landing page (Design Bible §19.4 · v5.0).
+ * Public landing page — INTENTIONALLY EMPTY.
  *
- * Composed as a tonal arc rather than a stack of equal blocks — base, deep,
- * base, raised, base, deep, base, deep — so the eye gets a floor roughly every
- * other section and the page reads as chapters instead of one long scroll.
+ * The previous landing was deleted in full (all section components, the UI kit
+ * and the motion layer) along with its written specification in Design Bible
+ * §19.4, which is now cleared. There is deliberately no approved composition to
+ * rebuild from: the specification was the reason successive redesigns kept
+ * producing the same page.
  *
- * Each section owns a genuinely different structure: an editorial hero, a
- * measured proof band, a specification index, a pinned sequence, a broken-row
- * rate card, a single display quote, a split FAQ, and a final inversion. The
- * shared language is the 1400px measure, the numbered markers, the hairline
- * system and the ice-cyan accent — not a repeated layout.
+ * Copy and content survive in `landing/content.ts` and are unchanged.
+ * The Deep Teal / Ice Cyan theme tokens survive in `tailwind.config.ts`.
  *
- * Anonymous by rule (§19.1): nothing personalized renders pre-authentication.
+ * Do not reconstruct the old layout from git history.
  */
 export default function LandingPage() {
   return (
-    <>
-      <SmoothScroll />
-      <Curtain />
-      <LandingNav />
-      <main className="overflow-x-clip bg-cream text-ink">
-        <Hero />
-        <Proof />
-        <Features />
-        <How />
-        <Pricing />
-        <Testimonials />
-        <Faq />
-        <Cta />
-      </main>
-      <Footer />
-    </>
+    <main className="flex min-h-screen items-center justify-center bg-cream px-6 text-ink">
+      <div className="max-w-md">
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-sm font-black text-void">
+          Z
+        </span>
+        <h1 className="mt-6 text-2xl font-black tracking-tight">Project Zero</h1>
+        <p className="mt-3 text-sm leading-relaxed text-muted">
+          Landing design cleared. Awaiting a new direction.
+        </p>
+      </div>
+    </main>
   );
 }
