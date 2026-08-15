@@ -1,0 +1,60 @@
+/**
+ * BLUEPRINT — candidate 3
+ *
+ * Character: clean, technical, daylight. The only light candidate, and
+ * deliberately cool rather than warm — warm cream with a serif and a
+ * terracotta accent is the most over-used "premium" look on the web right
+ * now and would undercut the brief.
+ *
+ * Ground is a faintly blue-shifted paper, not white, so pure white cards
+ * lift off it without a border. Ink is near-black with a blue cast. One
+ * deep structural blue does the interaction work.
+ *
+ * Use when the product should read as trustworthy and legible above all —
+ * the theme most likely to survive an enterprise buyer's screenshot.
+ *
+ * Note: no grain. Grain on a light ground reads as a printing artefact.
+ */
+
+[data-theme="blueprint"] {
+  color-scheme: light;
+
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #e8ecf2;
+  --overlay: rgb(13 18 32 / 0.42);
+
+  --text: #0d1220;
+  --text-muted: #4a5468;
+  --text-faint: #7b8598;
+  --text-on-accent: #ffffff;
+
+  --accent: #1b4fd8;
+  --accent-hover: #1740b4;
+  --accent-subtle: rgb(27 79 216 / 0.08);
+  --accent-contrast: #1740b4;
+
+  --second: #0f766e;
+  --second-subtle: rgb(15 118 110 / 0.09);
+
+  --line-subtle: #dfe4ec;
+  --line-strong: #a9b3c4;
+
+  --success: #12805a;
+  --warning: #8a5a06;
+  --danger: #b4342f;
+  --info: #1b4fd8;
+
+  /* On a light ground depth is a cast shadow — an inset highlight does
+     nothing, so these are genuinely different values, not an inversion. */
+  --shadow-sm: 0 1px 2px rgb(13 18 32 / 0.06);
+  --shadow-md: 0 2px 4px rgb(13 18 32 / 0.05), 0 8px 24px rgb(13 18 32 / 0.06);
+  --shadow-lg: 0 4px 8px rgb(13 18 32 / 0.05), 0 24px 56px rgb(13 18 32 / 0.09);
+  --glow: 0 8px 32px rgb(27 79 216 / 0.18);
+  --grain-opacity: 0;
+
+  --scene-fog: #f3f5f8;
+  --scene-key: #1b4fd8;
+  --scene-rim: #0f766e;
+}

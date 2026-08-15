@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Theme candidates. Each defines the full token contract (themes/contract.ts)
+   under its own [data-theme] selector. Adding one is an import + a registry
+   row — no component ever changes. */
+@import "../themes/obsidian.css";
+@import "../themes/halation.css";
+@import "../themes/blueprint.css";
+
+/**
+ * Tailwind v4 theme mapping.
+ *
+ * Utilities resolve to the CSS variables above rather than to literal
+ * colours, so `bg-surface` is correct in every theme and switching themes
+ * is one attribute on <html>. Never write a hex literal in a component —
+ * if a value is missing, it belongs in the contract.
+ */
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-text-on-accent: var(--text-on-accent);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-contrast: var(--accent-contrast);
+
+  --color-second: var(--second);
+  --color-second-subtle: var(--second-subtle);
+
+  --color-line-subtle: var(--line-subtle);
+  --color-line-strong: var(--line-strong);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  /* Type scale. Display steps carry negative tracking; body does not. */
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3.25rem;
+  --text-5xl: 4.5rem;
+
+  /* Motion. Mirrors motion/easings.ts and motion/durations.ts — CSS
+     transitions and JS animations must not disagree about feel. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+}
+
+@layer base {
+  html {
+    /* Lenis drives scrolling; native smooth-scroll would fight it. */
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  /* Focus is a designed state and is never suppressed. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-subtle);
+    color: var(--text);
+  }
+
+  /* Headings opt out of orphans; body text keeps normal wrapping. */
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Applied by MotionProvider when a user prefers reduced motion, in
+     addition to the media query — some animations are JS-driven and need
+     the class as well as the query. */
+  .reduce-motion *,
+  .reduce-motion *::before,
+  .reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

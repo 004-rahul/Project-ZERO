@@ -5,11 +5,11 @@ obj/
 .vs/
 TestResults/
 
-# Node / Next.js
+# Node / React (Vite)
 node_modules/
-.next/
-out/
-next-env.d.ts.bak
+dist/
+.vite/
+vite.config.ts.timestamp-*
 npm-debug.log*
 
 # Python

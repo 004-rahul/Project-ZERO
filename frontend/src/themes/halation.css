@@ -1,0 +1,56 @@
+/**
+ * HALATION — candidate 2
+ *
+ * Character: cinematic, atmospheric, expensive. Named for the bloom that
+ * forms around a bright source on film. Deep indigo ground rather than
+ * neutral black, so the whole page has a colour temperature. Accent blooms;
+ * grain is present and deliberate.
+ *
+ * Use when the product should read as a *creative* technology company —
+ * more emotional than Obsidian, more memorable, slightly riskier. This is
+ * the theme that will photograph best in a launch post.
+ *
+ * Cost: bloom and grain are the easiest things in the world to overdo. The
+ * glow token is for the hero and the primary action. Nothing else.
+ */
+
+[data-theme="halation"] {
+  color-scheme: dark;
+
+  --bg: #0a0714;
+  --surface: #130f22;
+  --surface-raised: #1c1630;
+  --surface-sunken: #060410;
+  --overlay: rgb(6 4 16 / 0.76);
+
+  --text: #efeaf8;
+  --text-muted: #a49cbb;
+  --text-faint: #736b8a;
+  --text-on-accent: #12081f;
+
+  --accent: #b15cff;
+  --accent-hover: #c688ff;
+  --accent-subtle: rgb(177 92 255 / 0.14);
+  --accent-contrast: #cfa3ff;
+
+  --second: #ffb347;
+  --second-subtle: rgb(255 179 71 / 0.13);
+
+  --line-subtle: #241d3a;
+  --line-strong: #453a63;
+
+  --success: #4ade80;
+  --warning: #ffb347;
+  --danger: #fb7185;
+  --info: #a78bfa;
+
+  --shadow-sm: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 3px rgb(0 0 0 / 0.5);
+  --shadow-md: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 6px 22px rgb(0 0 0 / 0.5);
+  --shadow-lg: inset 0 1px 0 rgb(255 255 255 / 0.09), 0 24px 64px rgb(10 2 24 / 0.7);
+  --glow: 0 0 64px rgb(177 92 255 / 0.4);
+  --grain-opacity: 0.055;
+
+  --scene-fog: #0a0714;
+  --scene-key: #b15cff;
+  --scene-rim: #ffb347;
+}

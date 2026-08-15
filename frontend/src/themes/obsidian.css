@@ -1,0 +1,54 @@
+/**
+ * OBSIDIAN — candidate 1
+ *
+ * Character: engineered, cold, precise. Near-black ground that is *not*
+ * pure #000, so surfaces separate by lightness and hairlines can carry
+ * structure rather than propping up contrast. One confident electric blue
+ * doing all the interaction work; everything else is neutral.
+ *
+ * Use when the product should read as infrastructure — serious, fast,
+ * built by engineers. Least decorative of the three.
+ */
+
+[data-theme="obsidian"] {
+  color-scheme: dark;
+
+  --bg: #08090b;
+  --surface: #0f1115;
+  --surface-raised: #171a20;
+  --surface-sunken: #050608;
+  --overlay: rgb(4 5 7 / 0.72);
+
+  --text: #f1f3f6;
+  --text-muted: #9aa0ad;
+  --text-faint: #676d7a;
+  --text-on-accent: #f5f8ff;
+
+  --accent: #3b6ff5;
+  --accent-hover: #5583ff;
+  --accent-subtle: rgb(59 111 245 / 0.12);
+  --accent-contrast: #8daaff;
+
+  --second: #22d3a7;
+  --second-subtle: rgb(34 211 167 / 0.12);
+
+  --line-subtle: #1c1f26;
+  --line-strong: #333947;
+
+  --success: #34d399;
+  --warning: #f5b544;
+  --danger: #f87171;
+  --info: #60a5fa;
+
+  /* On a dark ground a cast shadow alone is invisible — depth comes from a
+     top inset highlight plus a deeper cast beneath. */
+  --shadow-sm: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 4px 16px rgb(0 0 0 / 0.45);
+  --shadow-lg: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 18px 48px rgb(0 0 0 / 0.55);
+  --glow: 0 0 40px rgb(59 111 245 / 0.28);
+  --grain-opacity: 0.035;
+
+  --scene-fog: #08090b;
+  --scene-key: #3b6ff5;
+  --scene-rim: #22d3a7;
+}
