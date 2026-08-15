@@ -1,3 +1,5 @@
+import { Curtain } from "@/components/landing/curtain";
+import { SmoothScroll } from "@/components/landing/smooth-scroll";
 import { Cta } from "@/components/landing/sections/cta";
 import { Faq } from "@/components/landing/sections/faq";
 import { Features } from "@/components/landing/sections/features";
@@ -24,6 +26,8 @@ import { Testimonials } from "@/components/landing/sections/testimonials";
 export default function LandingPage() {
   return (
     <>
+      <SmoothScroll />
+      <Curtain />
       <LandingNav />
       <main className="overflow-x-clip bg-cream text-ink">
         <Hero />

@@ -43,12 +43,18 @@ export function LandingNav() {
   }, []);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        solid ? "border-b border-white/10 bg-zone-header/90 backdrop-blur-xl" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex w-full max-w-[1400px] items-center gap-8 px-6 py-4 md:px-10 lg:px-16">
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* The chrome cross-fades as its own layer. Toggling `border-b` shifts
+          every following pixel by 1px on scroll, and `backdrop-blur` cannot be
+          transitioned at all — both read as the bar snapping rather than
+          settling. Opacity on a layer is smooth and costs no layout. */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 border-b border-white/10 bg-zone-header/90 backdrop-blur-xl transition-opacity duration-500 ease-out ${
+          solid ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      <div className="relative mx-auto flex w-full max-w-[1400px] items-center gap-8 px-6 py-4 md:px-10 lg:px-16">
         <Link href="/" className="group flex items-center gap-2.5">
           <span
             className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-black transition-colors ${

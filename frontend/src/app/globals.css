@@ -95,3 +95,58 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── card interaction layers (Design Bible §15) ─────────────────────────
+   Driven by the parent .pz-card's hover so one cursor event moves several
+   layers together. Transform-only, so none of this costs a layout pass. */
+.pz-zoom {
+  transform: scale(1);
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.pz-card:hover .pz-zoom {
+  transform: scale(1.055);
+}
+.pz-shift {
+  transform: translateY(0);
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pz-card:hover .pz-shift {
+  transform: translateY(-3px);
+}
+/* Icon travel on buttons and links — the arrow leads the cursor. */
+.pz-travel {
+  transform: translateX(0);
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .pz-travel,
+.pz-card:hover .pz-travel {
+  transform: translateX(3px);
+}
+/* Sheen that crosses a primary action on hover. */
+.pz-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.pz-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.pz-sheen:hover::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pz-zoom,
+  .pz-shift,
+  .pz-travel,
+  .pz-sheen::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}

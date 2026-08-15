@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { AiOrb } from "../ai-orb";
 import { FEATURES } from "../content";
-import { Eyebrow, Reveal, Shell, SpotlightCard } from "../primitives";
+import { ClipReveal, Eyebrow, Reveal, Shell, SpotlightCard } from "../primitives";
 
 /**
  * Features (Design Bible §19.4): an asymmetric bento — a tall graphite feature
@@ -12,7 +12,6 @@ import { Eyebrow, Reveal, Shell, SpotlightCard } from "../primitives";
  * three-across grid.
  */
 
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 /** Column spans per index — deliberately uneven. */
 const SPAN = ["lg:col-span-8", "lg:col-span-4", "lg:col-span-4", "lg:col-span-4", "lg:col-span-4", "lg:col-span-8"];
@@ -76,23 +75,30 @@ export function Features() {
           <div className="col-span-12 lg:col-span-7">
             <div className="grid grid-cols-12 gap-4">
               {FEATURES.map((f, i) => (
-                <Reveal key={f.title} delay={i * 0.05} className={`col-span-12 sm:col-span-6 ${SPAN[i]}`}>
+                /* Clip wipe rather than another fade-up: the bento is the third
+                   reveal on the page, and repeating one entrance across every
+                   section is what makes a site read as templated. */
+                <ClipReveal
+                  key={f.title}
+                  delay={i * 0.05}
+                  className={`col-span-12 sm:col-span-6 ${SPAN[i]}`}
+                >
                   <SpotlightCard className="h-full p-6">
                     <div className="flex items-start gap-4">
-                      <motion.span
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-cream ${f.tone}`}
-                        whileHover={{ rotate: -8, scale: 1.06 }}
-                        transition={{ duration: 0.35, ease: EASE }}
+                      {/* icon leads, copy follows a beat behind — one hover,
+                          several layers responding (.pz-zoom / .pz-shift) */}
+                      <span
+                        className={`pz-zoom flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-cream transition-colors duration-300 group-hover:border-accent/40 ${f.tone}`}
                       >
                         <f.icon />
-                      </motion.span>
-                      <div>
+                      </span>
+                      <div className="pz-shift">
                         <h3 className="text-md font-extrabold leading-snug text-ink">{f.title}</h3>
                         <p className="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
                       </div>
                     </div>
                   </SpotlightCard>
-                </Reveal>
+                </ClipReveal>
               ))}
             </div>
           </div>
