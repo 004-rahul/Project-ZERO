@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | Project Zero Roadmap & Implementation Guide |
-| **Document Number** | 06 of 06 |
+| **Document Number** | 06 of 07 |
 | **Version** | 3.0 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Founders / Engineering Lead |
@@ -154,7 +154,7 @@ Twelve epics, numbered 0–11 (reconciliation of the two conflicting older lists
 | 4 | AI Gateway | 2 | MVP |
 | 5 | Connector Platform | 3 | MVP (GitHub) |
 | 6 | Knowledge Platform | 4 | MVP |
-| 7 | Decision Intelligence | 5 | MVP (chat) → V1 (full) |
+| 7 | Decision Intelligence | 5 | MVP (chat + Decision Briefs + evidence + confidence + feedback) → V1 (completion) |
 | 8 | Administration | Expansion | V1 |
 | 9 | Notifications | Expansion | V1 |
 | 10 | Billing & Licensing | Expansion | V1 |
@@ -169,7 +169,7 @@ Every feature and acceptance criterion from all backlog sources, merged. Accepta
 ### Epic 0 — Platform Foundation
 **Goal:** establish the core platform infrastructure required to support all future modules.
 
-**Features:** Git repository; solution structure; Clean Architecture setup; Modular Monolith foundation; dependency injection; configuration management; logging (Serilog); global exception middleware; health checks; API versioning; OpenAPI documentation; Docker environment (Compose: API, AI Engine, PostgreSQL, Redis, RabbitMQ, local storage); GitHub Actions CI; **Python AI Service skeleton**; **.NET ↔ Python API + shared contracts**; **tenant isolation foundation**; **provider abstractions (all nine interfaces)**; feature-flag foundation; testing setup.
+**Features:** Git repository; solution structure; Clean Architecture setup; Modular Monolith foundation; dependency injection; configuration management; logging (Serilog); global exception middleware; health checks; API versioning; OpenAPI documentation; Docker environment (Compose: API, AI Engine, PostgreSQL, Redis, RabbitMQ, local storage); GitHub Actions CI; **Python AI Service skeleton**; **.NET ↔ Python API + shared contracts**; **tenant isolation foundation**; **provider abstractions (all ten interfaces)**; feature-flag foundation; testing setup.
 
 **Acceptance criteria:** project builds successfully; local development environment operational; CI pipeline passes; health endpoints available; API documentation generated.
 
@@ -272,8 +272,10 @@ Key dependencies: tenancy (Epics 1–3) precedes anything tenant-scoped; the AI 
 
 | Release | Contents | Gate |
 |---|---|---|
-| **MVP** | Platform Foundation; Identity; Organizations; Workspaces; AI Gateway; GitHub connector; Knowledge Platform; AI Chat with evidence | Milestones 1–6 |
-| **Version 1.0** | Full Decision Intelligence; Billing & Licensing; Notifications; Administration; Observability hardening | Customer validation (Milestone 7) informing scope |
+| **MVP** | Platform Foundation; Identity; Organizations; Workspaces; AI Gateway; GitHub connector; Knowledge Platform; AI Chat with evidence; **Decision Briefs, confidence scoring, feedback capture, decision history** | Milestones 1–6 |
+| **Version 1.0** | Decision Intelligence **completion** (deepened approval workflows, measured learning loop, executive dashboards); Billing & Licensing; Notifications; Administration; Observability hardening | Customer validation (Milestone 7) informing scope |
+
+*MVP/V1 split for Decision Intelligence resolved in *Product Bible* Appendix C — briefs are MVP, because R005 MVP goal #4 ("recommend next actions") cannot otherwise be met.*
 | **Version 2.0** | Marketplace; vertical solutions; advanced AI agents; mobile applications; desktop applications | V1 stable in production |
 
 Release mechanics (approval, rollback, verification) are defined in the *Engineering Playbook* §§12, 20.
@@ -286,14 +288,36 @@ Actions that must happen **before** their dependent epics, carried from the pre-
 
 | # | De-risking action | Deadline (relative) | Status |
 |---|---|---|---|
-| 1 | **Prototype one end-to-end evidence-backed answer against a real LLM response** — validates the Trust Layer, the hardest UX problem in the product | Before Epic 7 begins | **Open** |
-| 2 | Set the **first-customer-demo target date** and check it against epic ordering | Immediately | **Open** |
+| **0** | **Secure three design partners in writing before substantial build.** Twenty diagnostic conversations with beachhead companies; identify the repeated question; convert the best 3–5 on design-partner terms | **Before Phase 1 · runs alongside Phase 0** | **Open — highest priority** |
+| 1 | **Prototype one end-to-end evidence-backed answer against a real LLM response** — validates the Trust Layer, the hardest UX problem in the product | ~~Before Epic 7 begins~~ → **Moved forward: this is the wedge deliverable** (see §12.1) | **Open** |
+| 2 | Set the **first-customer-demo target date** and check it against epic ordering | Immediately — **now overdue** | **Open** |
 | 3 | Lock the single MVP connector and defer the rest | — | **Done** (GitHub — *Product Bible* Appendix A) |
 | 4 | Define the .NET ↔ Python contract (schema + auth) | Before Epic 0 completes | **Done** (*Architecture Bible* §11) |
 | 5 | Write down the tenant-isolation approach (storage, vector DB, knowledge graph) | Before Epic 0 completes | **Done** (*Architecture Bible* §16, ADR-10) |
 | 6 | Define the test strategy (levels, coverage bar, CI gate) | Before Epic 0 completes | **Done** (*Engineering Playbook* §10) |
 | 7 | Define the connector OAuth/token storage pattern | Before Epic 5 | **Done** (*Architecture Bible* §23.2) |
 | 8 | Resolve architecture v1.1/v1.2 versioning; lock the .NET/Python split | — | **Done** (ADR-04; *Architecture Bible* Appendix B) |
+
+---
+
+### 12.1 Sequence Revision — Validation Before Full Build
+
+*Added August 2026. The phase and epic structure below is unchanged; only the order in which the first customer sees working software changes.*
+
+**The problem.** The plan as written placed customer validation at Milestone 7 — roughly twelve months of building before anyone outside the company used the product. Industry norm for B2B SaaS *first revenue* is 6–12 months in total. More importantly it conflicts with our own constitution: Founder Rule 3 is *validate before scaling*, and Execution Principle 4 guards the backlog with a framework whose first test is a validated business problem. The *problem* is validated (R001, confirmed R002). **Our answer to it is not**, and cannot be validated by building in private for a year.
+
+**The revision — same destination, reordered.**
+
+| Stage | When | Content | Gate |
+|---|---|---|---|
+| **Block Zero** | Weeks 1–4, alongside foundation work | De-risking action #0: twenty diagnostic conversations, identify the repeated question, convert design partners | 3+ design partners in writing |
+| **The wedge** | ~10 weeks | The narrowest thing that is still Project Zero: one question type answered with the full Trust Layer envelope on a partner's real GitHub. Tenant-scoped from the first line; queue-first surface (*Product Bible* §12.1.1) | A partner says the answer is one they would **act on** — not merely "impressive" |
+| **Harden** | Months 4–8 | Blocks A–C as written, now with live usage informing them. Charge from day one of this stage, even nominally | Two paying customers on separate tenants, isolation proven, unit cost known |
+| **Launch** | Months 9–12 | Block G hardening, staging, then public and self-serve | Ten paying customers, positive gross margin |
+
+**What this is not.** It is not a scope reduction and not an architecture change. Every epic, acceptance criterion, and quality gate survives intact. **De-risking action #1 — the Trust Layer prototype — becomes the wedge deliverable rather than a Sprint 18 gate**, which is where a de-risking action belongs: at the front, where it can still change the plan.
+
+**The execution rule.** Customer work runs in parallel with build work from week one and never stops. Building is comfortable and selling is not, so the selling lane is the one that silently disappears. A week with no messages sent and no calls booked has failed regardless of what shipped. Channel plan: *Foundation & Strategy* §19.4.
 
 ---
 
@@ -309,7 +333,7 @@ Modular monolith → internal event bus → selective service extraction → dis
 
 ### 13.3 Documentation Migration
 
-This six-document master library supersedes all prior documents (lineage in *Foundation & Strategy* Appendix B). The originals are archived; all future updates land in the masters.
+This seven-document master library supersedes all prior documents (lineage in *Foundation & Strategy* Appendix B). The originals are archived; all future updates land in the masters.
 
 ---
 
@@ -322,6 +346,20 @@ The complete recorded expansion horizon, sequenced directionally (no dates until
 **Beyond:** multi-agent orchestration; realtime collaboration; voice interface; spatial knowledge graph / 3D particle engine; MCP connector substrate; advanced reasoning pipelines; enterprise governance expansion; multi-region deployment; intelligence infrastructure (the long-term vision — *Foundation & Strategy* §22).
 
 Early epic candidates preserved from the original future-epics list: Billing; Licensing; Marketplace; Creator Pack; Healthcare Pack; Mobile App; Desktop App.
+
+### 14.1 Growth Stages, Gated on Revenue
+
+*Added August 2026.* Expansion is triggered by revenue, not by calendar or enthusiasm — the discipline that keeps a small team from widening before it has depth.
+
+| Stage | Trigger | Scope | Why not earlier |
+|---|---|---|---|
+| Deepen | $250k ARR | Connector breadth (now cheap — ADR-19), knowledge graph, executive dashboards, the learning loop measured rather than asserted | Retrieval quality only becomes an improvable number once there is real usage to measure |
+| First hire | $500k ARR | One engineer — frontend or AI, whichever is slower | §17 of the *Sprint Plan* shows a second engineer roughly halves the timeline. Highest-leverage spend available |
+| Widen | $1M ARR | Epics 8–10: billing, licensing, administration, notifications. Marketplace groundwork | Do it by hand until the operational load justifies automating it — and until doing it by hand has taught you the pricing objections |
+| Verticals | $3M ARR | The first two vertical packs, chosen by where the customer base already clustered | Let the data pick. Do not pre-decide between healthcare, legal, and agency |
+| Platform | $10M ARR | Marketplace, white-label, multi-agent orchestration, multi-region. **Quantum Tier 2 and Robotics Tier 1 become fundable here** (*Foundation & Strategy* §22.4) | Ecosystem plays require an ecosystem worth joining |
+
+At Starter pricing a 30-seat customer is ≈$7.9k/yr, so **$1M ARR is on the order of 125 customers** — reachable without a sales team, which is precisely why the price sits where it does (*Foundation & Strategy* §17.2).
 
 ---
 
@@ -338,6 +376,8 @@ Standing rule: **temporary compromises must be tracked here with planned resolut
 | TD-5 | Marketplace product requirements directional only | *Product Bible* §22 | Detail before V2 planning cycle |
 | TD-6 | Healthcare/Legal pack compliance requirements undetailed | *Product Bible* §23 | Detail when packs are scheduled |
 | TD-7 | Specific price points for the four plan tiers unset | *Foundation & Strategy* §24 | Set during customer-validation phase |
+| TD-8 | Public landing has no server-rendered SEO (accepted cost of the React SPA decision) | ADR-018 | Pre-render the public marketing routes to static HTML, or host the landing separately. **Launch gate — must land in Block G** |
+| TD-9 | ADR-16 and ADR-17 cited as binding but have no written record | *Architecture Bible* Appendix B | Author both records in `docs/adr/` before Sprint 3 |
 
 ---
 
@@ -372,14 +412,18 @@ An epic is complete **only** when implementation, automated tests, documentation
 
 The tracker carried forward from the original backlog, to be updated every sprint:
 
-| Field | Value |
-|---|---|
-| Current company phase | Phase 3 — MVP Development |
-| Current implementation phase | Phase 0 — Foundation |
-| Current sprint | Foundation |
-| Overall progress | 0% (development not started at documentation freeze) |
-| MVP progress | 0% |
-| Next milestone | Milestone 1 — Running platform foundation (first checkpoint: running solution with authentication skeleton) |
+| Field | Value | As of |
+|---|---|---|
+| Current company phase | Phase 3 — MVP Development | 2026-08-15 |
+| Current implementation phase | Phase 0 — Foundation | 2026-08-15 |
+| Current sprint | Sprint 1 — Foundation (not started) | 2026-08-15 |
+| Overall progress | 0% | 2026-08-15 |
+| MVP progress | 0% | 2026-08-15 |
+| Next milestone | Milestone 1 — Running platform foundation (first checkpoint: running solution with authentication skeleton) | 2026-08-15 |
+
+**Reset note (2026-08-15).** A first pass at Sprint 1 was built and then deliberately deleted (commits `e6fbc39`, `09f9153`): the .NET solution skeleton, the React/Next.js frontend with landing, auth and dashboard surfaces, the design system as code, and the AI-engine skeleton. Progress is genuinely 0% against the current baseline — but "0% because nothing was attempted" and "0% because the first attempt was reset" are different situations, and the register should say which. Prior work remains recoverable from git history and the **design tokens were recovered from it** into *Experience & Design Bible* §10.
+
+**Tracker maintenance rule.** This table is updated at every sprint close, in the same commit as the *Sprint Plan* §18 tracker (*Sprint Plan* §15). A tracker that says 0% while commits are landing is a defect with an owner — the same standard the *Engineering Playbook* §16 applies to stale documentation.
 
 ---
 
@@ -432,4 +476,4 @@ The README list is retired as an outdated simplified summary. An early draft bac
 
 ---
 
-*End of Project Zero Roadmap & Implementation Guide v3.0 — Master Document 06 of 06.*
+*End of Project Zero Roadmap & Implementation Guide v3.0 — Master Document 06 of 07.*

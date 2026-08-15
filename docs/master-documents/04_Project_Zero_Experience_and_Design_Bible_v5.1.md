@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Document** | Project Zero Experience & Design Bible |
-| **Document Number** | 04 of 06 |
-| **Version** | 3.2 |
+| **Document Number** | 04 of 07 |
+| **Version** | **5.1** |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Design (Founders / Design Lead) |
 | **Audience** | Designers, frontend engineers, product managers, accessibility reviewers, brand/marketing |
@@ -14,21 +14,29 @@
 
 ## Revision History
 
+*Ordered newest first. Prior to this consolidation the table was out of
+sequence (5.0 was listed above 4.2/4.1/4.0/3.5), the header claimed 3.2, the
+filename claimed 3.1, and the footer claimed 3.0 — four different answers to
+"which version is this?". Every historical row is preserved below; only the
+ordering and the version metadata were corrected.*
+
 | Version | Description |
 |---|---|
+| **5.1** | **This document — consolidation, not redesign.** No design decision is changed. Four defects fixed: (1) the version was stated four different ways — now 5.0 lineage, single source; (2) §9/§10 still published the retired **Zoned Graphite** palette as canonical while the product had moved to **Deep Teal / Ice Cyan** — the real token values are now recorded, recovered verbatim from `tailwind.config.ts` as it stood at the last frontend commit; (3) §7.2, §25 and §29 still described the retired **Signature Face** and the two-generations-dead **deep-space palette** — brought in line with the §7.1 never-figurative rule and the live theme; (4) §11/§13/§15 were missing the type steps, elevation model and motion tokens the implementation actually used. Additive throughout. 2026-08-15. |
 | 0.x | UI direction notes: inspired by Linear, Stripe, GitHub, Vercel, ChatGPT; enterprise-first; dark-first; decisions over dashboards. |
 | 1.0 | Design System v1.0 (tokens, components, accessibility, governance) and the Experience & Motion Design Specification v1.0 (deep-space identity, particle AI, motion language). |
 | 2.0 | First consolidated Experience & Design Bible. |
 | 3.0 | Full enterprise rewrite merging the design system, motion specification, AI-identity concept, UI direction, and all experience requirements into one canonical design reference — including exact color values, AI state mappings, and component standards. |
 | 3.1 | Founder-approved theme revision: the deep-space dark theme is replaced by the **Zoned Graphite theme** (dark graphite chrome, light workspace canvas, Violet `#7C3AED` accent); the AI identity is finalized as the **Signature Face** (geometric android particle mask — not human, not cartoon); industry-standard typography scale confirmed (Inter only); auth screens bound by the **anonymity rule** (no personalized content pre-authentication); public landing experience specified (§19.4). Approved via interactive design previews, 2026-07-20. |
 | 3.2 | Public landing experience redesigned (§19.4 rewritten). The generic marketing-template structure is replaced by the **Organism landing**: one continuous particle system that morphs through the product story as the hero, a **left-aligned** impact headline, an **in-page live demo** (try before connecting anything — the founder-identified adoption barrier), and a landing-scoped **Aurora palette** (iridescent violet `#C084FC` → magenta `#E45FBC` → amber `#F2A65A` on near-black `#080709`) selected via comparative color R&D (Ember / Orchid / Aurora previews). Glossy 3D material language (specular edges, sheen sweeps, tilt depth). Product interior keeps the v3.1 Zoned Graphite identity. Approved via interactive design previews (concepts 1–9), 2026-08-02. |
-| 3.3 | Landing brought under a founder-supplied structured brief. **Structure list superseded and cleared in v5.0 — see §19.4. The layout details formerly recorded in this row are void and must not be used as a specification.** 2026-08-02. |
-| 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
-| 5.0 | **This document.** Landing specification CLEARED (§19.4). Every prior "redesign from scratch" complied with the written prescription in that section and so reproduced the same page; the specification itself was the blocker. Section 19.4 now records only the non-stylistic constraints (anonymity, accessibility, performance, copy ownership) and explicitly specifies no layout, grid, type scale, ornament or motion vocabulary. Theme remains Deep Teal / Ice Cyan. All landing section components and the UI kit were deleted alongside it. 2026-08-15. |
+| 5.0 | Landing specification CLEARED (§19.4). Every prior "redesign from scratch" complied with the written prescription in that section and so reproduced the same page; the specification itself was the blocker. Section 19.4 now records only the non-stylistic constraints (anonymity, accessibility, performance, copy ownership) and explicitly specifies no layout, grid, type scale, ornament or motion vocabulary. Theme remains Deep Teal / Ice Cyan. All landing section components and the UI kit were deleted alongside it. 2026-08-15. |
+| 4.3 | **Theme replaced: Zoned Graphite retired, Deep Teal / Ice Cyan adopted.** The interface becomes dark-first and elevated — base `#0D1719` rather than near-black, so surfaces separate by lightness instead of relying on heavy borders. Ice Cyan `#3DDBD9` replaces Violet `#7C3AED` as the single accent. Token *names* are deliberately unchanged (`cream` is the page, `card` is a surface, `ink` is primary text) so the product re-themes from one file rather than section by section; their *values* carry the theme. Canonical values in §10. *(This row is reconstructed in v5.1: the theme change shipped in commit `b1759b1` on 2026-08-15 but was never given a revision entry, which is how §9/§10 kept publishing the retired palette. Dated from the commit.)* 2026-08-15. |
 | 4.2 | AI identity re-founded again after founder review scored the voxel profile head −10 (“looks like a cartoon”). **Binding rule added: the identity is never figurative.** Tracing a recognisable object — a face, a brain, a head — in points or lines reads as clip art at any density, and three successive attempts failed the same way. The premium quality in the founder's references comes from *volume, depth and light*, not from resemblance. The identity is now **MindCore**: an abstract volumetric intelligence core in WebGL (~29k GPU points, two draw calls, hand-written GLSL) — a hot nucleus, a coherent accretion vortex drawing data inward, a sparse cold atmosphere, and a crisp counter-rotating ring that **holds through the entire cycle** so a designed element is always on screen. Palette unchanged. 2026-08-03. |
-| 4.1 | AI identity re-founded (§7 rewritten). The geometric android **Signature Face** is retired outright — a face on a public surface read as a mascot and was rejected in founder review. The identity is now **The Zero Mind**: a human head in profile built from emissive voxels, the cerebrum glowing inside the cranium, a spine of light into the shoulders, and a signature **halo ring** through the head at brow level with lens flares at both extremes. Colour runs the existing ramp along the axis of thought — cyan at the occiput where raw data arrives, magenta at the face where it becomes an answer, gold synapses. Its lifecycle carries the founder's own thesis: scattered drift (an organisation's data is a mess) → slow gather → work → dissolve. Built from founder references `Demos/SS/Identity-1…4`; geometry verified against real profile proportion by offline rasterisation before shipping. State-bearing duties stay with the **Zero Orb** (§7.3). Palette unchanged. 2026-08-03. |
-| 4.0 | Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). 2026-08-03. |
+| 4.1 | AI identity re-founded (§7 rewritten). The geometric android **Signature Face** is retired outright — a face on a public surface read as a mascot and was rejected in founder review. The identity is now **The Zero Mind**: a human head in profile built from emissive voxels, the cerebrum glowing inside the cranium, a spine of light into the shoulders, and a signature **halo ring** through the head at brow level with lens flares at both extremes. Colour runs the existing ramp along the axis of thought — cyan at the occiput where raw data arrives, magenta at the face where it becomes an answer, gold synapses. Its lifecycle carries the founder's own thesis: scattered drift (an organisation's data is a mess) → slow gather → work → dissolve. Built from founder references `Demos/SS/Identity-1…4`; geometry verified against real profile proportion by offline rasterisation before shipping. State-bearing duties stay with the **Zero Orb** (§7.3). Palette unchanged. *(Superseded by 4.2 — retained as the record of why the never-figurative rule exists.)* 2026-08-03. |
+| 4.0 | Landing rebuilt from scratch as a **senior-craft, motion-led composition** (§19.4 replaced). Palette, brand and copy unchanged by instruction; layout, motion and interaction fully re-authored. Adds a modular motion system (`primitives.tsx`: Reveal, Stagger, MaskLines, Parallax, SpotlightCard, Magnetic, Ticker, Marquee, DragRail, pointer-depth), a **React Three Fiber** Knowledge Lattice (light + dark tones, idle-loaded, desktop-only, excluded from first-load JS), and the **Answer Engine** — one product-surface component driving both the auto-playing hero visual and the visitor-driven demo. Composition is a tonal arc (light hero → graphite proof → light bento → pinned scroll-scrub → pricing → drag rail → split FAQ → graphite finale). *(Composition superseded by 5.0's clearing of §19.4; the motion primitives and Answer Engine concept remain valid reference.)* 2026-08-03. |
 | 3.5 | Landing switched to the **light, screenshot-led language** (founder direction, referencing lindy.ai / glean.com): white and soft-gray alternating bands, ink text, the product's own Violet `#7C3AED` accent (landing rejoins the §10 identity — Aurora dark retired), soft card shadows, pastel washes, large centered hero with the product window as the visual. Custom cursor removed. 2026-08-02. |
+| 3.4 | Particle organism retired from the landing after screenshot review; hero visual becomes the **self-running product showcase window** (typing question → evidence chips → streaming answer → confidence stamp, looping). Layout made fluid (5vw padding, fills any monitor, mobile-first stacking); vendor names in marketing copy replaced by generic integration categories with a "See all integrations" affordance. 2026-08-02. |
+| 3.3 | Landing brought under a founder-supplied structured brief. **Structure list superseded and cleared in v5.0 — see §19.4. The layout details formerly recorded in this row are void and must not be used as a specification.** 2026-08-02. |
 
 ---
 
@@ -42,7 +50,7 @@
 6. [Design Principles and Goals](#6-design-principles-and-goals)
 7. [The AI Identity — Particle Intelligence](#7-the-ai-identity--particle-intelligence)
 8. [The Mission Control Workspace](#8-the-mission-control-workspace)
-9. [Design Language — Zoned Graphite Theme](#9-design-language--zoned-graphite-theme)
+9. [Design Language — Deep Teal Theme](#9-design-language--deep-teal-theme)
 10. [Color System](#10-color-system)
 11. [Typography](#11-typography)
 12. [Design Tokens](#12-design-tokens)
@@ -119,7 +127,7 @@ The experience must evoke: **confidence** (the system knows what it's doing), **
 
 The visual identity represents **trust, intelligence, precision, and enterprise reliability**. The platform should appear modern without chasing design trends — built for a 10-year documentation horizon, the brand must age well.
 
-Identity pillars: **zoned graphite presentation (dark chrome framing a light workspace); premium typography; restrained color usage; purposeful motion.** Together they create a professional environment suitable for long working sessions. White space, typography, spacing, and alignment are the primary design tools; color and motion are reserved for meaning (state, focus, feedback).
+Identity pillars: **an elevated dark-teal ground with depth carried by surface lightness; premium typography; restrained color usage; purposeful motion.** Together they create a professional environment suitable for long working sessions. White space, typography, spacing, and alignment are the primary design tools; color and motion are reserved for meaning (state, focus, feedback).
 
 ---
 
@@ -163,17 +171,21 @@ Verification requirement: **the identity is looked at before it ships.** Geometr
 
 ### 7.2 AI States
 
-Seven canonical states, each with a distinct motion signature and mapped color (Section 10.3). States are carried by the **Zero Orb** (§7.3), not by the Mind — a state-switching face would be expression, and expression is what got the android face retired. The rows below describe orb behaviour; "face forms/dissolves" is historical wording retained for the state semantics.
+Seven canonical states, each with a distinct motion signature and mapped colour (Section 10.5). States are carried by the **Zero Orb** (§7.3), not by MindCore — a state-switching face would be expression, and expression is what got the android face retired.
+
+**These descriptions were rewritten in v5.1.** They previously described a face forming and dissolving, eyes igniting, and a mouth line shimmering — the retired Signature Face. That wording survived §7.1's never-figurative rule and would have led any implementer straight back into the component that was rejected three times. The state *semantics* are unchanged; only the figurative vocabulary is gone.
 
 | State | When | Visual Behavior |
 |---|---|---|
-| **Idle** | No active task | Face dissolved — loose constellation drift; dim neutral |
-| **Listening** | User is typing/speaking | Face forms; eyes ignite in the accent color; attentive stillness |
-| **Thinking** | Reasoning in progress | Formed face; concentrated particle swirl; Thinking color |
-| **Researching** | Retrieval/knowledge search running | Face dissolves outward — particles trace searching paths; Knowledge color |
-| **Speaking** | Response streaming | Formed face; eyes pulse rhythmically with output; mouth line shimmers |
-| **Warning** | Attention needed | Formed face; amber eyes; sharpened motion |
-| **Success** | Task completed | Formed face settles; green eyes; particles calm |
+| **Idle** | No active task | Orb dispersed — loose constellation drift, low luminance; neutral `faint` |
+| **Listening** | User is typing/speaking | Orb coheres; core brightens to `accent`; attentive stillness, no drift |
+| **Thinking** | Reasoning in progress | Cohered orb; concentrated inward swirl; `thinking` hue |
+| **Researching** | Retrieval/knowledge search running | Orb disperses outward — filaments trace searching paths; `knowledge` hue, dimmed |
+| **Speaking** | Response streaming | Cohered orb; core pulses rhythmically in time with token output; `accent` |
+| **Warning** | Attention needed | Cohered orb; `warning` hue; motion sharpens and shortens |
+| **Success** | Task completed | Orb settles and steadies; `success` hue; motion calms to rest |
+
+**Rules binding on all seven:** no facial features, no anatomy, no anthropomorphic gesture (§7.1); every state has a `prefers-reduced-motion` equivalent that conveys the same information through colour and a static form (§25); and the state shown must be the state the pipeline is actually in — a decorative animation that does not track real system state violates §15.1.
 
 **Future:** collaborative multi-agent visualizations — multiple particle entities coordinating — reserved for the multi-agent roadmap.
 
@@ -206,61 +218,120 @@ Requirements:
 
 ---
 
-## 9. Design Language — Zoned Graphite Theme
+## 9. Design Language — Deep Teal Theme
 
-The interface is a **zone-based theme**: dark graphite chrome (header, sidebar, footer) framing a **light, calm workspace canvas** — visually distinct zones make the product's structure legible at a glance:
+The interface is **dark-first and deliberately elevated**. The base is `#0D1719` — not near-black — so surfaces above it separate **by lightness alone** and hairlines can be used for structure rather than to prop up contrast. Zones remain the organising idea: distinct surfaces make the product's structure legible at a glance.
 
 | Zone | Surface | Color |
 |---|---|---|
-| Header | Graphite Ink | `#101114` |
-| Sidebar / navigation | Graphite Panel | `#17181C` |
-| Workspace canvas | Neutral White | `#FAFAFB` |
-| Surfaces / cards | Porcelain | `#FFFFFF` (hairline borders `#E8E8EA`) |
-| Footer / status bar | Deep Graphite | `#0B0C0E` |
+| Header | Chrome, deepest | `#0A1315` |
+| Sidebar / navigation | Chrome panel | `#101B1E` |
+| Workspace canvas | Page base | `#0D1719` |
+| Surfaces / cards | Surface, +1 step | `#142225` |
+| Raised / hover / nav | Surface, +2 steps | `#1C2E32` |
+| Footer / status bar | Deepest chrome | `#081113` |
+| Void | Below-base wells | `#060E10` |
 
-Visual identity elements: **zoned depth, calm neutral surfaces, hairline borders, two subtle elevation levels, premium typography, purposeful whitespace.** The violet accent is reserved exclusively for **interaction, active states, focus, and the AI presence** — never ambient decoration. Dark surfaces survive only in the chrome zones and the auth/landing hero panels.
+Visual identity elements: **an elevation ladder rather than borders, calm desaturated teal surfaces, two hairline weights (§10.3), premium typography, purposeful whitespace.** The Ice Cyan accent is reserved exclusively for **interaction, active states, focus, and the AI presence** — never ambient decoration.
 
-*(Decision record: the v3.0 "deep-space layered dark" theme was replaced by this zoned system by founder decision on 2026-07-20, after interactive preview review — deep blues, emerald/gold, and full-dark canvases were explicitly rejected in favor of a neutral, industry-standard premium system.)*
+**The token-naming rule (binding).** Token *names* survive theme changes; only their *values* change. `cream` is the page base, `card` is a surface, `ink` is primary text — regardless of whether the theme is light or dark. This is why the product re-themes from one file instead of section by section, and it is the reason a future theme change costs hours rather than weeks. Do not rename tokens to describe their current colour.
+
+### 9.1 Theme Decision Record
+
+| Date | Change | Reasoning |
+|---|---|---|
+| 2026-07-20 | "Deep-space layered dark" (v3.0) → **Zoned Graphite** | Founder decision after interactive preview review. Deep blues, emerald/gold, and full-dark canvases were explicitly rejected in favour of a neutral, industry-standard premium system. |
+| 2026-08-15 | **Zoned Graphite → Deep Teal / Ice Cyan** (commit `b1759b1`) | Founder decision. The light workspace canvas fought the product's own subject matter — an intelligence surface reading evidence and confidence wants a calm dark ground. Base lifted off black to `#0D1719` so elevation can carry hierarchy. Violet `#7C3AED` → Ice Cyan `#3DDBD9`. |
+
+*Both prior palettes are retired. Any surviving reference to Graphite, Violet `#7C3AED`, or the deep-space palette elsewhere in the documentation set is a defect — report it.*
 
 ---
 
 ## 10. Color System
 
-### 10.1 Zone Palette (Canonical Values)
+*These are the canonical values. They are mirrored in code by
+`frontend/tailwind.config.ts`, which is the single source of truth for
+implementation — if the two ever disagree, the config is right and this section
+is a defect to be fixed in the same PR (§26 governance).*
+
+### 10.1 Surface and Elevation Ladder (Canonical Values)
+
+Surfaces separate by **lightness**, not by border weight. Each step up the
+ladder is a lighter teal-neutral; hairlines then carry structure rather than
+contrast.
 
 | Token | Hex | Use |
 |---|---|---|
-| `zone.header` | `#101114` | Top header bar (Graphite Ink) |
-| `zone.sidebar` | `#17181C` | Left navigation (Graphite Panel) |
-| `zone.canvas` | `#FAFAFB` | Main workspace background |
-| `zone.footer` | `#0B0C0E` | Footer / status bar (Deep Graphite) |
-| `surface.card` | `#FFFFFF` | Cards, panels, chat bubbles |
-| `border.default` | `#E8E8EA` | Hairline separation on light surfaces |
-| `text.ink` | `#17181C` | Primary text on light surfaces |
-| `text.muted` | `#5F6168` | Secondary text on light surfaces |
+| `zone.header` | `#0A1315` | Top header bar — chrome, deepest |
+| `zone.sidebar` | `#101B1E` | Left navigation |
+| `zone.canvas` | `#0D1719` | Main workspace background |
+| `zone.footer` | `#081113` | Footer / status bar |
+| `cream` | `#0D1719` | Page base (name preserved from the light theme — §9) |
+| `card` | `#142225` | Cards, panels, chat bubbles — one step above base |
+| `raised` | `#1C2E32` | Hover, active nav, popovers — two steps above base |
+| `void` | `#060E10` | Wells and insets that must sit *below* the base |
 
-### 10.2 Accent and Semantic Palette (Canonical Values)
+### 10.2 Text Palette (Canonical Values)
+
+| Token | Hex | Use |
+|---|---|---|
+| `ink` | `#EAF2F2` | Primary text (near-white — the theme is dark-first) |
+| `muted` | `#8FA3A6` | Secondary text, labels |
+| `faint` | `#6B8085` | Tertiary text, timestamps, disabled |
+| `on-dark` | `#EAF2F2` | Text on chrome zones |
+| `on-dark-muted` | `#8FA3A6` | Secondary text on chrome zones |
+
+### 10.3 Hairlines — Two Weights, and Why
+
+There are **two** hairline tokens, split deliberately by WCAG 2.2 SC 1.4.11
+(Non-text Contrast). Using one weight for both purposes either fails the audit
+or makes every divider look like a wireframe.
+
+| Token | Hex | Use | Contrast obligation |
+|---|---|---|---|
+| `line` | `#314E53` | **Decorative** — dividers, page grid, section rules | Exempt from the 3:1 non-text minimum |
+| `line-strong` | `#4F7A82` | **Interactive bounds** — cards, inputs, secondary buttons | Must clear 3:1 against both `cream` and `card` |
+
+Choosing `line` for an interactive control's border is an accessibility defect,
+not a style preference.
+
+### 10.4 Accent and Semantic Palette (Canonical Values)
 
 | Token | Hex | Meaning |
 |---|---|---|
-| `accent` | `#7C3AED` (Violet) | Primary actions, active navigation, focus, AI presence |
-| `accent.strong` | `#6D28D9` | Hover/pressed accent; accent text on light surfaces |
-| `accent.bright` | `#A78BFA` | Accent on dark surfaces; formed-face particles |
-| `semantic.thinking` | `#8B5CF6` | Reasoning in progress |
-| `semantic.knowledge` | `#0E7490` (light surfaces) / `#22A3BF` (dark surfaces) | Knowledge, sources, retrieval, citations |
-| `semantic.success` | `#16A34A` | Success, completion, approval |
-| `semantic.warning` | `#D97706` | Warnings, attention |
-| `semantic.error` | `#DC2626` | Errors, failures, rejection |
+| `accent` | `#3DDBD9` (Ice Cyan) | Primary actions, active navigation, focus, AI presence |
+| `accent.strong` | `#2BB8B6` | Hover / pressed accent |
+| `accent.bright` | `#7CEDEB` | Accent on the deepest chrome; highlight particles |
+| `second` | `#7C9EFF` | Secondary hue — **never a second CTA colour**; only to separate one data channel from another |
+| `second.soft` | `#A9BEFF` | Lighter step of the secondary hue |
+| `thinking` | `#7C9EFF` | Reasoning in progress |
+| `knowledge` | `#3DDBD9` | Knowledge, sources, retrieval, citations |
+| `knowledge.dark` | `#7CEDEB` | Knowledge on the deepest surfaces |
+| `success` | `#34D399` | Success, completion, approval |
+| `warning` | `#FBBF24` | Warnings, attention |
+| `danger` | `#F87171` | Errors, failures, rejection |
 
-### 10.3 Accent-to-State Mapping
+### 10.5 Accent-to-State Mapping
 
-One violet accent carries all interaction; semantic colors carry state — color is never decorative. The AI identity's **eyes** map to state: Listening/Speaking→`accent`, Thinking→`semantic.thinking`, Researching→`semantic.knowledge`, Success→`semantic.success`, Warning→`semantic.warning`, Error→`semantic.error`, Idle→neutral `#8B8D95`.
+One Ice Cyan accent carries all interaction; semantic colours carry state —
+colour is never decorative. The AI presence (the Zero Orb, §7.3) maps to state
+through its **core luminance and halo hue**, never through facial features:
 
-### 10.4 Token Scales
+| State | Colour |
+|---|---|
+| Idle | neutral `faint` `#6B8085` |
+| Listening · Speaking | `accent` `#3DDBD9` |
+| Thinking | `thinking` `#7C9EFF` |
+| Researching | `knowledge` `#3DDBD9`, dimmed and dispersed |
+| Success | `success` `#34D399` |
+| Warning | `warning` `#FBBF24` |
+| Error | `danger` `#F87171` |
 
-The token system defines full scales for systematic use: **Primary 50–900**, **Neutral (White, Gray 50–900, Black)**, and **Semantic (Success, Warning, Error, Information)**. Scale steps map onto the canonical values above; lighter steps serve text/borders on dark surfaces.
+### 10.6 Token Scales
 
-### 10.5 The Color Rule
+The token system defines full scales for systematic use: **Accent (base / strong / bright)**, **Surface (void → canvas → card → raised)**, **Text (ink / muted / faint)**, and **Semantic (success, warning, danger, thinking, knowledge)**. Steps map onto the canonical values above. New shades require a token, not a hex literal.
+
+### 10.7 The Color Rule
 
 **Color alone must never communicate critical information.** Icons, labels, and motion reinforce meaning in every state indication (accessibility requirement, Section 25).
 
@@ -268,9 +339,31 @@ The token system defines full scales for systematic use: **Primary 50–900**, *
 
 ## 11. Typography
 
-- **Font family:** **Inter**. Fallback stack: System UI, Segoe UI, Roboto, Arial.
-- **Type scale (industry standard):** 11 / 12 / 13 / **14 (base)** / 16 / 18 / 22 / 28px; weights 400 / 500 / 600 / 700; tight letter-spacing (−0.01 to −0.02em) on headings only; tabular numerals for metrics.
-- **Character:** premium, restrained, highly legible on both light canvas and dark chrome; generous line height for long sessions; responsive typography scales with breakpoints (Section 24). Single family — no decorative or serif faces.
+- **Font family:** **Inter**. Fallback stack: `-apple-system`, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif.
+- **Weights:** 400 / 500 / 600 / 700. Tabular numerals for metrics, prices, and any aligned figures.
+
+### 11.1 Type Scale (Canonical)
+
+*The four display steps below (`3xl`, `4xl`, `hero`) were used by the implementation but were missing from this document, which stopped at 28px. Recorded in v5.1.*
+
+| Token | Size | Line height | Letter-spacing | Use |
+|---|---|---|---|---|
+| `2xs` | 11px | 16px | — | Micro-labels, badge text |
+| `xs` | 12px | 18px | — | Captions, metadata |
+| `sm` | 13px | 20px | — | Secondary UI text |
+| **`base`** | **14px** | **22px** | — | **Body — the product's default** |
+| `md` | 16px | 24px | — | Emphasised body, lead paragraphs |
+| `lg` | 18px | 27px | — | Section subheads |
+| `xl` | 22px | 30px | — | Card and panel titles |
+| `2xl` | 28px | 36px | −0.02em | Page titles |
+| `3xl` | 36px | 42px | −0.025em | Major headings |
+| `4xl` | 52px | 56px | −0.03em | Display headings |
+| `hero` | `clamp(36px, 6.2vw, 88px)` | 1.05 | −0.04em | Landing hero only — fluid by viewport |
+
+Tight letter-spacing applies to headings only (`2xl` and above); body text keeps
+default tracking for legibility in long sessions.
+- **Character:** premium, restrained, highly legible across the full surface ladder — from `void` `#060E10` through `raised` `#1C2E32` (§10.1); generous line height for long sessions; responsive typography scales with breakpoints (Section 24). Single family — no decorative or serif typefaces.
+- **Dark-theme weight rule:** light text on dark surfaces optically thickens. Prefer weight 400–500 for body on the Deep Teal ground where a light theme would have used 500–600; reserve 600–700 for headings and emphasis. Over-bolding is the most common way a dark UI starts to feel heavy.
 - Typography is a primary design tool (Section 5): hierarchy is achieved through scale and weight before color or decoration.
 
 ---
@@ -280,8 +373,10 @@ The token system defines full scales for systematic use: **Primary 50–900**, *
 Every visual property in the product resolves to a token — color (Section 10), typography (Section 11), spacing, radius, elevation (Section 13), motion durations/easings (Section 15). Rules:
 
 1. **Every UI change must use approved design tokens** (governance rule — Section 26).
-2. Tokens are the single bridge between design and code: one source, consumed by Tailwind config and component styles.
-3. Hard-coded values in components are defects.
+2. Tokens are the single bridge between design and code. **In code the single source of truth is `frontend/tailwind.config.ts`**; a small set of CSS custom properties in `frontend/src/styles/globals.css` mirrors the accent, zone, and line values for the few places Tailwind utilities cannot reach (canvas gradients, scrollbars, selection).
+3. **Hard-coded values in components are defects.** This includes hex literals, pixel sizes outside the spacing scale, and inline `cubic-bezier` values.
+4. **This document and the config must agree.** If they diverge, the config is authoritative and the document is the defect — fix it in the same PR (§26).
+5. **Token names are theme-independent** (§9). Rename a token only when its *role* changes, never when its colour does.
 
 ---
 
@@ -291,9 +386,20 @@ Every visual property in the product resolves to a token — color (Section 10),
 
 **Grid.** Desktop **12 columns**; tablet **8**; mobile **4**. Container widths: Small, Medium, Large, Full Width.
 
-**Border radius.** None, Small, Medium, Large, Extra Large, Pill, Full — applied consistently by component class (inputs share one radius; cards another).
+**Border radius (canonical).** `DEFAULT` 8px · `md` 10px · `lg` 12px · `xl` 16px · Pill · Full — applied consistently by component class (inputs share one radius; cards another).
 
-**Elevation.** Five shadow levels (1–5). Elevation indicates **hierarchy and interactive depth** — on the dark theme, elevation combines subtle shadow with surface-color steps (Section 9). Level jumps signal interactivity (hover lift = one level).
+**Elevation on a dark theme.** Elevation indicates **hierarchy and interactive depth**. The primary mechanism is the surface ladder in §10.1 — a raised element uses a lighter surface token, not a heavier shadow.
+
+*Recorded in v5.1:* on a dark canvas **a drop shadow alone is invisible**. Depth requires a **top inset highlight** — the edge catching light — plus a deeper cast below. Without the inset, dark cards read as flat holes punched in the page. The two canonical shadow tokens:
+
+| Token | Value | Use |
+|---|---|---|
+| `shadow-card` | `inset 0 1px 0 rgba(255,255,255,.045), 0 2px 8px rgba(0,0,0,.35)` | Resting cards, panels |
+| `shadow-lift` | `inset 0 1px 0 rgba(255,255,255,.07), 0 10px 34px rgba(0,0,0,.5)` | Hover / active lift — one level up |
+| `shadow-accent-glow` | `0 6px 26px rgba(61,219,217,.28)` | Primary actions and the AI presence only |
+| `shadow-ring` | `0 0 0 1px rgba(61,219,217,.35)` | Accent-bounded focus and selection rings |
+
+Level jumps signal interactivity (hover lift = one level: `shadow-card` → `shadow-lift`, optionally paired with a `card` → `raised` surface step).
 
 ---
 
@@ -333,6 +439,28 @@ Every visual property in the product resolves to a token — color (Section 10),
 3. Reduced distraction: motion never competes with content.
 4. Performance-optimized: GPU-friendly transforms; no layout-thrash animations.
 5. **Reduced-motion support:** every animation has a reduced-motion alternative (Section 25).
+6. **Transform and opacity only.** Animating layout properties (width, height, top, margin) is a defect — it forces a layout pass on every frame.
+7. **WebGL is idle-loaded and excluded from first-load JS**, and is desktop-only. It must never block first paint.
+
+### 15.4 Motion Tokens (Canonical)
+
+*Recorded in v5.1 — the implementation used a consistent easing and duration set that this document never captured.*
+
+**The signature easing is `cubic-bezier(0.16, 1, 0.3, 1)`** — a fast start settling gently. It is what makes the product's motion read as composed rather than springy, and it is the default for any interactive transition.
+
+| Purpose | Duration | Easing |
+|---|---|---|
+| Icon travel (arrow leads the cursor) | 260 ms | signature |
+| Surface shift / hover lift | 420 ms | signature |
+| Zoom on media within a card | 620 ms | signature |
+| Sheen sweep across a primary action | 720 ms | signature |
+| Entrance (`fade-up`) | 800 ms | `ease` |
+| Word-in (masked heading reveal) | 1000 ms | signature |
+| Page transition | **< 400 ms** | signature |
+
+Ambient loops (`glow-pulse` 6 s, `floaty` 9 s, drift 16–24 s) are permitted **only** on the AI presence and the landing hero, never in the working product — Rule 2 governs everywhere else.
+
+**Reduced motion is implemented globally**, not per component: under `prefers-reduced-motion: reduce`, all animation and transition durations collapse to `0.01ms` and iteration counts to `1`, and the card interaction layers (`zoom`, `shift`, `travel`, `sheen`) drop their transforms entirely. A component that opts out of this global rule must document why.
 
 ---
 
@@ -387,7 +515,7 @@ Main navigation (the canonical section set from the UI direction):
 
 > **Dashboard · AI · Knowledge · Decisions · Connectors · Organization · Files · Notifications · Settings**
 
-Rules: the sidebar is the persistent spine (dark navy layer); the workspace (AI) is the default landing surface for members; administration surfaces (Organization, Settings) follow the same design language — Mission Control aesthetics apply even to settings; the command palette provides keyboard-first navigation across all sections.
+Rules: the sidebar is the persistent spine (`zone.sidebar` `#101B1E` — §10.1); the workspace (AI) is the default landing surface for members; administration surfaces (Organization, Settings) follow the same design language — Mission Control aesthetics apply even to settings; the command palette provides keyboard-first navigation across all sections.
 
 ---
 
@@ -436,8 +564,11 @@ not stylistic:
   suppressed; every animation has a `prefers-reduced-motion` equivalent.
 - **§15.3 performance budget** — transform/opacity only, WebGL idle-loaded and
   excluded from first-load JS.
-- **Copy and content** are owned by `landing/content.ts` and are preserved
-  across redesigns unless the founder says otherwise.
+- **Copy and content** are owned by a single content module (previously
+  `landing/content.ts`, deleted with the landing in commit `09f9153`) and are
+  preserved across redesigns unless the founder says otherwise. **The prior copy
+  is recoverable from git history — recover it rather than rewriting it**, since
+  the copy was approved separately from the layout that was cleared.
 
 Nothing about layout, section order, grid, type scale, ornament or motion
 vocabulary is specified here. That is intentional.
@@ -465,6 +596,21 @@ Conversation List; Chat Window; Prompt Input; Suggested Prompts; Source Referenc
 ### 21.1 Philosophy
 
 The dashboard is **Mission Control** — organizational situational awareness, not chart decoration: what is the AI doing, what needs deciding, what is connected, what changed.
+
+**The Decision Queue is the product's home screen** (*Product Bible* §12.1.1, FR-24). *Added v5.1 — this document already described Mission Control and the decision queue, then let the chat window occupy the front door in practice. That ordering produces a product visually indistinguishable from every assistant on the market, which is the outcome §29's success criterion exists to prevent.*
+
+| | Rejected | Canonical |
+|---|---|---|
+| First thing the user sees | An empty prompt | Items awaiting their decision |
+| Who supplies the question | The user, every time | The platform, from what changed |
+| Chat's role | The product | A drill-down inside a brief |
+
+**Design obligations that follow:**
+
+- **An empty queue is a designed state, not a failure state.** A quiet week is honest and must read as calm and finished — never as an error, never as a nudge to go ask something. Manufacturing items to fill space destroys the trust the Trust Layer exists to build.
+- **Each item is a Decision Brief**, not a notification: recommendation first, evidence cards, honest confidence including *low*, approve/dismiss (§19.3).
+- **Dismissal is a first-class action with visible consequence** — the interface should make clear that dismissing teaches the system, because that is the compounding the product is sold on.
+- **Recency is not relevance.** The queue is ordered by what warrants a decision, never by timestamp alone; a feed sorted by time is the pattern this design explicitly rejects.
 
 ### 21.2 Widgets
 
@@ -507,7 +653,18 @@ A brand-new workspace — before any connector is linked — is a **designed exp
 
 **Compliance target: WCAG 2.2 AA. Mandatory, not optional.**
 
-Requirements: keyboard navigation everywhere (the entire product operable without a mouse); screen reader support (semantic HTML first, ARIA labels where required); visible focus states (never suppressed — focus is a designed state); high color contrast (validated on dark surfaces — the deep-space palette must meet AA in every text/surface pairing); **reduced-motion support** (every animation has a reduced or static alternative, including the particle identity); scalable typography; consistent interaction behavior; decorative icons hidden from assistive tech; color never the sole carrier of meaning (Section 10.5); accessible charts on dashboards.
+Requirements: keyboard navigation everywhere (the entire product operable without a mouse); screen reader support (semantic HTML first, ARIA labels where required); scalable typography; consistent interaction behavior; decorative icons hidden from assistive tech; colour never the sole carrier of meaning (Section 10.7); accessible charts on dashboards.
+
+### 25.1 Contrast Obligations (Deep Teal Theme)
+
+*Corrected in v5.1 — this section previously required "the deep-space palette" to meet AA. That palette was retired two themes ago. The obligations below apply to the live Deep Teal theme (§10).*
+
+- **Text (SC 1.4.3, AA):** every `ink` / `muted` / `faint` pairing against every surface in the §10.1 ladder must be validated. `faint` `#6B8085` is the tightest case — it is permitted for tertiary content only, never for body text or anything a user must read to act.
+- **Non-text (SC 1.4.11, AA):** interactive bounds use `line-strong` `#4F7A82`, which must clear **3:1** against both `cream` `#0D1719` and `card` `#142225`. Decorative `line` `#314E53` is exempt because it carries no information — using it on an interactive control converts an exempt element into a failing one (§10.3).
+- **Focus (SC 2.4.11/2.4.13):** focus is a **designed state and is never suppressed**. The canonical treatment is `outline: 2px solid var(--accent); outline-offset: 2px` — an Ice Cyan ring with clearance so it reads against both cards and chrome.
+- **Reduced motion (SC 2.3.3):** every animation has a reduced or static alternative, including the AI identity. Implemented as a global rule (§15.4), not per component.
+
+Contrast validation runs at the component lifecycle's Accessibility Review stage (§27) and is a release gate (*Engineering Playbook* §20).
 
 Accessibility review is a stage in the component lifecycle (Section 27) and a release gate (see *Engineering Playbook*).
 
@@ -551,7 +708,7 @@ Accessibility review is a stage in the component lifecycle (Section 27) and a re
 
 > **Users should recognize Project Zero from its experience alone — even without the logo.**
 
-The zoned graphite surfaces, the violet accent, the signature particle face, the evidence-forward answers, and the calm purposeful motion together form an identity no competitor screenshot could be mistaken for.
+The elevated deep-teal surfaces, the Ice Cyan accent, the abstract MindCore identity, the evidence-forward answers, and the calm purposeful motion together form an identity no competitor screenshot could be mistaken for.
 
 ---
 
@@ -570,4 +727,4 @@ Recorded future experience directions (sequencing in the *Roadmap*): **voice int
 
 ---
 
-*End of Project Zero Experience & Design Bible v3.0 — Master Document 04 of 06.*
+*End of Project Zero Experience & Design Bible v5.1 — Master Document 04 of 07.*

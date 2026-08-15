@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | Project Zero Foundation & Strategy |
-| **Document Number** | 01 of 06 |
+| **Document Number** | 01 of 07 |
 | **Version** | 3.0 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Founders |
@@ -563,8 +563,24 @@ Competitors are assessed against the dimensions that matter for enterprise intel
 | **AI productivity suites** | Microsoft Copilot, Google Gemini, ChatGPT Enterprise | Distribution, model quality, office-suite integration | Locked to their own vendor stack; weak cross-platform intelligence; shallow explainability |
 | **Knowledge platforms** | Notion AI, Confluence / Atlassian Intelligence | Content-adjacent AI inside their own workspace | Intelligence stops at their own walls; fragmented organizational memory |
 | **Workflow automation** | Zapier, Make, n8n | Connecting systems for task plumbing | Move data; do not understand or reason over it |
-| **Enterprise search** | Glean, Elastic | Retrieval across systems | Return documents, not decisions; limited explanation of *why* |
+| **Enterprise search** | Glean, Elastic, GoSearch | Retrieval across systems | Return documents, not decisions; limited explanation of *why* |
+| **Accessible tier** | Guru, Notion AI, GoSearch | Published pricing, self-serve, usable by small teams | Search and wiki tooling — no evidence-backed recommendation, no confidence, no audit trail |
 | **Indirect** | Custom in-house AI solutions, internal knowledge portals, workflow platforms | Tailored fit | Expensive to build, hard to maintain, rarely explainable or governed |
+
+### 16.2.1 Market Sizing Evidence (external research, August 2026)
+
+The category is **proven, not speculative** — which changes the strategic problem from "will anyone buy this" to "who is not being served":
+
+| Signal | Figure | What it means for us |
+|---|---|---|
+| Glean ARR | **~$300M**, growing ~89% YoY (May 2026) | Buyers pay real money for cross-system, cited, grounded answers. We are not evangelising a category |
+| Glean valuation | **$7.2B** (Series F, mid-2025); plausible IPO window 2027+ | The category has institutional validation and a public comparable is coming |
+| Glean contract minimum | **~100 seats, ≈$60k/yr floor**; $50–100/seat, sales-led, no self-serve | **The beachhead cannot buy the leader at any price** |
+| Accessible tier ceiling | Under **$25**/seat (Guru, GoSearch, Notion AI) | The price band we must land in — and those products do not do decision intelligence |
+
+**The strategic consequence (binding on positioning).** The gap in the market is **structural, not accidental**. A sales-led company with a $60k floor cannot profitably serve a 30-person organisation, and cannot move down-market without breaking its own model. This is a stronger competitive position than the one recorded in §16.3: we are not out-executing incumbents on their turf, we are occupying a segment their economics forbid them to enter. This should lead the pitch.
+
+*Figures are external research current to August 2026 and must be re-verified before use in fundraising or pricing material.*
 
 ### 16.3 Competitive Gaps (The Opening)
 
@@ -611,12 +627,18 @@ The business model, established in Playbook v1.0 and elaborated through the lice
 
 Four plan tiers, controlled through feature flags and permissions (this restores the Licensing & Plans definition from Architecture v1.1 that was inadvertently thinned during the v1.2 restructuring — see Appendix A, item 6):
 
-| Plan | Intended Audience | Character |
-|---|---|---|
-| **Free** | Individuals and very small teams evaluating the platform | Core AI workspace with restricted capacity, community support |
-| **Starter** | Small teams adopting seriously | Higher limits, core connectors, standard support |
-| **Professional** | The beachhead segment (20–200 employees) | Full connector set, decision intelligence, priority support |
-| **Enterprise** | Large organizations and regulated industries | Governance features, tenant configuration (own AI provider, region, retention, security policies), white-label options, premium support |
+| Plan | Intended Audience | Character | Indicative price *(proposed — see below)* |
+|---|---|---|---|
+| **Free** | Individuals and very small teams evaluating the platform | Core AI workspace with restricted capacity, community support | $0 · 3 seats · 1 repository · capped questions **and capped corpus size** |
+| **Starter** | Small teams adopting seriously | Higher limits, core connectors, standard support | ~$22/seat/mo, 5-seat minimum |
+| **Professional** | The beachhead segment (20–200 employees) | Full connector set, decision intelligence, priority support | ~$45/seat/mo — the upgrade trigger is **governance, not capacity** |
+| **Enterprise** | Large organizations and regulated industries | Governance features, tenant configuration (own AI provider, region, retention, security policies), white-label options, premium support | Custom |
+
+**Pricing rationale.** The band is chosen deliberately: **under the ~$25/seat accessible-tier ceiling while delivering premium-tier capability** (§16.2.1). A 30-person customer at Starter is ≈$7.9k/yr — a number a founder approves without a committee, and roughly an order of magnitude below the leader's contract floor. That single positioning decision is the business model.
+
+**Free-tier protection (important).** The free tier must be capped on **corpus size**, not only on question count. Per-query inference is cheap and scales with usage you charge for; **ingestion is paid up front and scales with corpus size**, so a free user with a very large repository can cost more on day one than a paying customer does in a year. See *Architecture Bible* §31 for the measured unit economics.
+
+*These price points remain **proposed**, not set — TD-7 stays open until validated with design partners.*
 
 Licensing is enforced per organization: feature flags gate capabilities (AI, Knowledge, Connectors, Decision Engine, Marketplace, Billing, Licensing, Vertical Packs) and quotas gate capacity. Detailed licensing mechanics live in the *Architecture Bible* (Feature Flags, Tenant Configuration) and *Product Bible* (Licensing module).
 
@@ -668,6 +690,34 @@ flowchart LR
 ### 19.3 Growth Motion
 
 Free entry and community growth generate the top of funnel; enterprise subscriptions convert the organizations that adopt deeply; the marketplace and white-label programs compound reach through partners. Enterprise procurement cycles are a recognized risk (Section 21) — the free-first, land-and-expand motion exists specifically to bypass long procurement at entry.
+
+### 19.4 Customer Acquisition — the Channel Plan
+
+*Added August 2026. The strategy specified a motion but never named a channel; at zero audience that gap is the difference between a plan and a wish.*
+
+**The governing fact: at zero audience, only direct outreach produces a customer this quarter.** Content, SEO, and community compound over six to twelve months. They are worth starting, but they cannot be the plan.
+
+| Channel | Time to first customer | Effort | Role |
+|---|---|---|---|
+| **Direct outreach** | 2–6 weeks | 3–4 hrs/week | **Primary.** The only channel that works from a standing start |
+| **Building in public** | 3–6 months | ~2 hrs/week | Compounds — makes month-6 outreach warm and launch day loud |
+| **Free public tool** | Immediate spike, then steady | ~1 week to build | Attention, email capture, and a live proof the technology works |
+| **Show HN / Product Hunt** | One-shot spike | ~2 days | Burst only. Fire once the product genuinely holds up |
+| **Content / SEO** | 6–12 months | Ongoing | Start at month 6. Too slow to be the entry channel |
+
+**Start in India.** A genuine structural advantage: the Indian B2B SaaS community is dense and well-networked (SaaSBoomi; the Zoho and Freshworks alumni networks; the Bangalore, Chennai, and Pune ecosystems), consists overwhelmingly of engineering-led companies in exactly the 20–200 band, and is reachable through two degrees of connection rather than cold. Warm introductions convert roughly an order of magnitude better than cold outreach. Expand to US and EU **after** the product is proven, not before.
+
+**Outreach is diagnostic, not promotional.** The first hundred messages ask how the recipient currently answers a hard question and how long it takes — they do not mention the product. The goal is to identify **the repeated question** that appears across most conversations; that question becomes the product's first job.
+
+**Expected funnel (planning basis):** 100 messages → ~25 replies → ~15 calls → **3–5 design partners**. Design-partner terms are a 50–70% discount in exchange for access, feedback, and a reference.
+
+**The free tool as the attention play.** A public, no-signup tool that runs the real pipeline on public data (e.g. ask a question of any public repository and get a cited answer) is simultaneously a launch asset, a demo, a lead magnet, and an honest technical proof. Developers share tools; they do not share marketing. Cap it by repository size and per-IP usage so a front-page moment does not become an inference bill.
+
+### 19.5 Validation Before Build (binding sequence)
+
+Founder Rule 3 is *validate before scaling*, and the Decision Framework (§12) requires a validated business problem before commitment. **Customer conversations therefore precede the build, and run in parallel with it thereafter.** The specific problem is validated (R001, confirmed by R002); *our answer to it* is not, and cannot be validated by building for a year in private.
+
+The delivery consequence is recorded as de-risking action #0 in the *Roadmap* §12 and as Block Zero in the *Sprint Plan*. The rule for execution: **no week passes without messages sent or calls booked.** Building is comfortable and selling is not, so the selling lane is the one that silently disappears.
 
 ---
 
@@ -753,7 +803,38 @@ Preserved future ideas, each of which remains intentional (none are commitments 
 - **Mobile and desktop applications** — beyond the web experience.
 - **Voice interface and real-time collaboration** — new interaction surfaces.
 - **Spatial knowledge graphs and advanced visualization** — new comprehension surfaces.
-- **Future robotics integration** — recorded in MASTER v0.1 explicitly as *vision only*: if AI employees eventually acquire physical embodiment, Project Zero's coordination layer is where they would be managed. No product commitment exists or is implied.
+- **Future robotics integration** — recorded in MASTER v0.1 explicitly as *vision only*: if AI employees eventually acquire physical embodiment, Project Zero's coordination layer is where they would be managed. No product commitment exists or is implied. Sequencing and thresholds in §22.4.
+- **Quantum** — see §22.4. The near-term opportunity is quantum-*safe* cryptography, not quantum compute.
+
+### 22.4 Quantum and Robotics — Sequenced, with Thresholds
+
+*Added August 2026 in response to founder direction to pursue both after growth funds research. Recorded here so the ambition is preserved with honest gating rather than as an undated aspiration.*
+
+**The architectural point that governs both.** Neither is a pivot, and neither requires new architecture. **Both enter through mechanisms already specified**: a provider interface (§8.5, ADR-08) and a vertical pack (*Architecture Bible* §33). That is the payoff of provider abstraction — the long horizon costs nothing today because the seams already exist. What must be protected now is only the discipline of keeping them open.
+
+#### Quantum — three tiers
+
+| Tier | Trigger | Scope | Indicative cost |
+|---|---|---|---|
+| **1 · Quantum-safe posture** | **Now** — before the first enterprise security review | Hybrid TLS key exchange (classical + ML-KEM), data keys at rest wrapped with a PQC KEM, published crypto-agility statement and roadmap | ~2 weeks engineering |
+| **2 · `IQuantumProvider`** | $5M ARR or funded research budget | A provider interface routing specific optimisation workloads (context selection under a token budget, sync scheduling, cluster assignment) to Braket / Azure Quantum / IBM, benchmarked honestly against classical solvers | ~$300–400k/yr (one researcher) |
+| **3 · Quantum as compute** | $10M+ ARR **and** Tier 2 benchmarks showing real advantage | Quantum ML over organisational data | $1–2M/yr |
+
+**Why Tier 1 is the real opportunity.** Post-quantum cryptography now has dates, not speculation: NIST standards final since August 2024; Executive Order 14412 signed 22 June 2026; CNSA 2.0 required for new US National Security System acquisitions from 1 January 2027; federal high-value systems migrating key establishment by end-2030 and signatures by end-2031. Only ~13% of organisations have PQC in production and ~60% have not meaningfully started, while discovery alone takes 12–24 months. Federal mandates propagate to vendors as a condition of the relationship.
+
+Project Zero proposes to hold a customer's **entire institutional memory in one place**. "Harvest now, decrypt later" is therefore a legitimate question a security reviewer will ask, most competitors cannot answer it, and `ISecretProvider` already makes crypto-agility a configuration concern rather than a rewrite. **This is a security-review differentiator available now at near-zero cost** — and it is the honest form of "we are doing quantum."
+
+**Why Tiers 2–3 wait.** IBM targets a narrow quantum advantage demonstration by end-2026, but broad commercial viability is projected for the **early 2030s**, and DARPA's benchmarking initiative targets 2033 for validating utility-scale machines. Quantum compute is a decade out for this workload. Tier 2's only job is to make Tier 3 cheap on the day it stops being a decade out.
+
+#### Robotics — three tiers
+
+| Tier | Trigger | Scope |
+|---|---|---|
+| **1 · Physical-operations vertical pack** | ~$3–5M ARR | Manufacturing &amp; Logistics pack: connectors to MES, WMS, and fleet telemetry; domain prompts and dashboards; decision briefs over throughput, downtime, and maintenance. **Zero new architecture** — §33 already defines a pack as flags + prompts + connectors + dashboards, and robot telemetry is simply another connector emitting into the knowledge pipeline |
+| **2 · Fleet task coordination** | ~$20M+ ARR | Project Zero as the supervision layer above heterogeneous robot fleets: task assignment, exception handling, **human approval gates on physical actions**, and a full audit trail. This is the v0.1 founding vision — *coordinate humans, AI employees, and business systems* — with embodiment added; the Agentic Runtime, Workflow Engine, and approval-gate requirements (§6.2) map onto it almost directly |
+| **3 · Building robot hardware** | **Never** | Different capital structure, competency, customers, and sales motion. Partner or acquire. The MASTER v0.1 instinct — *vision only* — was correct and stands |
+
+**The binding sequence for both.** A meaningful research programme is a real budget (~$10M ARR of company, or dedicated funding). Therefore: **launch → product-market fit → growth → then research.** What is required today is only that the seams stay open, which costs nothing because they are already designed. Any proposal to bring either forward must pass the Decision Framework (§12) and must not compromise the four permanent properties in §22.3.
 
 ### 22.3 What the Long Term Must Preserve
 
@@ -889,14 +970,24 @@ The V1 Finalization Review identified inconsistencies across the 21-document set
 
 ### B.1 The Master Library (Current, Authoritative)
 
-| # | Document | Contents |
-|---|---|---|
-| 01 | **Foundation & Strategy** (this document) | Vision, mission, philosophy, principles, decision framework, market, personas, competition, business model, long-term vision, glossary |
-| 02 | **Product Bible** | Requirements, features, modules, user stories, acceptance criteria, functional/non-functional requirements, future features |
-| 03 | **Architecture Bible** | System architecture, ADRs, backend/frontend/AI engine, infrastructure, security, provider abstraction, knowledge/RAG, deployment, scaling |
-| 04 | **Experience & Design Bible** | UX philosophy, brand, design language, tokens, color, typography, motion, particle AI identity, components, accessibility |
-| 05 | **Engineering Playbook** | Coding standards, structure, workflow, testing, CI/CD, git strategy, reviews, security/performance standards, Definition of Done |
-| 06 | **Roadmap & Implementation Guide** | Backlog, epics, milestones, phases, sprints, dependencies, releases, migration, technical debt, risk register |
+| # | Document | Version | Contents |
+|---|---|---|---|
+| 01 | **Foundation & Strategy** (this document) | 3.0 | Vision, mission, philosophy, principles, decision framework, market, personas, competition, business model, long-term vision, glossary |
+| 02 | **Product Bible** | 3.0 | Requirements, features, modules, user stories, acceptance criteria, functional/non-functional requirements, future features |
+| 03 | **Architecture Bible** | 3.0 | System architecture, ADRs, backend/frontend/AI engine, infrastructure, security, provider abstraction, knowledge/RAG, deployment, scaling |
+| 04 | **Experience & Design Bible** | 5.1 | UX philosophy, brand, design language, tokens, colour, typography, motion, the abstract AI identity, components, accessibility |
+| 05 | **Engineering Playbook** | 3.0 | Coding standards, structure, workflow, testing, CI/CD, git strategy, reviews, security/performance standards, Definition of Done |
+| 06 | **Roadmap & Implementation Guide** | 3.0 | Backlog, epics, milestones, phases, sprints, dependencies, releases, migration, technical debt, risk register |
+| 07 | **Sprint Plan & Delivery Schedule** | 1.0 | The working delivery schedule: 32 sprints in blocks A–G, per-sprint scope and exit criteria, the production-ready standard, demo-readiness checklist, timeline scenarios. *Working document — updated every sprint; it executes Document 06 and supersedes no master document.* |
+
+**Supporting records, not master documents:**
+
+| Location | Contents |
+|---|---|
+| [`docs/adr/`](../adr/) | Architecture Decision Records — the full context/consequences record behind each ADR summarised in *Architecture Bible* §7 |
+| [`docs/DEVELOPER_GUIDE.md`](../DEVELOPER_GUIDE.md) | The practical system wiki: how the three services connect, ports, env vars, run instructions |
+
+*The library was six documents when this appendix was written; Document 07 was added afterwards and this index was not updated — corrected here. Any statement elsewhere that the library contains six documents is stale.*
 
 ### B.2 Superseded Sources Absorbed by This Document
 
@@ -917,4 +1008,4 @@ After this v3.0 library is accepted, the originals are historical artifacts only
 
 ---
 
-*End of Project Zero Foundation & Strategy v3.0 — Master Document 01 of 06.*
+*End of Project Zero Foundation & Strategy v3.0 — Master Document 01 of 07.*

@@ -1,7 +1,7 @@
 # Project Zero — Developer Guide & System Wiki
 
 > **Read this first.** It explains how every part of Project Zero — the .NET
-> backend, the Next.js frontend, the Python AI Engine, PostgreSQL/Redis/RabbitMQ,
+> backend, the React frontend, the Python AI Engine, PostgreSQL/Redis/RabbitMQ,
 > and Docker — fits together and talks to each other. If you are new, you should
 > be able to run the whole system and understand the request flow after reading
 > this page. Deep design rationale lives in the master documents
@@ -11,7 +11,19 @@
 |---|---|
 | **Audience** | Every new contributor (human or AI) |
 | **Status** | Living document — update it in the same PR when connections change |
-| **Last structural update** | Sprint 1 (foundation) |
+| **Last structural update** | 2026-08-15 — frontend moved to React + Vite (ADR-018) |
+
+> ### ⚠️ Read this first
+>
+> **The code this guide describes is not currently in the repository.** The
+> `backend/`, `frontend/`, `ai-engine/`, `shared/`, `docker/`, and
+> `infrastructure/` trees were deleted on 2026-08-15 as a deliberate reset
+> (commits `e6fbc39`, `09f9153`); prior code is recoverable from git history.
+>
+> This guide is therefore the **specification of how the system connects** —
+> accurate as intent, ahead of the tree. Everything in it is what Sprints 1–3
+> build. Where it says "run this", that command works once the corresponding
+> sprint has landed.
 
 ---
 
@@ -22,7 +34,7 @@ infrastructure**:
 
 ```mermaid
 flowchart LR
-    U["Browser<br/>(user)"] -->|HTTPS| FE["Frontend<br/>Next.js :3000"]
+    U["Browser<br/>(user)"] -->|HTTPS| FE["Frontend<br/>React SPA :3000"]
     FE -->|"REST /api/v1<br/>JWT"| API["Backend API<br/>.NET 8 :5080"]
     API -->|"internal REST /api/v1<br/>JWT / API-key"| AI["AI Engine<br/>Python FastAPI :8000"]
     API --> PG[("PostgreSQL<br/>:5432")]
@@ -53,7 +65,7 @@ ecosystem is Python-native. See ADR-04 (Architecture Bible §7, §10).
 ```
 Zero/
 ├── backend/            # .NET 8 business platform (the API + all modules)
-├── frontend/           # Next.js app (the only browser-facing surface)
+├── frontend/           # React (Vite) SPA (the only browser-facing surface)
 ├── ai-engine/          # Python FastAPI intelligence service
 ├── shared/             # DTO contracts for the .NET ↔ Python boundary
 ├── docker/             # docker-compose.yml — the whole stack for machines with Docker
@@ -67,7 +79,7 @@ Each part in one line:
 | Folder | Language / stack | Runs on | Talks to |
 |---|---|---|---|
 | `backend/` | C# / ASP.NET Core 8 | `:5080` (dev) / `:8080` (Docker) | Frontend (inbound), AI Engine, Postgres, Redis, RabbitMQ |
-| `frontend/` | TypeScript / Next.js 14 | `:3000` | Backend API only |
+| `frontend/` | TypeScript / React 18 + Vite | `:3000` | Backend API only |
 | `ai-engine/` | Python / FastAPI | `:8000` | Postgres, Redis, RabbitMQ; receives calls from backend |
 | `shared/` | JSON/DTO contracts | build-time | Consumed by backend + AI Engine |
 
@@ -81,9 +93,11 @@ Each part in one line:
   `/api/v1/...` (Architecture Bible §24).
 - **Auth (from Sprint 4):** the browser sends a **JWT** access token in the
   `Authorization: Bearer` header; refresh tokens rotate the access token.
-- **Base URL:** the frontend reads it from `NEXT_PUBLIC_API_BASE_URL`
+- **Base URL:** the frontend reads it from `VITE_API_BASE_URL`
   (e.g. `http://localhost:5080` in dev). The frontend has **no** database or AI
-  credentials — it cannot, by design.
+  credentials — it cannot, by design. Note that Vite only exposes variables
+  prefixed `VITE_` to client code, and everything it exposes is public by
+  construction — never put a secret behind that prefix.
 - **Correlation:** every response carries `X-Correlation-Id`; the frontend
   echoes it on retries so one user action is traceable end to end.
 
@@ -120,6 +134,7 @@ vendor swap is configuration, not code:
 | Object storage | `IStorageProvider` | local files | Backend |
 | Email | `IEmailProvider` | Gmail SMTP | Backend |
 | AI models | `IAIProvider` | OpenRouter | AI Engine (behind the gateway) |
+| Vector store | `IVectorStoreProvider` | pgvector on the primary PostgreSQL | AI Engine |
 | Secrets | `ISecretProvider` | appsettings (dev only) | Backend |
 
 Async work (document processing, embeddings, connector sync, notifications)
@@ -148,7 +163,7 @@ once Decision Intelligence ships — shown now so the wiring is clear):
 
 ```mermaid
 sequenceDiagram
-    participant B as Browser (Next.js :3000)
+    participant B as Browser (React SPA :3000)
     participant A as Backend API (.NET :5080)
     participant AG as AI Gateway module
     participant AI as AI Engine (Python :8000)
@@ -211,12 +226,14 @@ npm install            # first time only
 npm run dev
 #   → http://localhost:3000   (landing → /login → /register → /dashboard)
 ```
-Boots with **nothing else running** — every page renders (the UI is static in
-Sprint 1). To talk to a live API, point it at the backend by creating
-`frontend/.env.local`:
+Boots with **nothing else running** — every route renders. To talk to a live
+API, point it at the backend by creating `frontend/.env.local`:
 ```
-NEXT_PUBLIC_API_BASE_URL=http://localhost:5080
+VITE_API_BASE_URL=http://localhost:5080
 ```
+Vite's dev server defaults to `:5173`; this project pins it to `:3000` in
+`vite.config.ts` so every document, the ports table below, and the CORS
+allow-list agree on one number.
 
 **C) AI Engine — standalone** *(skeleton today; full build Sprint 2)*
 
@@ -269,7 +286,7 @@ up the whole stack (5.3).
 
 | Service | Dev port | Docker port | Key env vars |
 |---|---|---|---|
-| Frontend | 3000 | 3000 | `NEXT_PUBLIC_API_BASE_URL` |
+| Frontend | 3000 | 3000 | `VITE_API_BASE_URL` |
 | Backend API | 5080 (http) / 7080 (https) | 8080 | `ASPNETCORE_ENVIRONMENT`, `ConnectionStrings__Database` |
 | AI Engine | 8000 | 8000 | `AI_ENGINE__AUTH_KEY` (Sprint 2) |
 | PostgreSQL | 5432 | 5432 | `POSTGRES_DB/USER/PASSWORD` |
@@ -327,7 +344,7 @@ The **Platform** module is the worked example to copy.
 | Why is it built this way? | Architecture Bible (`docs/master-documents/03_...`) |
 | What are we building & acceptance criteria? | Product Bible (`02_...`) |
 | Coding standards, testing, Definition of Done | Engineering Playbook (`05_...`) |
-| Look, theme, the AI face | Experience & Design Bible (`04_...`, v3.1) |
+| Look, theme, the AI identity | Experience & Design Bible (`04_...`, v5.1) |
 | What ships in which sprint | Sprint Plan (`07_...`) |
 | Specific technical decisions | ADRs (`docs/adr/`) |
 

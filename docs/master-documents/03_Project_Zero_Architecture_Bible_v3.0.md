@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | Project Zero Architecture Bible |
-| **Document Number** | 03 of 06 |
+| **Document Number** | 03 of 07 |
 | **Version** | 3.0 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Architecture (Founders / Lead Architect) |
@@ -79,7 +79,7 @@ This document is the complete technical architecture of Project Zero: every stru
 
 ### 1.2 Scope
 
-**In scope:** system architecture; architecture decisions (ADRs); Clean Architecture and DDD application; backend (.NET), frontend (Next.js), and the Python AI Engine; infrastructure (PostgreSQL, Redis, RabbitMQ, Docker); authentication, authorization, and security; provider abstraction; knowledge graph, memory, RAG, embeddings; prompt architecture; connectors; deployment; monitoring; scaling.
+**In scope:** system architecture; architecture decisions (ADRs); Clean Architecture and DDD application; backend (.NET), frontend (React SPA), and the Python AI Engine; infrastructure (PostgreSQL, Redis, RabbitMQ, Docker); authentication, authorization, and security; provider abstraction; knowledge graph, memory, RAG, embeddings; prompt architecture; connectors; deployment; monitoring; scaling.
 
 **Out of scope:** what the product does (*Product Bible*); day-to-day engineering practice, code style, and CI/CD workflow detail (*Engineering Playbook*); visual/interaction design (*Experience & Design Bible*); delivery sequencing (*Roadmap*).
 
@@ -139,7 +139,7 @@ Design principles applied throughout: single responsibility; separation of conce
 ```mermaid
 flowchart TD
     subgraph Clients["Client Applications"]
-        W[Next.js Web App]
+        W[React SPA Web App]
         M[Future Mobile App]
         D[Future Desktop App]
     end
@@ -206,7 +206,7 @@ flowchart TD
 
 | Layer | Technology | Notes |
 |---|---|---|
-| **Frontend** | Next.js, TypeScript, Tailwind CSS, Framer Motion | See *Experience & Design Bible* for how motion is used |
+| **Frontend** | React (Vite), TypeScript, React Router, Tailwind CSS, Framer Motion | Client-rendered SPA — ADR-018. See *Experience & Design Bible* for how motion is used |
 | **Backend** | ASP.NET Core (.NET), Clean Architecture, Modular Monolith | The business platform |
 | **AI Engine** | Python, FastAPI (recommended), LangGraph, LangChain / LlamaIndex where appropriate, Hugging Face, SentenceTransformers, and other AI-native libraries | A first-class platform component, never a helper library |
 | **AI Providers** | OpenRouter (development), Azure OpenAI / OpenAI / Anthropic Claude / Google Gemini / local models (production options) | Behind IAIProvider |
@@ -242,6 +242,12 @@ Every significant decision, with context and reasoning. New decisions of this ma
 | **ADR-13** | **Cloud-native deployment model; Docker everywhere; Kubernetes beyond dev** | Locked founder decision (Cloud First, local dev allowed); reproducible environments. | Accepted |
 | **ADR-14** | **PostgreSQL full-text for V1 search; Elasticsearch behind ISearchProvider when scale demands** | Avoid operating a search cluster before search volume justifies it. | Accepted |
 | **ADR-15** | **Feature flags gate all major capabilities** | Enables licensing, safe rollout, per-tenant enablement, and vertical packs. | Accepted |
+| **ADR-16** | **SQL-script schema ownership with a DbUp-based migrator** | Versioned `V{NNNN}__` scripts under `backend/db/migrations/`, `schema_versions` journal, a rollback script per migration, CI drift check against EF entity configurations. EF Core migrations were rejected: they make the C# model the schema authority, which is wrong when stored procedures and hand-tuned indexes are first-class and half the data access bypasses the ORM (ADR-17). Full record: [`docs/adr/ADR-016-...`](../adr/ADR-016-sql-script-schema-ownership.md) | Accepted |
+| **ADR-17** | **Two-lane data access: EF Core + Dapper** | EF Core is the default for simple reads and single-entity CRUD; stored procedures / parameterized Dapper SQL by exception for bulk and set-based work, with a stated (normally measured) reason. **Raw SQL is always parameterized and always filters `organization_id`/`workspace_id` explicitly** — EF's global tenant filters do not apply to it, so Lane 2 is safe by discipline where Lane 1 is safe by construction. Full record: [`docs/adr/ADR-017-...`](../adr/ADR-017-two-lane-data-access.md) | Accepted |
+| **ADR-18** | **React (Vite) client-rendered SPA for the frontend; Next.js rejected** | Founder decision, 2026-08-15. The frontend framework had never been recorded as an ADR — Next.js appeared only in the stack table. A plain React SPA keeps the frontend a pure API client with no server runtime of its own, which matches the API-First mandate and the rule that the browser talks only to the .NET API. **Accepted cost:** no SSR/SSG, so the public landing loses server-rendered SEO — mitigation required before launch (see the ADR). Full record: [`docs/adr/ADR-018-react-spa-frontend.md`](../adr/ADR-018-react-spa-frontend.md) | Accepted |
+| **ADR-19** | **`IConnector` implemented primarily as a Model Context Protocol host** | Founder decision, 2026-08-15. MCP reached installed-base scale during 2025–26 (10,000+ public servers, 1,000+ connectors, adopted by every major vendor). Building bespoke per-vendor integrations to reach five systems is replaced by speaking one protocol to reach a thousand. We retain auth, token custody, tenancy, scheduling, retry, and normalisation — which was always the SDK's real value. Supersedes the "MCP as long-term substrate" position in §23.4. **Security condition:** third-party MCP servers are untrusted code and untrusted input. Detail: §23.1 | Accepted |
+| **ADR-20** | **AI pipeline architecture: retrieval quality and cost control as one decision** | Founder decision, 2026-08-15. Hybrid retrieval (vector + lexical) over contextually-enriched chunks with reranking, plus cache-aware prompt layout, model cascade, and tenant-scoped semantic caching. Grouped as one ADR because they are one insight: **weak retrieval is compensated for with more chunks, which is a permanent multiplier on inference cost.** Quality and cost are the same lever. Detail: §20.4, §21.1, §22.1.1, §31.1 | Accepted |
+| **ADR-21** | **Deferred infrastructure: no containers, Redis, or message broker at the start** | Founder decision, 2026-08-15. Native processes against local PostgreSQL; in-process cache and Postgres-backed queue behind their existing provider interfaces; pgvector in the primary database. Legal because every deferred component already sits behind an interface (§12) — this is an implementation choice, not an architectural exception. **Tenant-isolation obligations are unchanged.** Detail: §34.3 | Accepted |
 
 ---
 
@@ -346,6 +352,19 @@ Provider abstraction is the architectural embodiment of two locked decisions: ne
 | `INotificationProvider` | Notification channels | In-app + email | Enterprise channels |
 | `ISecretProvider` | Secrets | appsettings (dev only) | Azure Key Vault |
 | `IConnectorProvider` | Connector integrations | Connector SDK implementations | Same SDK, all connectors |
+| `IVectorStoreProvider` | Embedding storage and tenant-scoped similarity search | pgvector on the primary PostgreSQL | Dedicated vector databases (Qdrant, Weaviate, pgvector on a separate cluster) |
+
+**Ten interfaces, not nine.** `IVectorStoreProvider` was added in this revision to
+close a gap: the *Sprint Plan* commits Sprint 14 to **pgvector** specifically,
+but the interface set stopped at nine and §12.7 listed a vector-store provider as
+merely *future*. That left the single most performance- and cost-sensitive
+dependency in the retrieval path as a direct, unabstracted vendor choice —
+against the rule this section exists to enforce. Any document or checklist
+referring to "all nine provider interfaces" now means ten.
+
+The interface must carry tenant scope in its signature, not as an optional
+parameter — a retrieval call that *can* be made without tenant scope is an
+isolation defect waiting to happen (§16.2).
 
 ### 12.3 Architecture
 
@@ -378,7 +397,7 @@ public interface IAIProvider
 
 ### 12.7 Future Providers
 
-The interface set is expected to grow (e.g., vector-store provider, telephony/voice provider for the voice-interface future). New interfaces follow the same pattern and require an ADR entry.
+The interface set is expected to grow (e.g., telephony/voice provider for the voice-interface future). New interfaces follow the same pattern and require an ADR entry. *(The vector-store provider previously listed here has been promoted into the canonical set — §12.2.)*
 
 ---
 
@@ -515,7 +534,24 @@ OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, OpenRouter, local models 
 
 ### 20.3 Multimodal Intelligence
 
-The engine owns the ten intelligence capabilities defined in the *Product Bible* (text, document, vision/OCR, audio, video, code, database, knowledge graph, memory, decision engine) and processes the full supported-content matrix (PDF/DOCX/PPTX/XLSX/TXT/Markdown/HTML/CSV/JSON/XML/YAML; images incl. OCR, diagrams, screenshots, charts, handwriting; audio incl. meetings and voice notes; video incl. transcription, speaker detection, summaries, action items; repositories; databases).
+The engine owns the ten intelligence capabilities defined in the *Product Bible* (text, document, vision/OCR, audio, video, code, database, knowledge graph, memory, decision engine) and processes the full supported-content matrix (PDF/DOCX/PPTX/XLSX/TXT/Markdown/HTML/CSV/JSON/XML/YAML; images incl. OCR, diagrams, screenshots, charts, handwriting; audio incl. meetings and voice notes; video incl. transcription, speaker detection, summaries, action items; repositories; databases). *MVP format scope is phased per Product Bible FR-11a/11b and Appendix D.*
+
+### 20.4 Cost-Control Architecture (ADR-20)
+
+*Added August 2026.* Four independently switchable layers, each realised through an existing abstraction rather than as new machinery. Applied together they reduce blended cost per query by roughly 70%.
+
+| Layer | Mechanism | Where it lives | Caveat that must be respected |
+|---|---|---|---|
+| **Prompt caching** | Stable-prefix discount from the provider | Prompt Architecture §21.1 | Requires the cache-aware layout. Free if adopted early, costly to retrofit |
+| **Retrieval quality** | Fewer, better chunks per query | Knowledge Pipeline §22.1.1 | The largest single lever; usually mistaken for a quality project rather than a cost one |
+| **Model cascade** | Cheap model answers first; escalate only on low confidence | **Model Router** (§20.1) | The escalation threshold is a live cost variable — tune it against the evaluation sets, never by intuition. Too loose leaks errors; too tight escalates everything |
+| **Semantic cache** | Serve semantically-similar prior questions without a model call | `ICacheProvider` (§12.2, §18) | **Must be tenant-scoped and corpus-versioned.** A cache key that omits tenant or corpus version serves a confidently stale — or cross-tenant — answer. Treat as an isolation-critical component (§16) |
+
+**Context compression** (prompt compression to a fraction of original length) is permitted **only** where the evaluation score is demonstrably unchanged. It is lossy, and for an evidence-backed product a dropped source sentence is a worse outcome than the token cost.
+
+**Sequencing.** Cache-aware prompt layout and retrieval quality are designed in from the start because both are ingestion- or authoring-time decisions. Cascade routing and semantic caching are tuned **against real query logs** — building them before there is traffic optimises a guess.
+
+**Proactive brief generation** (*Product Bible* §17.3) uses the same cascade discipline applied to attention: cheap deterministic detection over already-synced data (no model calls), then a cheap-model relevance filter, then full brief generation only for survivors. Running a model continuously over all content is the naive design and is not affordable at any plan price.
 
 ---
 
@@ -530,6 +566,18 @@ Prompts are **governed artifacts**, not string literals:
 - **Structured** — prompts are assembled from templates + Context Builder output + tenant context; no ad-hoc concatenation in business code.
 
 This implements the prompt-governance requirements of R004 and the *Product Bible* (Section 28.4).
+
+### 21.1 Cache-Aware Prompt Layout (binding, and expensive to retrofit)
+
+*Added August 2026.* Providers cache the **processed prefix** of a prompt and discount reprocessing it — up to 90% off cached input tokens on some providers, ~50% on others. The discount only applies to a **stable prefix**, which makes prompt ordering an architectural decision rather than a stylistic one.
+
+**Every prompt is assembled in this order, without exception:**
+
+1. **Stable prefix** — system instructions, role definition, output schema, tenant-invariant policy. Identical across requests; fully cacheable.
+2. **Semi-stable** — tenant configuration, vocabulary, prompt-version metadata. Changes rarely.
+3. **Volatile** — retrieved chunks, conversation turn, the user's question. Different every request; never cacheable.
+
+Placing retrieved chunks before system instructions destroys the cache on every request and silently multiplies input cost. **Adopt this layout from the first prompt written** — retrofitting means rewriting and re-validating every prompt in the library against the evaluation sets.
 
 ---
 
@@ -553,6 +601,26 @@ flowchart LR
 
 **Stages.** Parsing normalizes every supported format to processable text/structure. Chunking divides content into retrieval-optimal segments preserving source references. Embedding generation runs asynchronously (background workers — Section 28). The vector store serves tenant-scoped semantic retrieval. Context retrieval combines vector search, knowledge-graph relationships, full-text search, and memory. LLM reasoning is grounded in retrieved context (RAG — the primary hallucination mitigation). Every response carries its evidence (Section 26).
 
+### 22.1.1 Retrieval Architecture (ADR-20)
+
+*Added August 2026. The pipeline above was correct in outline but unspecified in the details that determine both answer quality and unit cost — which turn out to be the same details.*
+
+**The governing insight: retrieval quality is the cost strategy.** Weak retrieval is compensated for by sending more chunks and hoping the answer is among them. Twenty chunks instead of five is **4× the input tokens on every query, permanently**. Poor retrieval is not a quality problem that also costs money — it is a standing multiplier on inference cost that also degrades answers.
+
+Three mandatory techniques, each an **ingestion-time** decision that cannot be retrofitted without re-indexing every customer:
+
+| Technique | What it does | Measured effect |
+|---|---|---|
+| **Contextual chunk enrichment** | Before embedding, a model reads the whole document and writes a 50–100 token explanation situating the chunk; that context is prepended before both embedding and lexical indexing | ~35% reduction in retrieval failures (5.7% → 3.7%) |
+| **Hybrid retrieval** | Semantic search (`pgvector`) **and** lexical search (PostgreSQL full-text) over the same enriched chunks, results fused | ~49% reduction when combined with the above |
+| **Reranking** | Retrieve ~20 candidates, rerank with a small dedicated model, pass ~4 to generation | **~67% reduction (5.7% → 1.9%)** and a ~5× cut in generation input tokens |
+
+**Hybrid is not optional for this corpus.** Project Zero's MVP content is code and issues — dense with exact identifiers (function names, error strings, ticket IDs, commit SHAs). Vector search is weak on exact tokens; lexical search is excellent at them. PostgreSQL provides both in one engine, so this requires no additional datastore (ADR-05, ADR-14).
+
+**The cost trade is strongly favourable.** Contextual enrichment spends tokens once per document at ingestion (roughly $1 per million document tokens with prompt caching) and saves tokens on every query about that document for the life of the account. Reranking is the highest quality-per-currency step in the pipeline — rerankers cost a small fraction of generation while cutting what generation must read.
+
+**Model independence (FR-26).** Chunks are stored as **source text plus provenance**; embeddings are a derived cache keyed by embedding-model version. Changing embedding model re-derives the cache from source rather than losing the corpus — this is what makes the portable-memory promise (FR-27) architecturally real rather than a marketing claim.
+
 ### 22.2 Organizational Memory
 
 Memory is the compounding asset: ingested knowledge, extracted relationships, conversation history, decisions, and feedback accumulate per tenant with **version awareness** — updated content supersedes stale knowledge without losing history. Memory is retrievable by the Context Builder and always tenant-scoped.
@@ -565,9 +633,21 @@ Entities (people, projects, systems, documents, decisions) and their relationshi
 
 ## 23. Connector Architecture
 
-### 23.1 The Connector SDK
+### 23.1 The Connector SDK — an MCP Host (ADR-19)
 
 One standardized SDK implements: **authentication (OAuth 2.0), synchronization, contracts, scheduling, and provider abstraction** — every connector reuses them. Connectors implement the standard `IConnector` contract and plug into the sync engine.
+
+**`IConnector` is implemented primarily as a Model Context Protocol host.** *Revised August 2026.*
+
+MCP moved from emerging standard to installed base during 2025–26: **10,000+ public servers and 1,000+ live connectors**, adopted by Anthropic, Microsoft, Google, OpenAI, Amazon, Salesforce, and Databricks, with 28–41% of surveyed enterprises running MCP servers in production. This document previously filed MCP under "long-term connector substrate" (§23.4). That assessment is superseded.
+
+**What changes:** building bespoke per-vendor API integrations to reach five systems is replaced by speaking one protocol to reach a thousand. **What does not change:** we still own authentication and encrypted token custody, tenancy propagation, sync scheduling and cursors, retry and dead-lettering, normalisation into the ingestion content model, and connector health surfacing. Those were always the SDK's real value; per-vendor API glue never was.
+
+**Why this is architecturally consistent rather than a reversal.** `IConnector` is a provider abstraction (§12). An MCP-host implementation is a *provider implementation* behind that interface. Sources without a usable MCP server — or where we need behaviour the server does not expose — are implemented natively behind the same interface. The abstraction is what makes the choice reversible per connector.
+
+**The strategic consequence.** An MCP host that is also model-agnostic (§12.2) occupies the layer position the platform claims: **any tool plugs into us, and we plug into any model.** That is what "the intelligence layer above the stack" means concretely, and it is available now rather than as a V2 ambition.
+
+**Security note.** A third-party MCP server is untrusted code reachable from our network. Each server runs with least privilege, its declared scopes are reviewed before enablement, its output is treated as untrusted input at the prompt boundary (prompt-injection surface — §26), and tenant scope is enforced on our side, never delegated to the server.
 
 ### 23.2 Connector Security (Closing the Flagged Gap)
 
@@ -584,7 +664,9 @@ Scheduled sync with per-connector cadence; webhooks where sources support them; 
 
 ### 23.4 Catalog
 
-GitHub (MVP) → Slack, Gmail, Google Drive, Notion (fast-follow) → Discord, Outlook, Jira, Confluence, Microsoft Teams, YouTube, LinkedIn, Instagram, TikTok, Salesforce, HubSpot, future enterprise systems. MCP support is on the long-term connector-substrate horizon. (Scope decision record: *Product Bible*, Appendix A.)
+GitHub (MVP) → Slack, Gmail, Google Drive, Notion (fast-follow) → Discord, Outlook, Jira, Confluence, Microsoft Teams, YouTube, LinkedIn, Instagram, TikTok, Salesforce, HubSpot, future enterprise systems. (Scope decision record: *Product Bible*, Appendix A.)
+
+*MCP is no longer a horizon item — it is the primary implementation mechanism (§23.1, ADR-19). The catalog order above still holds, because the constraint on connector rollout was never the integration work; it is the normalisation and retrieval-quality work each new source requires.*
 
 ---
 
@@ -681,6 +763,30 @@ Dedicated workers (Presentation-layer hosts) consume queues for: **document proc
 
 Restored from Architecture v1.1 as a first-class architectural capability. The platform tracks, per tenant and per workspace: **token usage; API calls; storage consumption; queue usage; connector usage; monthly workspace cost.**
 
+### 31.1 Measured Unit Economics (August 2026)
+
+*Added so that pricing, quota design, and the free-tier cap rest on numbers rather than intuition. **Model prices move often — the ratios are the durable part, not the absolute amounts.** Re-measure against real logs once traffic exists.*
+
+A representative grounded question — 8 retrieved chunks (~400 tokens each), ~800-token system prompt, ~50-token question, ~600-token answer — is approximately **4,000 input and 600 output tokens**.
+
+| Configuration | Approx. cost/query |
+|---|---|
+| Naive RAG, mid-tier frontier model | **$0.021** |
+| + cache-aware prompt layout (§21.1) | $0.019 |
+| + retrieval quality: 8 chunks → 4 (§22.1.1) | $0.014 |
+| + model cascade, ~85% to cheap tier (§20.4) | $0.008 |
+| + semantic cache at ~30% hit rate (§20.4) | **$0.006** |
+
+**The shape of the cost, which determines plan design:**
+
+| Cost | Scales with | Paid | Risk |
+|---|---|---|---|
+| **Per query** | Usage — which is also what we charge for | Continuously | Low. Self-correcting: heavier users pay more |
+| **Per ingestion** | **Corpus size** | **Up front, before revenue** | **This is the real exposure.** A free-tier user with a very large repository can cost more on day one than a paying customer does in a year |
+| **Per embedding** | Corpus size | Up front | Low — embedding models are one to two orders of magnitude cheaper than generation, which is what makes re-embedding on model change (FR-26) affordable |
+
+**Binding consequences.** Quotas and the free tier are capped on **corpus size as well as query count** (*Foundation & Strategy* §17.2). Ingestion cost is metered per tenant from the first sprint that ingestion exists, not added later — without it, plan pricing is guesswork.
+
 Implementation: the AI Gateway meters every AI request (tokens, model, provider price signals); storage and queue usage are sampled by background jobs; metering events flow to Billing for quota enforcement (behavior at limits defined in *Product Bible* Section 21.2) and to dashboards for customer-facing transparency. Cost data also feeds the Model Router: cost-aware routing is how rising inference costs (a recorded strategic risk) are managed operationally.
 
 ---
@@ -713,6 +819,26 @@ Three environments — **Development, Staging, Production** — identical in top
 ### 34.2 Principles
 
 Containerized deployment via Docker; CI/CD through GitHub Actions (build → test → scan → package → deploy; full pipeline in the *Engineering Playbook*); reproducible, configuration-driven environments; versioned releases with rollback support; feature flags decouple deploy from release.
+
+### 34.3 Deferred Infrastructure — the Early Development Profile (ADR-21)
+
+*Added August 2026 by founder decision.* Containers and the standalone infrastructure services are **deferred until they earn their place**, and the platform runs as native processes against a locally installed PostgreSQL until then. This is legal under this architecture precisely because every deferred component sits behind a provider interface (§12) — the deferral is an implementation choice, not an architectural exception.
+
+| Component | Early implementation | Reinstated when |
+|---|---|---|
+| **Cache** | In-process memory cache behind `ICacheProvider` | A second application instance exists — a cache is meaningless on one process |
+| **Queue** | PostgreSQL table polled by a .NET background worker behind `IQueueProvider` | Queue depth or throughput demonstrably hurts |
+| **Vector store** | `pgvector` in the primary PostgreSQL behind `IVectorStoreProvider` | Corpus scale demands a dedicated engine |
+| **Containers** | None — native processes | First paying customer (reproducible deploys become an obligation) |
+| **Kubernetes** | None | Staging environment, per §34.1 — realistically much later than assumed |
+
+**Three rules keep containerisation a packaging exercise rather than a rewrite.** They are binding from the first commit:
+
+1. **All configuration through environment variables.** No machine-specific paths, no hard-coded directories.
+2. **Services address each other by configurable base URL** — never a hard-coded `localhost`.
+3. **Dockerfiles are written early and left unused.** They cost minutes and prevent accidentally building something un-containerizable.
+
+**The isolation obligations do not relax.** Tenant-prefixed cache keys (§18) apply to the in-memory cache exactly as to Redis; the queue table is tenant-scoped like every other table (§16.2). Deferring the *technology* never defers the *invariant*.
 
 ---
 
@@ -795,12 +921,12 @@ Review authority: architecture owner (founders/lead architect). Changes violatin
 ProjectZero/
 │
 ├── backend/          # ASP.NET Core modular monolith (Clean Architecture per module)
-├── frontend/         # Next.js application
+├── frontend/         # React (Vite) single-page application
 ├── ai-engine/        # Python FastAPI AI Engine
 ├── shared/           # Shared contracts (DTOs for the .NET ↔ Python boundary)
 ├── docker/           # Compose files, container assets
 ├── infrastructure/   # IaC, Kubernetes manifests
-└── docs/             # The six master documents and ADRs
+└── docs/             # The seven master documents and ADRs
 ```
 
 ---
@@ -818,6 +944,9 @@ ProjectZero/
 | Tenant quota/rate-limit UX and billing behavior | **Defined at product level; billing detail tracked** | *Product Bible* Section 21.2; remaining billing design tracked in *Roadmap* debt register |
 | Trust Layer end-to-end prototype against a real LLM | **Open — de-risking task** | Required before Decision Intelligence build; tracked in *Roadmap* |
 | RTO/RPO formalization | **Open** | Enterprise-tier commitment; tracked in *Roadmap* |
+| ADR-16 and ADR-17 cited as binding but never written | **Resolved — pending confirmation** | Both were referenced as decided policy by *Sprint Plan* §5 (Sprint 3) and *Developer Guide* §3.4, but neither had an entry in §7 or a record in `docs/adr/` (which did not exist). Summary rows added to §7; full records reconstructed from those two descriptions. **Founder confirmation required before Sprint 3** — they were reconstructed, not witnessed |
+| Frontend framework never recorded as a decision | **Resolved** | ADR-18: React (Vite) SPA. Next.js had appeared only in the §6 stack table with no ADR behind it |
+| Vector store technology unabstracted | **Resolved** | *Sprint Plan* §9 (Sprint 14) commits to pgvector while §12.2 had no vector-store interface and §12.7 listed it as *future* — leaving the retrieval path's most cost-sensitive dependency unabstracted. `IVectorStoreProvider` added to §12.2 as the tenth interface; pgvector becomes its development/default implementation rather than a hard dependency |
 
 ---
 
@@ -831,4 +960,4 @@ ProjectZero/
 
 ---
 
-*End of Project Zero Architecture Bible v3.0 — Master Document 03 of 06.*
+*End of Project Zero Architecture Bible v3.0 — Master Document 03 of 07.*

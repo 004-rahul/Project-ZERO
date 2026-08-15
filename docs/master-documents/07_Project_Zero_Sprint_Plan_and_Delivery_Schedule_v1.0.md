@@ -8,7 +8,7 @@
 | **Status** | Working Document — Updated Every Sprint |
 | **Owner** | Founders / Engineering Lead |
 | **Audience** | Everyone planning, building, or tracking delivery |
-| **Derives From** | Roadmap & Implementation Guide v3.0 (phases, epics, milestones, dependency map), Product Bible v3.0 (scope and acceptance criteria), Architecture Bible v3.0 (Phase 0 scope, ADRs), Engineering Playbook v3.0 (Definition of Done, quality gates), Experience & Design Bible v3.0 (design deliverables preceding frontend work) |
+| **Derives From** | Roadmap & Implementation Guide v3.0 (phases, epics, milestones, dependency map), Product Bible v3.0 (scope and acceptance criteria), Architecture Bible v3.0 (Phase 0 scope, ADRs), Engineering Playbook v3.0 (Definition of Done, quality gates), Experience & Design Bible v5.1 (design deliverables preceding frontend work) |
 
 ---
 
@@ -79,7 +79,7 @@ It is planned deliberately to a **production standard**: the target output is a 
 "Production-ready" is a gate, not a mood. Every sprint's output must satisfy the Playbook's Definition of Done; in addition, the following platform-level bars are non-negotiable and are verified at every milestone review:
 
 1. **Tenant isolation proven, not promised.** The cross-tenant isolation test suite (attempted cross-tenant reads must fail) exists from Sprint 6 onward and runs in CI on every merge, permanently. A missing tenant scope anywhere — query, cache key, file path, embedding, graph edge — is a critical defect that stops the release.
-2. **No vendor SDK in business logic, ever.** All nine provider interfaces (*Architecture Bible* §12.2) are real from Block A; contract-conformance tests run against every implementation.
+2. **No vendor SDK in business logic, ever.** All **ten** provider interfaces (*Architecture Bible* §12.2) are real from Block A; contract-conformance tests run against every implementation.
 3. **Security is a construction property.** JWT + RBAC on every endpoint; encrypted secrets and connector tokens; TLS on every hop including .NET↔Python; input validation at every boundary; audit logging on every important action; dependency and image scanning in CI from Sprint 1.
 4. **The Trust Layer envelope is structural.** From the first AI response the platform ever produces (Sprint 8), responses carry model, prompt version, token usage, and correlation ID; evidence/sources/confidence join in Blocks E–F. No AI output ships without its envelope.
 5. **Observability from day one.** Structured logging with correlation IDs (Sprint 1), health checks per service, metrics and tracing wired progressively, full monitoring stack by Block G. Unobservable features are incomplete features (*Architecture Bible* §39).
@@ -92,6 +92,15 @@ It is planned deliberately to a **production standard**: the target output is a 
 ---
 
 ## 4. Delivery Overview — Blocks, Sprints, Milestones
+
+> **Sequence revision, August 2026 (*Roadmap* §12.1).** A **Block Zero** now precedes Block A, and the Trust Layer prototype moves from Sprint 18 to the front as the wedge deliverable. The blocks below are otherwise unchanged and remain the plan for building the full platform — they execute *after* a design partner has confirmed the wedge is worth building on. Sprint content stands; only its position relative to the first customer moves.
+>
+> | Block | Weeks | Content | Gate |
+> |---|---|---|---|
+> | **Zero — Validation** | 1–4, parallel with foundation | De-risking action #0: twenty diagnostic conversations, identify the repeated question, convert design partners on 50–70% terms | **3+ design partners in writing.** If three cannot be found, the problem is segment or positioning — and learning that in week 4 costs four weeks, not fifty |
+> | **Wedge** | ~10 weeks | One question type, full Trust Layer envelope, real partner GitHub, queue-first surface. This *is* de-risking action #1 | A partner says the answer is one they would **act on** |
+>
+> Customer work then runs in parallel with every block below and never stops (*Foundation & Strategy* §19.4).
 
 | Block | Sprints | Epic(s) | Roadmap Phase | Milestone at Exit |
 |---|---|---|---|---|
@@ -118,7 +127,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 |---|---|
 | **Repo/DevOps** | Git repository with the fixed structure (`backend/ frontend/ ai-engine/ shared/ docker/ infrastructure/ docs/`); branch protection on `main`; PR template with DoD checklist; GitHub Actions CI: build → static analysis (analyzers/linters, formatting) → unit tests → dependency scan. Warnings are errors on protected branches |
 | **Backend** | `ProjectZero.sln`; first module skeleton with Clean Architecture layers (Domain/Application/Infrastructure/Presentation) and enforced project references (dependency rule physically impossible to violate); DI composition root; configuration binding with startup validation; Serilog structured logging with correlation-ID middleware; global exception middleware with the standard error envelope; health check endpoints; API versioning scaffold (`/api/v1`) |
-| **Frontend** | Next.js + TypeScript + Tailwind scaffold; **the design system as code**: all approved v3.1 tokens (Zoned Graphite: header `#101114`, sidebar `#17181C`, canvas `#FAFAFB`, footer `#0B0C0E`; Violet accent `#7C3AED`; semantic palette), Inter typography scale, spacing scale (4px base), radius/elevation tokens wired into Tailwind config; base layout shell (header/sidebar/canvas/footer zones); signature particle-face component |
+| **Frontend** | React (Vite) + TypeScript + React Router + Tailwind scaffold (ADR-018), dev server pinned to `:3000`; **the design system as code**: the approved theme tokens, Inter typography scale, spacing scale (4px base), radius/elevation tokens wired into Tailwind config; base layout shell (header/sidebar/canvas/footer zones); abstract AI-identity component per *Design Bible* §7.1 (never figurative) — **BLOCKED: the canonical token values and the identity spec are contradictory in *Design Bible* §9/§10/§25/§29 and §7.2. Re-baseline Document 04 before this sprint runs.** |
 | **Infra** | Docker Compose: API + PostgreSQL; containerized local run documented |
 | **Docs/QA** | `docs/` seeded with the master library + ADR template; test projects created (unit + integration); architecture-conformance tests (layer dependency rules) running in CI |
 
@@ -130,7 +139,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 |---|---|
 | **AI Engine** | Python FastAPI service skeleton; `/api/v1` internal routes; JWT/API-key authentication on every internal call; structured logging with correlation-ID propagation from .NET; health endpoint; test setup (pytest); Dockerfile + Compose entry |
 | **Shared contracts** | `shared/` DTO contracts for the .NET↔Python boundary; contract tests on **both** sides (the boundary is the riskiest integration point — *Architecture Bible* §11); contract-change review rule in the PR template |
-| **Backend** | `IAIProvider`, `IStorageProvider`, `ICacheProvider`, `IQueueProvider`, `IEmailProvider`, `ISearchProvider`, `INotificationProvider`, `ISecretProvider`, `IConnectorProvider` — all nine interfaces defined in the Application layer with development implementations in Infrastructure (local files, Redis, RabbitMQ, Gmail SMTP, PostgreSQL FTS, appsettings secrets); configuration-driven provider selection through DI; contract-conformance test suite that runs against every implementation of each interface |
+| **Backend** | `IAIProvider`, `IStorageProvider`, `ICacheProvider`, `IQueueProvider`, `IEmailProvider`, `ISearchProvider`, `INotificationProvider`, `ISecretProvider`, `IConnectorProvider`, `IVectorStoreProvider` — all **ten** interfaces defined in the Application layer with development implementations in Infrastructure (local files, Redis, RabbitMQ, Gmail SMTP, PostgreSQL FTS, appsettings secrets, pgvector); configuration-driven provider selection through DI; contract-conformance test suite that runs against every implementation of each interface. `IVectorStoreProvider` **must carry tenant scope in its signature**, not as an optional argument (*Architecture Bible* §12.2, §16.2) |
 | **Infra** | Redis + RabbitMQ + local object storage added to Compose; background worker host (Presentation-layer worker service) consuming a demo queue with idempotent handling, retry/back-off, and dead-letter queue |
 | **Docs** | ADRs recorded for anything decided during setup; provider implementation guide (how to add a provider — *Architecture Bible* §12.6) |
 
@@ -143,7 +152,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 | **Backend** | Tenant context: established at authentication, carried through every layer, propagated to the AI Engine (`OrganizationId`/`WorkspaceId` on every internal request); **global query filters** at the data layer so an unfiltered tenant query is impossible by default (ADR-10); tenant-prefixed cache-key convention (`{org}:{ws}:domain:key`) enforced in the cache provider; SQL-script migration pipeline per ADR-016 (versioned `V{NNNN}__` scripts, DbUp-based `ProjectZero.Database.Migrator`, `schema_versions` journal, rollback script per migration, CI drift check between scripts and EF entity configurations); data-access two-lane policy per ADR-017 (EF Core simple reads; Dapper SPs/parameterized SQL for bulk, with explicit tenant scope on raw statements) |
 | **Feature flags** | Flag foundation: per-organization flag storage, cached evaluation in the application layer, audit on change — the future licensing enforcement mechanism (ADR-15) |
 | **Frontend** | Component library first wave: Button (all six states), Input family, Card, Alert/Toast, Skeleton/shimmer loaders, empty-state component — each documented with anatomy/variants/states/accessibility notes (*Design Bible* §27) |
-| **QA** | Full test pyramid operational in CI: unit, integration (Testcontainers or Compose-backed), API-contract tests, and the seed of the security suite; coverage reporting with "no decrease on protected branches" gate |
+| **QA** | Full test pyramid operational in CI: unit, integration (Testcontainers or Compose-backed), API-contract tests, and the seed of the security suite; coverage gate enforcing **both** the floor (≥70% overall, ≥85% Domain/Application) and the "no decrease on protected branches" ratchet (*Playbook* §10.2) |
 | **Docs/DevOps** | OpenAPI generation published as a CI artifact; developer onboarding guide ("zero to running locally in under 30 minutes"); image build + tag + scan stage in CI |
 
 **Exit criteria: MILESTONE 1 — Running platform foundation.** All services healthy locally and in CI; tenancy plumbing and flags exist before any feature does; the test machinery every future sprint depends on is in place.
@@ -215,7 +224,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 
 | Workstream | Scope |
 |---|---|
-| **Backend/AI Engine** | Prompt Manager: prompts as versioned artifacts (identity + version, stored, retrievable); no inline prompt strings in business code (lint-enforced); prompt rollback; per-organization model configuration (tenant AI provider selection); evaluation harness skeleton — the structure for running a prompt against an evaluation set, to be filled as real prompts accumulate |
+| **Backend/AI Engine** | Prompt Manager: prompts as versioned artifacts (identity + version, stored, retrievable); no inline prompt strings in business code (lint-enforced); prompt rollback; per-organization model configuration (tenant AI provider selection); evaluation harness skeleton — the structure for running a prompt against an evaluation set, to be filled as real prompts accumulate. **Every prompt uses the cache-aware layout from the first one written** — stable prefix, then semi-stable, then volatile retrieved content (*Architecture Bible* §21.1). Free now; retrofitting means rewriting and re-validating the whole library |
 | **Frontend** | Internal prompt administration surface (list, versions, rollback) — Platform Owner scope |
 | **QA** | Prompt version recorded on every response (Trust Layer input); rollback test |
 
@@ -279,7 +288,7 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 | Workstream | Scope |
 |---|---|
 | **Backend** | Ingestion orchestration: connector content + direct file upload enter one pipeline; `DocumentIndexed`/`KnowledgeUpdated` domain events; upload API with virus/size/type validation |
-| **AI Engine** | Parsing for the MVP-priority formats (Markdown, code files, PDF, DOCX, TXT, HTML, JSON/YAML — the formats GitHub + uploads actually produce; the full multimodal matrix lands post-MVP per *Product Bible* §16); chunking with source-reference preservation (repo/file/line, document/page); embedding generation as asynchronous queue workers; **tenant-scoped vector storage** (pgvector) where a retrieval query without tenant scope is structurally impossible |
+| **AI Engine** | Parsing for the MVP format set per *Product Bible* FR-11a and Appendix D; chunking with source-reference preservation (repo/file/line, document/page); **contextual chunk enrichment before embedding** and a **hybrid index — `pgvector` plus PostgreSQL full-text — populated at ingest** (ADR-20; both are ingestion-time decisions that cannot be retrofitted without re-indexing every customer); embedding generation as asynchronous queue workers; **tenant-scoped vector storage** behind `IVectorStoreProvider` where a retrieval query without tenant scope is structurally impossible; **source text and provenance retained as the record, embeddings as a derived cache** (FR-26); **ingestion cost metered per tenant** from this sprint (*Architecture Bible* §31.1) |
 | **Frontend** | Upload flow with real progress (queue-backed, honest states); ingestion status visibility |
 | **QA** | Pipeline tests per format; **embedding isolation tests join the permanent isolation suite**; idempotent re-ingestion (updated file supersedes, doesn't duplicate) |
 
@@ -289,11 +298,11 @@ Dependency logic (from *Roadmap* §8): tenancy before anything tenant-scoped; AI
 
 | Workstream | Scope |
 |---|---|
-| **Backend/AI Engine** | Semantic search over the vector store; PostgreSQL full-text search (ADR-14); hybrid ranking (semantic + keyword); permission-aware results (caller sees only what RBAC allows); search API |
+| **Backend/AI Engine** | Semantic search over the vector store; PostgreSQL full-text search (ADR-14); hybrid ranking (semantic + keyword) — essential here because the MVP corpus is code and issues, dense with exact identifiers that vector search handles poorly (ADR-20); **reranking: retrieve ~20 candidates, rerank, pass ~4 to generation** — the highest quality-per-cost step in the pipeline; permission-aware results (caller sees only what RBAC allows); search API |
 | **Frontend** | Knowledge search experience: search surface with meaningful results (source, snippet, recency), the intelligent-search-placeholder micro-interaction, designed no-results state |
 | **QA** | Retrieval quality baseline: a seeded evaluation set of question → expected-source pairs, scored and tracked from this sprint forward (this baseline is what proves retrieval improves rather than regresses) |
 
-**Exit criteria:** meaning-based search across everything the caller may access, with sources; quality baseline recorded.
+**Exit criteria:** meaning-based search across everything the caller may access, with sources; quality baseline recorded. **The evaluation set is now a blocking CI gate** — a retrieval change that cannot be evaluated does not merge (*Engineering Playbook* §10.1).
 
 ### Sprint 16 — Context Builder, Memory, and Evidence
 
@@ -470,7 +479,7 @@ What must be true before Project Zero is shown to a real company as a product (t
 - [ ] The critical loop works live: connect → ingest → ask → evidence-backed answer → Decision Brief → approve/reject
 - [ ] Every AI answer shows evidence, navigable citations, and honest confidence — including low confidence
 - [ ] Zero states, loading states, and error states are all designed experiences; nothing dead-ends
-- [ ] The interface reads as the Design Bible v3.1 intends: zoned graphite theme, violet accent, signature particle face, purposeful motion, Mission Control — not an admin panel
+- [ ] The interface reads as the Design Bible v5.1 intends: Deep Teal elevated surfaces, Ice Cyan accent, the abstract (never figurative) MindCore identity, purposeful motion, Mission Control — not an admin panel
 
 **Trust & security (what their technical evaluator will ask)**
 - [ ] Tenant isolation explained *and demonstrated* (the test suite is a sales asset)
@@ -510,16 +519,21 @@ Scaling rules: parallelize only along module boundaries (that's what they're for
 
 Updated at every sprint close (mirrors *Roadmap* §18):
 
-| Field | Value |
-|---|---|
-| Current company phase | Phase 3 — MVP Development |
-| Current block | **A — Platform Foundation** |
-| Current sprint | **Sprint 1** (not started) |
-| Sprints completed | 0 of 24 (MVP) / 0 of 32 (V1.0) |
-| MVP progress | 0% |
-| Next milestone | M1 — Running platform foundation (Sprint 3 exit) |
-| First-customer-demo target date | **OPEN — set immediately (de-risking action #2)** |
-| Active technical debt items | TD-1…TD-7 (see *Roadmap* §15) |
+| Field | Value | As of |
+|---|---|---|
+| Current company phase | Phase 3 — MVP Development | 2026-08-15 |
+| Current block | **A — Platform Foundation** | 2026-08-15 |
+| Current sprint | **Sprint 1** (not started — see reset note) | 2026-08-15 |
+| Sprints completed | 0 of 24 (MVP) / 0 of 32 (V1.0) | 2026-08-15 |
+| MVP progress | 0% | 2026-08-15 |
+| Next milestone | M1 — Running platform foundation (Sprint 3 exit) | 2026-08-15 |
+| First-customer-demo target date | **STILL OPEN — de-risking action #2, flagged "immediately" and now overdue** | 2026-08-15 |
+| Frontend stack | React 18 + Vite (ADR-018 — changed from Next.js 2026-08-15) | 2026-08-15 |
+| Active technical debt items | TD-1…TD-9 (see *Roadmap* §15) | 2026-08-15 |
+
+**Reset note.** An earlier attempt at Sprint 1 was completed and then deliberately deleted on 2026-08-15. The plan restarts from Sprint 1 with two changes carried forward: the frontend is React + Vite rather than Next.js (ADR-018), and the design tokens in *Experience & Design Bible* §10 were recovered from that deleted work rather than re-derived.
+
+**On the demo date.** De-risking action #2 asked for this date "immediately" and it has never been set. On this plan the earliest honest enterprise demo is the end of Block F (Sprint 21) on seeded data, and end of Block G (Sprint 24) on a customer's real GitHub organisation (§2). Set it, write it into this row, and check every sprint against it — an unset date is how a 24-sprint plan quietly becomes a 40-sprint one.
 
 Per-sprint log (append one row at each sprint close):
 
@@ -546,7 +560,7 @@ Per-sprint log (append one row at each sprint close):
 - *Product Bible v3.0* — acceptance criteria behind every sprint's exit criteria.
 - *Architecture Bible v3.0* — Phase 0 scope, ADRs, tenancy/provider/trust mechanics built in Blocks A–F.
 - *Engineering Playbook v3.0* — Definition of Done, testing strategy, CI/CD, release process enforced every sprint.
-- *Experience & Design Bible v3.0* — design system, workspace, and accessibility standards implemented across all frontend scope.
+- *Experience & Design Bible v5.1* — design system, workspace, and accessibility standards implemented across all frontend scope.
 - *Foundation & Strategy v3.0* — the decision framework guarding every scope change.
 
 ---

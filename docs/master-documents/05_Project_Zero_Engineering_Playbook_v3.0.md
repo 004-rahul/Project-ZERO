@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | Project Zero Engineering Playbook |
-| **Document Number** | 05 of 06 |
+| **Document Number** | 05 of 07 |
 | **Version** | 3.0 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Engineering (Founders / Engineering Lead) |
@@ -72,7 +72,7 @@ Every contributor, without exception. QA owns Sections 10 and 19 jointly with en
 
 ## 2. Engineering Vision
 
-The platform is being built for a **10+ year horizon** by a deliberately small team augmented by AI assistants. That combination only works with unusually high standards for consistency, documentation, and automation: the codebase must always be understandable by a contributor (human or AI) with zero context beyond these six documents. Quality is enforced by pipeline and process, not by heroics.
+The platform is being built for a **10+ year horizon** by a deliberately small team augmented by AI assistants. That combination only works with unusually high standards for consistency, documentation, and automation: the codebase must always be understandable by a contributor (human or AI) with zero context beyond these seven documents. Quality is enforced by pipeline and process, not by heroics.
 
 ---
 
@@ -105,12 +105,12 @@ ProjectZero/
 │
 ├── backend/          # ASP.NET Core modular monolith
 │   └── <Module>/     #   each module: Domain / Application / Infrastructure / Presentation
-├── frontend/         # Next.js + TypeScript + Tailwind + Framer Motion
+├── frontend/         # React (Vite) SPA + TypeScript + React Router + Tailwind + Framer Motion
 ├── ai-engine/        # Python FastAPI AI Engine
 ├── shared/           # Shared contracts (.NET ↔ Python DTOs)
 ├── docker/           # Compose files and container assets
 ├── infrastructure/   # IaC and Kubernetes manifests
-└── docs/             # The six master documents + ADRs
+└── docs/             # The seven master documents + ADRs
 ```
 
 Rules: modules remain independent with clearly defined interfaces and minimal coupling; each backend module contains its own Clean Architecture layers; shared contracts change only through reviewed API-change PRs; nothing lives outside this structure without an ADR.
@@ -213,19 +213,27 @@ Working rules (from the original backlog, permanently in force):
 | **API tests** | Endpoint contracts, auth, error envelopes | Versioned-contract regression protection |
 | **End-to-end tests** | Complete user workflows | The critical paths: onboarding, connect → ingest → ask → decision |
 | **Performance tests** | Targets in *Architecture Bible* §37 | Baseline validated per release |
-| **Security tests** | AuthZ enforcement, tenant isolation, dependency vulnerabilities | **Cross-tenant access attempts must fail — a permanent, non-skippable suite** |
+| **Security tests** | AuthZ enforcement, tenant isolation, dependency vulnerabilities | **Cross-tenant access attempts must fail — a permanent, non-skippable suite.** Includes the semantic cache: a cache key omitting tenant or corpus version is an isolation defect (ADR-20) |
+| **Retrieval evaluation** | Answer groundedness — that the right sources are retrieved | **A scored set of question → expected-source pairs, run on every change to the retrieval path and reported as a number.** Mandatory from the sprint retrieval exists (ADR-20) |
+
+**On the retrieval evaluation set (§10.1, last row).** This is the most important test in the platform and the least conventional, so its purpose is stated explicitly: retrieval has **no visible failure mode**. Bad retrieval does not throw — it returns a confident, well-formed, wrong answer. No amount of code review catches a ranking regression, and the AI Engine is the component least likely to be reviewed line-by-line by a small team.
+
+The evaluation set converts that unreviewable surface into a number that moves. It is how a change to the retrieval path is accepted or rejected, and it is the arbiter for every cost/quality trade in ADR-20 — chunk count, cascade threshold, compression. **A retrieval change that cannot be evaluated does not merge.**
 
 ### 10.2 Quality Gates
 
 - All tests pass — no merges over red builds.
 - No critical vulnerabilities (dependency and code scanning).
-- **Coverage maintained** — coverage must not decrease on protected branches; business-logic-heavy modules target high coverage rather than chasing a single global number.
+- **Coverage floor and ratchet.** Two rules, both enforced in CI:
+  - **Floor:** line coverage must be **≥ 70%** overall, and **≥ 85%** in Domain and Application layers, where the business rules live. Infrastructure and Presentation are excluded from the higher bar — they are covered by integration and API tests instead.
+  - **Ratchet:** coverage must not decrease on protected branches.
+  *(A ratchet without a floor was the prior rule. It is trivially satisfied by starting at zero and never improving, which is why the floor is now explicit. Modules below the floor at the time this was adopted have until the end of their current block to reach it; new modules meet it from their first PR.)*
 - Performance baseline validated before release.
 - Regression testing required before releases.
 
 ### 10.3 Special Test Obligations
 
-- **.NET ↔ Python contract tests** on both sides of the boundary (shared DTOs — *Architecture Bible* §11).
+- **.NET ↔ Python contract tests** on both sides of the boundary (shared DTOs — *Architecture Bible* §11). **These are written from the .NET side**, defining expected input and output in C#, so the boundary is verified by the language the team reviews most confidently. The AI Engine keeps a deliberately small API surface for the same reason — a growing endpoint count is a signal that logic is drifting into the service where it is hardest to review.
 - **Idempotency tests** for queue consumers.
 - **Trust Layer tests** — AI responses must carry the full evidence/audit envelope.
 
@@ -311,7 +319,7 @@ Engineering rules specific to AI capabilities:
 
 **Every module, connector, migration, and public contract must be documented.** Documentation evolves with the platform and is the primary knowledge source for developers and AI coding assistants — stale documentation is a defect with an owner.
 
-Documentation lives in `docs/` and in the six master documents; changes that alter behavior described in a master document must update that document in the same change (the *Foundation & Strategy* working rule, applied to engineering).
+Documentation lives in `docs/` and in the seven master documents; changes that alter behavior described in a master document must update that document in the same change (the *Foundation & Strategy* working rule, applied to engineering).
 
 ---
 
@@ -381,4 +389,4 @@ Adherence to this playbook ensures consistency, quality, security, and long-term
 
 ---
 
-*End of Project Zero Engineering Playbook v3.0 — Master Document 05 of 06.*
+*End of Project Zero Engineering Playbook v3.0 — Master Document 05 of 07.*

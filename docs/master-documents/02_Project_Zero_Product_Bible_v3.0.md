@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Document** | Project Zero Product Bible |
-| **Document Number** | 02 of 06 |
+| **Document Number** | 02 of 07 |
 | **Version** | 3.0 |
 | **Status** | Master Document — Single Source of Truth |
 | **Owner** | Product Management (Founders) |
@@ -57,9 +57,11 @@
 30. [Success Metrics](#30-success-metrics)
 31. [Product Risks](#31-product-risks)
 32. [Future Features and Long-Term Evolution](#32-future-features-and-long-term-evolution)
-33. [Appendix A — MVP Scope Decision Record](#appendix-a--mvp-scope-decision-record)
+33. [Appendix A — MVP Connector Scope Decision Record](#appendix-a--mvp-scope-decision-record)
 34. [Appendix B — Requirements Traceability](#appendix-b--requirements-traceability)
-35. [References](#references)
+35. [Appendix C — Decision Intelligence MVP Scope Decision Record](#appendix-c--decision-intelligence-mvp-scope-decision-record)
+36. [Appendix D — Content Format Phasing Decision Record](#appendix-d--content-format-phasing-decision-record)
+37. [References](#references)
 
 ---
 
@@ -308,6 +310,23 @@ Everything in Project Zero belongs to somebody: every document, embedding, conve
 
 The AI Workspace is the **primary interaction model** of the entire product. Users do not manage a database application with an AI feature attached; they supervise one unified AI identity inside a Mission Control experience (see *Experience & Design Bible* for the experiential specification). The workspace is where questions become evidence-backed answers and decisions.
 
+### 12.1.1 The Surface Is a Queue, Not a Chat Box (binding)
+
+*Added August 2026. This document already specified Mission Control, the Decision Brief, and the decision queue — and then let the chat window occupy the front door. That ordering produces a product indistinguishable from every assistant on the market. It is corrected here.*
+
+**The default surface is a queue of items awaiting the user's decision — not an empty prompt.** A user opening Project Zero is shown what changed and what needs attention, each as a Decision Brief (§17.2) with recommendation, evidence, confidence, and approve/dismiss controls. **Chat exists inside a brief, as the drill-down for "tell me more" — it is an input method, never the product.**
+
+| | Ask-and-receive (rejected) | Decision queue (canonical) |
+|---|---|---|
+| Front door | Empty text box | Items needing a decision |
+| Who supplies the question | The user, every time | The platform, from what changed |
+| Competes on | Model quality — the one axis where we lose to everyone | Organisational memory — the one axis competitors structurally lack |
+| Requires | Nothing | Accumulated memory of what this organisation decided and ignored before |
+
+**Why this is defensible.** Proactive surfacing requires knowing what matters *to this specific organisation*, which requires accumulated memory of prior decisions, evidence, and dismissals. A stateless assistant cannot do it — it has nothing to compare today against. **The organisational memory makes the proactive surface possible; the proactive surface makes the memory visible to a buyer.** Neither capability is worth much alone; together they are the product.
+
+This does not remove chat, reduce any existing requirement, or change the answer pipeline (§12.3). It fixes which surface is primary.
+
 ### 12.2 Capabilities
 
 - **AI Chat** — conversational interface with streaming responses, markdown rendering, and syntax highlighting.
@@ -405,6 +424,8 @@ The Knowledge Platform turns connected content into **organizational memory** �
 - **Knowledge graph** — entities and relationships extracted from content, enabling relationship queries and graph exploration in the UI.
 - **Context Builder** — assembles the most relevant organizational context for each AI request.
 - **Evidence collection** — retrieval retains source references so every answer can cite its basis.
+- **Model-independent memory** — the corpus is stored as source text plus provenance; embeddings are a derived cache, not the record. Changing embedding or generation model re-derives the cache without losing the memory (FR-26).
+- **Portable export** — an organization can take its complete memory with it (FR-27). This is the customer-owned-data promise made checkable, and it is a capability a vendor-locked competitor structurally cannot match.
 
 ### 15.3 Acceptance Criteria (Module Level)
 
@@ -462,11 +483,29 @@ Decision Intelligence is the product's reason for existing: it transforms retrie
 - **Feedback collection** — approve/reject on recommendations; ratings on responses; feedback demonstrably improves future recommendations.
 - **Continuous learning** — the feedback loop is a product requirement, not an aspiration: acceptance rates must be measurable and improving.
 
-### 17.3 Acceptance Criteria (Module Level)
+### 17.3 Proactive Briefs — the Decision Queue
+
+*Added August 2026 alongside §12.1.1. This is the capability that makes the queue surface possible.*
+
+The platform does not wait to be asked. It **detects what changed, decides whether a leader would care, and produces a brief** — three to five per workspace per week, not a firehose.
+
+| Requirement | Detail |
+|---|---|
+| **Detection** | Signals derived from already-synced content: unusual issue clustering, a pull request open abnormally long, a document marked final then edited, an identifier appearing across a bug and a design decision |
+| **Relevance filter** | Each candidate is assessed for whether it warrants a leader's attention before any brief is generated |
+| **Brief generation** | Survivors become full Decision Briefs (§17.2) with the complete Trust Layer envelope |
+| **Feedback loop** | Dismissals tune detection thresholds — the platform learns what this organisation ignores and stops surfacing it |
+| **Honesty** | A quiet week produces an empty queue. **Manufacturing briefs to look busy is prohibited** — it destroys exactly the trust §18 exists to build |
+| **Cost discipline** | Detection must not require running a model over all content continuously. Cheap signals first, model calls only on candidates (*Architecture Bible* §20.4) |
+
+**Acceptance criteria.** Briefs are generated without a user request; every brief carries the full trust envelope; dismissal demonstrably reduces similar future briefs; an empty queue renders as a designed state, not an error; and no brief is generated without a detected change to point at.
+
+### 17.4 Acceptance Criteria (Module Level)
 
 - Every response includes evidence.
 - Decision history is auditable.
 - Feedback improves future recommendations (measured via acceptance-rate trend).
+- The decision queue populates proactively and honestly (§17.3).
 
 ---
 
@@ -552,10 +591,12 @@ Each pack is enabled per organization via feature flags and licensing. Healthcar
 **AI Gateway:** multi-LLM routing, prompt management, usage tracking, provider abstraction.
 **Connectors:** **GitHub** (the single MVP connector — Appendix A).
 **Knowledge:** document ingestion, search, organizational memory, context builder.
-**Decision Intelligence:** AI Chat, Decision Briefs, evidence-backed responses, confidence scores, audit history.
+**Decision Intelligence:** AI Chat, Decision Briefs, evidence-backed responses, confidence scores, feedback capture, audit history. *(Scope confirmed in Appendix C.)*
 **Platform:** provider abstraction, multi-tenant foundation, explainable AI.
 
 The MVP one-liner: **Authentication + Organizations + RBAC + GitHub Connector + AI Workspace + Knowledge + Decision Briefs + Evidence-backed Responses.**
+
+**Surface note:** the MVP AI Workspace ships **queue-first** (§12.1.1) — the decision queue is the default screen, with chat as the drill-down inside a brief. Proactive brief generation (§17.3) may follow the first design-partner corpus, but the queue *surface* is MVP, not a later addition; retrofitting it means rebuilding the primary screen.
 
 ### 24.2 Excluded from MVP
 
@@ -569,9 +610,11 @@ ERP replacement; CRM replacement; project management platform; autonomous AI act
 
 | Release | Adds |
 |---|---|
-| **MVP** | Platform Foundation, Identity, Organizations, Workspaces, AI Gateway, GitHub Connector, Knowledge Platform, AI Chat |
-| **Version 1.0** | Decision Intelligence (full), Billing, Licensing, Notifications, Administration |
+| **MVP** | Platform Foundation, Identity, Organizations, Workspaces, AI Gateway, GitHub Connector, Knowledge Platform, AI Chat, **Decision Briefs, evidence-backed responses, confidence scoring, feedback capture** |
+| **Version 1.0** | Decision Intelligence **completion** (deepened approval workflows, the measured learning loop, executive dashboards), Billing, Licensing, Notifications, Administration, Observability hardening |
 | **Version 2.0** | Marketplace, Vertical Solutions, Advanced AI Agents, Mobile Applications, Desktop Applications |
+
+*This table previously listed MVP as ending at "AI Chat" and put all of Decision Intelligence in V1.0, contradicting §24.1 and the MVP one-liner in the same document. Corrected per Appendix C.*
 
 (Full sequencing, dependencies, and sprints: *Roadmap & Implementation Guide*.)
 
@@ -593,7 +636,9 @@ Consolidated, numbered, and binding. Each requirement is testable; module-level 
 | FR-08 | AI usage (tokens, API calls, cost) shall be tracked per request, per workspace, per organization. |
 | FR-09 | The platform shall provide a Connector SDK with a standard contract, OAuth foundation (encrypted tokens, refresh, revocation), scheduled sync, webhook support, and automatic retry. |
 | FR-10 | The platform shall provide a GitHub connector at MVP, followed by Slack, Gmail, Google Drive, and Notion. |
-| FR-11 | The platform shall ingest documents from connectors and direct upload, parse all supported formats, chunk, embed, and index asynchronously. |
+| FR-11 | The platform shall ingest documents from connectors and direct upload, chunk, embed, and index asynchronously, retaining source references end to end. |
+| FR-11a | **(MVP)** The platform shall parse the MVP format set: Markdown, source code files, PDF, DOCX, TXT, HTML, JSON, and YAML — the formats GitHub sync and direct upload actually produce. |
+| FR-11b | **(Post-MVP)** The platform shall parse the remaining supported formats: PPTX, XLSX, CSV, XML; images with OCR (diagrams, screenshots, charts, handwriting); audio (speech, meetings, voice notes); and video (transcription, speaker detection, summaries, action items) — completing the §16 content matrix. |
 | FR-12 | The platform shall provide semantic search across all content the caller is authorized to access. |
 | FR-13 | The platform shall maintain organizational memory with version awareness and a knowledge graph of entities and relationships. |
 | FR-14 | The platform shall provide AI Chat with streaming, markdown rendering, conversation history, suggested prompts, response actions, and feedback controls. |
@@ -606,6 +651,10 @@ Consolidated, numbered, and binding. Each requirement is testable; module-level 
 | FR-21 | The platform shall enforce subscription plans, quotas, and usage metering, with clear user-facing behavior at limits. |
 | FR-22 | Feature availability shall be controllable per organization via feature flags (AI, Knowledge, Connectors, Decision Engine, Marketplace, Billing, Licensing, Vertical Packs). |
 | FR-23 | All platform capabilities shall be exposed through versioned, documented REST APIs. |
+| FR-24 | The decision queue shall be the default surface of the AI Workspace; chat shall be available as a drill-down within a brief, not as the primary interface (§12.1.1). |
+| FR-25 | The platform shall generate Decision Briefs proactively from detected changes, without a user request, and shall reduce similar briefs when they are dismissed (§17.3). |
+| FR-26 | **Organizational memory shall be model-independent.** Every chunk shall retain its source text and provenance so the corpus can be re-embedded when the embedding model changes; decisions, evidence links, approvals, and feedback shall be stored as structured records rather than as model transcripts. |
+| FR-27 | **Organizations shall be able to export their complete organizational memory** — documents, decisions, evidence, approvals, and feedback — in a documented, portable format, without assistance. This makes the data-ownership promise (NFR-11) verifiable rather than asserted. |
 
 ---
 
@@ -773,13 +822,103 @@ Every future idea recorded anywhere in the source corpus, preserved and organize
 | Master Source | Where It Lives Now |
 |---|---|
 | PRD v1.0 Parts 1–5 | Sections 2–9, 24–30 (all content absorbed; MVP connector scope resolved per Appendix A) |
-| R005 Product Definition & MVP | Sections 5, 24, Appendix A |
+| R005 Product Definition & MVP | Sections 5, 24, Appendix A, Appendix C |
 | Backlog v1.0 features & acceptance criteria | Sections 11–23 (module capabilities), 27 (acceptance criteria); full delivery breakdown in *Roadmap* |
 | Design System v1.0 Part 4 (AI experience) | Sections 12, 17; experiential detail in *Experience & Design Bible* |
 | Architecture v1.1 (licensing, cost, trust, verticals) | Sections 18, 21, 23 |
-| Intelligence layer & supported content lists | Section 16 |
+| Intelligence layer & supported content lists | Section 16, Appendix D |
 | Conversation summary (product direction) | Sections 2, 4, 14, 23 |
 | Product Bible v2.0 | Superseded in full by this document |
+
+---
+
+## Appendix C — Decision Intelligence MVP Scope Decision Record
+
+
+**Context.** Five statements across three documents disagreed on whether Decision
+Briefs are in MVP or deferred to V1.0:
+
+| Source | Position |
+|---|---|
+| *Product Bible* §24.1 (Included — Functional Scope) | Briefs **in MVP** — "AI Chat, Decision Briefs, evidence-backed responses, confidence scores, audit history" |
+| *Product Bible* §24.1 MVP one-liner | Briefs **in MVP** — "…AI Workspace + Knowledge + **Decision Briefs** + Evidence-backed Responses" |
+| *Product Bible* §24.4 (Release Milestones) | Briefs **in V1.0** — MVP ends at "AI Chat" |
+| *Roadmap* §6 (Epic list) | Ambiguous — "MVP (chat) → V1 (full)" |
+| *Roadmap* §11 (Release Plan) | Briefs **in V1.0** — MVP ships "AI Chat with evidence" |
+| *Sprint Plan* §10 + M6 exit criteria | Briefs **in MVP** — Sprint 20 builds them inside Block F |
+
+**Decision. Decision Briefs are in MVP.** MVP Decision Intelligence =
+AI Chat with streaming, evidence-backed responses with navigable citations,
+Decision Briefs, confidence scoring, feedback capture, and decision history.
+V1.0 *completes* the epic — deepened approval workflows, the demonstrably-used
+learning loop, and executive dashboards.
+
+**Reasoning.**
+
+1. **R005 — the approved MVP definition — lists "Recommend next actions" as MVP
+   goal #4** (§24.3). A Decision Brief *is* the recommendation. Deferring briefs
+   would ship an MVP that fails one of its own five approved goals.
+2. **It is the product's stated reason for existing.** §17.1: "Where search
+   returns documents and chat returns text, Decision Intelligence returns a
+   defensible basis for action." An MVP that stops at chat-with-citations is
+   enterprise search with footnotes — the exact positioning *Foundation &
+   Strategy* §16.6 forbids competing on.
+3. **The majority and the most recent sources agree.** Three of six statements
+   say MVP, including the *Sprint Plan* — the newest document, written after all
+   the others, with the most operational detail.
+4. **The dissenting statements are summary tables, not scope definitions.** §24.4
+   and *Roadmap* §11 are one-line release summaries; §24.1 is the actual scope
+   section. Summaries lost to the definition.
+
+**Consequences.** *Product Bible* §24.4 corrected. *Roadmap* §6 and §11 corrected
+to match. *Sprint Plan* Block F (Sprints 18–21) was already planned correctly and
+is unchanged — meaning this resolution costs no schedule. The Sprint 18 Trust
+Layer gate remains mandatory and remains able to pause Block F.
+
+**Status.** Resolved on the evidence above. **Founder confirmation recommended**,
+since this fixes MVP scope at roughly two sprints of Block F work.
+
+---
+
+## Appendix D — Content Format Phasing Decision Record
+
+**Context.** FR-11 bound the platform to "parse **all** supported formats" — the
+full §16 matrix including PPTX, XLSX, CSV, XML, images with OCR, audio, and
+video. The *Sprint Plan* (Sprint 14) scopes ingestion to eight formats and states
+plainly that "the full multimodal matrix lands post-MVP." That made a binding
+numbered requirement knowingly unmet, with no decision record — the gap this
+appendix closes.
+
+**Decision.** FR-11 is **split, not reduced**. FR-11 keeps the pipeline
+obligation (ingest, chunk, embed, index, retain sources). FR-11a fixes the MVP
+format set. FR-11b carries the remainder of the §16 matrix as a post-MVP
+commitment.
+
+**Reasoning.**
+
+1. **Nothing is dropped.** §16's ten intelligence capabilities and the full
+   content matrix remain product commitments. This is sequencing, not scope
+   reduction — the long-term product identity in §32 is unchanged.
+2. **The MVP connector is GitHub only** (Appendix A). GitHub produces Markdown,
+   code, and documents. Building XLSX, audio, and video pipelines before any
+   connector emits them is exactly the "build it generically before proving it
+   on one" trap Appendix A was written to avoid.
+3. **Vision, audio, and video are materially harder** — OCR quality, speaker
+   diarisation, and video segmentation each carry their own retrieval-quality
+   risk (R-7). Loading them into MVP would put the Sprint 15 quality baseline on
+   sand.
+4. **The fast-follow connectors change the calculus.** Slack, Gmail, Drive, and
+   Notion introduce spreadsheets, presentations, and images. FR-11b is
+   naturally scheduled alongside them.
+
+**Consequences.** No change to *Sprint Plan* Sprint 14, which was already scoped
+this way. FR-11b must be scheduled explicitly in the V1 expansion re-plan at the
+Sprint 24 review; until then it is a stated commitment without a date, which is
+honest. §16 is unchanged and remains the authority on what the platform will
+ultimately understand.
+
+**Status.** Resolved. **Founder confirmation recommended** — this fixes what the
+MVP can read.
 
 ---
 
@@ -793,4 +932,4 @@ Every future idea recorded anywhere in the source corpus, preserved and organize
 
 ---
 
-*End of Project Zero Product Bible v3.0 — Master Document 02 of 06.*
+*End of Project Zero Product Bible v3.0 — Master Document 02 of 07.*
