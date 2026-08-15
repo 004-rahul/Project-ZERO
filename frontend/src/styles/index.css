@@ -104,7 +104,23 @@
   }
 }
 
+@keyframes pz-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 @layer utilities {
+  /* Ambient "in progress" pulse.
+     Deliberately CSS rather than a JS keyframe array: Motion routes a
+     multi-keyframe repeating animation through the Web Animations API,
+     which generates its own offsets and rejects them if they are not
+     monotonically non-decreasing — a real error this replaced. It is also
+     simply the right tool: an infinite ambient loop needs no JS at all.
+     The global reduced-motion rule collapses it automatically. */
+  .pulse-soft {
+    animation: pz-pulse 1.6s ease-in-out infinite;
+  }
+
   /* Panel with a lit top edge and a graded face.
      Replaces `border border-line-subtle` as the default panel treatment:
      a uniform 1px box on four sides is the flattest possible way to

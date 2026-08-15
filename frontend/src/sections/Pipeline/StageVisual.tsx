@@ -77,13 +77,12 @@ function Connect({ progress, i, n }: { progress: MotionValue<number>; i: number;
           {c.done ? (
             <span className="shrink-0 font-mono text-2xs text-second">synced</span>
           ) : (
-            <motion.span
-              className="shrink-0 font-mono text-2xs text-accent-contrast"
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 1.6, repeat: Infinity, delay: k * 0.1 }}
+            <span
+              className="pulse-soft shrink-0 font-mono text-2xs text-accent-contrast"
+              style={{ animationDelay: `${k * 0.12}s` }}
             >
               syncing
-            </motion.span>
+            </span>
           )}
         </Row>
       ))}
