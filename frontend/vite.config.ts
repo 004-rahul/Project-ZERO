@@ -10,6 +10,20 @@ export default defineConfig({
     alias: { "@": path.resolve(__dirname, "./src") },
   },
 
+  // Pre-bundle these explicitly.
+  //
+  // Vite discovers dependencies by crawling imports on first run and caches
+  // the result in node_modules/.vite. When a pull adds a new import from an
+  // already-cached package — as adding useVelocity and useAnimationFrame did —
+  // the cache can be stale and the dep chunk (motion_react.js) fails to load
+  // with a 504 or an outdated-optimize error. Naming them here makes the
+  // optimize step deterministic instead of discovery-order dependent.
+  //
+  // If it ever recurs after changing dependencies: npm run dev -- --force
+  optimizeDeps: {
+    include: ["motion", "motion/react", "lenis"],
+  },
+
   // Pinned to 3000 so every document, the ports table, and the API CORS
   // allow-list agree on one number (Vite's own default is 5173).
   server: {
