@@ -1,3 +1,15 @@
+# Project Zero CI
+#
+# Pipeline stages are specified in Engineering Playbook §11. This file
+# implements the stages that are possible today and grows with each sprint —
+# the remaining stages are listed at the bottom of this file with the sprint
+# that introduces them.
+#
+# Every job guards on the existence of its directory. The repository is
+# currently documentation-only (the code trees were reset on 2026-08-15), and a
+# CI file that fails on every push trains people to ignore CI — which is worse
+# than having none.
+
 name: CI
 
 on:
@@ -7,8 +19,68 @@ on:
     branches: [main]
 
 jobs:
+  # ── Stage 0: what exists? ───────────────────────────────────────────────
+  detect:
+    name: Detect present projects
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.check.outputs.backend }}
+      frontend: ${{ steps.check.outputs.frontend }}
+      ai_engine: ${{ steps.check.outputs.ai_engine }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        run: |
+          echo "backend=$([ -f backend/ProjectZero.sln ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "frontend=$([ -f frontend/package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "ai_engine=$([ -f ai-engine/requirements.txt ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+  # ── Documentation checks — always run, no code required ─────────────────
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Engineering Playbook §16: stale documentation is a defect with an owner.
+      # Design Bible §9.1: any surviving reference to a retired palette is a defect.
+      - name: No retired design tokens outside revision history
+        run: |
+          set +e
+          HITS=$(grep -rn -E '#7C3AED|#FAFAFB|#101114|Zoned Graphite|deep-space palette' \
+                   --include='*.md' docs/ README.md \
+                 | grep -v 'docs/master-documents/04_' )
+          if [ -n "$HITS" ]; then
+            echo "::error::Retired design tokens referenced outside the Design Bible's revision history:"
+            echo "$HITS"
+            exit 1
+          fi
+          echo "OK — no retired tokens in live documentation."
+
+      # ADRs 01-15 are summarised in the bible only; 16 onward require a
+      # standalone record. Derived from the table so the check never goes stale.
+      - name: Every ADR cited in the Architecture Bible has a record
+        run: |
+          set +e
+          MISSING=0
+          CITED=$(grep -o '\*\*ADR-[0-9]\+\*\*' docs/master-documents/03_*.md \
+                  | grep -o '[0-9]\+' | sort -un)
+          for n in $CITED; do
+            [ "$n" -lt 16 ] && continue
+            PADDED=$(printf "%03d" "$n")
+            if ! ls docs/adr/ADR-${PADDED}-*.md >/dev/null 2>&1; then
+              echo "::error::ADR-${PADDED} is cited as binding but has no record in docs/adr/"
+              MISSING=1
+            fi
+          done
+          [ $MISSING -eq 0 ] && echo "OK — every cited ADR from 016 onward has a record."
+          exit $MISSING
+
+  # ── Backend ─────────────────────────────────────────────────────────────
   backend:
     name: Backend (.NET 8)
+    needs: detect
+    if: needs.detect.outputs.backend == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,11 +99,16 @@ jobs:
       - name: Build (warnings are errors)
         run: dotnet build ProjectZero.sln --no-restore --configuration Release
 
+      # Includes the architecture-conformance suite (Clean Architecture layer
+      # rules) and the permanent cross-tenant isolation suite from Sprint 6.
       - name: Test (unit + architecture + integration)
         run: dotnet test ProjectZero.sln --no-build --configuration Release --logger "trx"
 
+  # ── Frontend (React + Vite — ADR-018) ───────────────────────────────────
   frontend:
-    name: Frontend (Next.js)
+    name: Frontend (React + Vite)
+    needs: detect
+    if: needs.detect.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -43,12 +120,88 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Lint
         run: npm run lint
 
+      - name: Typecheck
+        run: npx tsc --noEmit
+
       - name: Build
         run: npm run build
+
+  # ── AI Engine (Python FastAPI — from Sprint 2) ──────────────────────────
+  ai-engine:
+    name: AI Engine (Python)
+    needs: detect
+    if: needs.detect.outputs.ai_engine == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ai-engine
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Lint (PEP 8)
+        run: pip install ruff && ruff check .
+
+      - name: Test (pytest)
+        run: pip install pytest && pytest
+
+  # ── Security scan — Playbook §11 stage 6 ────────────────────────────────
+  security:
+    name: Security scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dependency review
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+
+      - name: Secret scan
+        run: |
+          set +e
+          # Engineering Playbook §13: secrets never in code, config, logs or images.
+          HITS=$(grep -rn -E '(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----)' \
+                   --exclude-dir=.git . )
+          if [ -n "$HITS" ]; then
+            echo "::error::Possible committed secret:"
+            echo "$HITS"
+            exit 1
+          fi
+          echo "OK — no obvious committed secrets."
+
+# ── Stages still to be added (Engineering Playbook §11) ───────────────────
+#
+#  Stage                                   Introduced by
+#  ─────────────────────────────────────   ─────────────────────────────────
+#  Provider contract-conformance suite     Sprint 2  (all ten interfaces)
+#  .NET ↔ Python contract tests            Sprint 2  (both sides of boundary)
+#  Coverage gate: floor + ratchet          Sprint 3  (Playbook §10.2)
+#  Schema drift check (ADR-016)            Sprint 3
+#  Non-parameterized SQL check (ADR-017)   Sprint 3
+#  Container image build + scan            Sprint 3
+#  Cross-tenant isolation suite            Sprint 6  (permanent, non-skippable)
+#  "No direct vendor calls" static rule    Sprint 8
+#  E2E acceptance suite                    Sprint 21
+#  Landing prerender for SEO (TD-8)        Block G   (ADR-018)
+#  Deploy to staging / production          Block G   (Sprints 23–24)
