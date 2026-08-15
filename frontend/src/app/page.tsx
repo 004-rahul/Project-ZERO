@@ -1,29 +1,48 @@
+import { SmoothScroll } from "@/components/landing/smooth-scroll";
+import { Field } from "@/components/site/field";
+import { Chrome } from "@/components/site/sections/chrome";
+import { Hero } from "@/components/site/sections/hero";
+import { Signal } from "@/components/site/sections/signal";
+import { Track } from "@/components/site/sections/track";
+import { Process } from "@/components/site/sections/process";
+import { Plans } from "@/components/site/sections/plans";
+import { Trust } from "@/components/site/sections/trust";
+import { Close } from "@/components/site/sections/close";
+
 /**
- * Public landing page — INTENTIONALLY EMPTY.
+ * Landing page.
  *
- * The previous landing was deleted in full (all section components, the UI kit
- * and the motion layer) along with its written specification in Design Bible
- * §19.4, which is now cleared. There is deliberately no approved composition to
- * rebuild from: the specification was the reason successive redesigns kept
- * producing the same page.
+ * Built as instrumentation rather than a brochure: one persistent WebGL field
+ * behind the whole page (not a canvas per section), content docking into it,
+ * and a left rail that indexes the page instead of hiding its structure behind
+ * menu labels.
  *
- * Copy and content survive in `landing/content.ts` and are unchanged.
- * The Deep Teal / Ice Cyan theme tokens survive in `tailwind.config.ts`.
+ * The six modules deliberately do not share a shape:
+ *   hero     an oversized headline with the live product cropped by the edge
+ *   signal   a quiet measured band — the only module that just states facts
+ *   track    capabilities running HORIZONTALLY, driven by vertical scroll
+ *   process  three ordered beats advanced by scroll, then the demo itself
+ *   plans    a rate table read across a shared baseline
+ *   trust    voices and security objections as one argument
+ *   close    the ask, with the index folded into the same surface
  *
- * Do not reconstruct the old layout from git history.
+ * Anonymous by rule: nothing personalised renders before sign-in.
  */
 export default function LandingPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-cream px-6 text-ink">
-      <div className="max-w-md">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-sm font-black text-void">
-          Z
-        </span>
-        <h1 className="mt-6 text-2xl font-black tracking-tight">Project Zero</h1>
-        <p className="mt-3 text-sm leading-relaxed text-muted">
-          Landing design cleared. Awaiting a new direction.
-        </p>
-      </div>
-    </main>
+    <>
+      <SmoothScroll />
+      <Field />
+      <Chrome />
+      <main className="relative overflow-x-clip bg-cream text-ink">
+        <Hero />
+        <Signal />
+        <Track />
+        <Process />
+        <Plans />
+        <Trust />
+      </main>
+      <Close />
+    </>
   );
 }
