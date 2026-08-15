@@ -3,7 +3,7 @@ import { Canvas as R3FCanvas } from "@react-three/fiber";
 import { useReducedMotion } from "motion/react";
 import { useTheme } from "@/app/providers/ThemeProvider";
 
-const LatticeField = lazy(() => import("./scenes/LatticeField"));
+const Convergence = lazy(() => import("./scenes/Convergence"));
 
 /**
  * The only place three.js enters the app.
@@ -57,7 +57,7 @@ export function Scene({ className }: { className?: string }) {
           style={{ pointerEvents: "none" }}
         >
           <Suspense fallback={null}>
-            <LatticeField />
+            <Convergence />
           </Suspense>
         </R3FCanvas>
       )}

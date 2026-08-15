@@ -479,7 +479,7 @@ What must be true before Project Zero is shown to a real company as a product (t
 - [ ] The critical loop works live: connect → ingest → ask → evidence-backed answer → Decision Brief → approve/reject
 - [ ] Every AI answer shows evidence, navigable citations, and honest confidence — including low confidence
 - [ ] Zero states, loading states, and error states are all designed experiences; nothing dead-ends
-- [ ] The interface reads as the Design Bible v5.1 intends: Deep Teal elevated surfaces, Ice Cyan accent, the abstract (never figurative) MindCore identity, purposeful motion, Mission Control — not an admin panel
+- [ ] The interface reads as the Design Bible v5.1 intends: Obsidian near-black surfaces, electric blue accent, the abstract (never figurative) Convergence identity, purposeful motion, Mission Control — not an admin panel
 
 **Trust & security (what their technical evaluator will ask)**
 - [ ] Tenant isolation explained *and demonstrated* (the test suite is a sales asset)

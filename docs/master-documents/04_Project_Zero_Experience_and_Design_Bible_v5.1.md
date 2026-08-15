@@ -50,7 +50,7 @@ ordering and the version metadata were corrected.*
 6. [Design Principles and Goals](#6-design-principles-and-goals)
 7. [The AI Identity — Particle Intelligence](#7-the-ai-identity--particle-intelligence)
 8. [The Mission Control Workspace](#8-the-mission-control-workspace)
-9. [Design Language — Deep Teal Theme](#9-design-language--deep-teal-theme)
+9. [Design Language — Obsidian Theme](#9-design-language--obsidian-theme)
 10. [Color System](#10-color-system)
 11. [Typography](#11-typography)
 12. [Design Tokens](#12-design-tokens)
@@ -218,21 +218,23 @@ Requirements:
 
 ---
 
-## 9. Design Language — Deep Teal Theme
+## 9. Design Language — Obsidian Theme
 
-The interface is **dark-first and deliberately elevated**. The base is `#0D1719` — not near-black — so surfaces above it separate **by lightness alone** and hairlines can be used for structure rather than to prop up contrast. Zones remain the organising idea: distinct surfaces make the product's structure legible at a glance.
+The interface is **dark-first and deliberately elevated**. The base is `#08090B` — near-black but not pure black — so surfaces above it separate **by lightness alone** and hairlines can be used for structure rather than to prop up contrast. Zones remain the organising idea: distinct surfaces make the product's structure legible at a glance.
 
 | Zone | Surface | Color |
 |---|---|---|
-| Header | Chrome, deepest | `#0A1315` |
-| Sidebar / navigation | Chrome panel | `#101B1E` |
-| Workspace canvas | Page base | `#0D1719` |
-| Surfaces / cards | Surface, +1 step | `#142225` |
-| Raised / hover / nav | Surface, +2 steps | `#1C2E32` |
-| Footer / status bar | Deepest chrome | `#081113` |
-| Void | Below-base wells | `#060E10` |
+| Header | Chrome, deepest | `#0A0B0E` |
+| Sidebar / navigation | Chrome panel | `#0F1115` |
+| Workspace canvas | Page base | `#08090B` |
+| Surfaces / cards | Surface, +1 step | `#0F1115` |
+| Raised / hover / nav | Surface, +2 steps | `#171A20` |
+| Footer / status bar | Deepest chrome | `#050608` |
+| Void | Below-base wells | `#050608` |
 
-Visual identity elements: **an elevation ladder rather than borders, calm desaturated teal surfaces, two hairline weights (§10.3), premium typography, purposeful whitespace.** The Ice Cyan accent is reserved exclusively for **interaction, active states, focus, and the AI presence** — never ambient decoration.
+Visual identity elements: **an elevation ladder rather than borders, cold neutral surfaces, two hairline weights (§10.3), premium typography, purposeful whitespace.** The electric blue accent is reserved exclusively for **interaction, active states, focus, and the AI presence** — never ambient decoration.
+
+**Character.** Obsidian is engineered and cold. One confident accent does all the interaction work and everything else stays neutral, so the product reads as infrastructure — serious, fast, built by engineers. It is the least decorative option considered, which is the point: the evidence and the answer are the subject, and the chrome should not compete with them.
 
 **The token-naming rule (binding).** Token *names* survive theme changes; only their *values* change. `cream` is the page base, `card` is a surface, `ink` is primary text — regardless of whether the theme is light or dark. This is why the product re-themes from one file instead of section by section, and it is the reason a future theme change costs hours rather than weeks. Do not rename tokens to describe their current colour.
 
@@ -243,7 +245,11 @@ Visual identity elements: **an elevation ladder rather than borders, calm desatu
 | 2026-07-20 | "Deep-space layered dark" (v3.0) → **Zoned Graphite** | Founder decision after interactive preview review. Deep blues, emerald/gold, and full-dark canvases were explicitly rejected in favour of a neutral, industry-standard premium system. |
 | 2026-08-15 | **Zoned Graphite → Deep Teal / Ice Cyan** (commit `b1759b1`) | Founder decision. The light workspace canvas fought the product's own subject matter — an intelligence surface reading evidence and confidence wants a calm dark ground. Base lifted off black to `#0D1719` so elevation can carry hierarchy. Violet `#7C3AED` → Ice Cyan `#3DDBD9`. |
 
-*Both prior palettes are retired. Any surviving reference to Graphite, Violet `#7C3AED`, or the deep-space palette elsewhere in the documentation set is a defect — report it.*
+| 2026-08-15 | **Deep Teal / Ice Cyan → Obsidian** | Founder decision, taken by comparing three fully-built candidates against real content rather than against swatches — Obsidian (engineered, cold), Halation (cinematic, bloom, grain) and Blueprint (technical daylight). Obsidian chosen. Base `#08090B`, accent electric blue `#3B6FF5`, secondary `#22D3A7`. Implemented in `frontend/src/themes/obsidian.css`, which is the source of truth in code (§12). |
+
+*All prior palettes are retired. Any surviving reference to Graphite, Violet `#7C3AED`, Deep Teal `#0D1719`, Ice Cyan `#3DDBD9`, or the deep-space palette elsewhere in the documentation set is a defect — report it.*
+
+**How this decision was made, recorded because the method mattered more than the outcome.** Three earlier landing attempts failed because each one read the prescription in this document first and therefore reproduced the previous page. This time the themes were built as three complete, switchable token sets and judged on screen. The token contract (`frontend/src/themes/contract.ts`) made that possible: 29 role-named tokens, three implementations, one attribute to switch. Retain that structure — the ability to *see* a decision before making it is worth more than any single palette.
 
 ---
 
@@ -262,24 +268,19 @@ contrast.
 
 | Token | Hex | Use |
 |---|---|---|
-| `zone.header` | `#0A1315` | Top header bar — chrome, deepest |
-| `zone.sidebar` | `#101B1E` | Left navigation |
-| `zone.canvas` | `#0D1719` | Main workspace background |
-| `zone.footer` | `#081113` | Footer / status bar |
-| `cream` | `#0D1719` | Page base (name preserved from the light theme — §9) |
-| `card` | `#142225` | Cards, panels, chat bubbles — one step above base |
-| `raised` | `#1C2E32` | Hover, active nav, popovers — two steps above base |
-| `void` | `#060E10` | Wells and insets that must sit *below* the base |
+| `--bg` | `#08090B` | Page base |
+| `--surface` | `#0F1115` | Cards, panels — one step above base |
+| `--surface-raised` | `#171A20` | Hover, active nav, popovers — two steps above |
+| `--surface-sunken` | `#050608` | Wells and insets that must sit *below* the base |
 
 ### 10.2 Text Palette (Canonical Values)
 
 | Token | Hex | Use |
 |---|---|---|
-| `ink` | `#EAF2F2` | Primary text (near-white — the theme is dark-first) |
-| `muted` | `#8FA3A6` | Secondary text, labels |
-| `faint` | `#6B8085` | Tertiary text, timestamps, disabled |
-| `on-dark` | `#EAF2F2` | Text on chrome zones |
-| `on-dark-muted` | `#8FA3A6` | Secondary text on chrome zones |
+| `--text` | `#F1F3F6` | Primary text (near-white — the theme is dark-first) |
+| `--text-muted` | `#9AA0AD` | Secondary text, labels |
+| `--text-faint` | `#676D7A` | Tertiary text, timestamps, disabled |
+| `--text-on-accent` | `#F5F8FF` | Text sitting on an accent fill |
 
 ### 10.3 Hairlines — Two Weights, and Why
 
@@ -289,8 +290,8 @@ or makes every divider look like a wireframe.
 
 | Token | Hex | Use | Contrast obligation |
 |---|---|---|---|
-| `line` | `#314E53` | **Decorative** — dividers, page grid, section rules | Exempt from the 3:1 non-text minimum |
-| `line-strong` | `#4F7A82` | **Interactive bounds** — cards, inputs, secondary buttons | Must clear 3:1 against both `cream` and `card` |
+| `--line-subtle` | `#1C1F26` | **Decorative** — dividers, page grid, section rules | Exempt from the 3:1 non-text minimum |
+| `--line-strong` | `#333947` | **Interactive bounds** — cards, inputs, secondary buttons | Must clear 3:1 against both `--bg` and `--surface` |
 
 Choosing `line` for an interactive control's border is an accessibility defect,
 not a style preference.
@@ -299,33 +300,31 @@ not a style preference.
 
 | Token | Hex | Meaning |
 |---|---|---|
-| `accent` | `#3DDBD9` (Ice Cyan) | Primary actions, active navigation, focus, AI presence |
-| `accent.strong` | `#2BB8B6` | Hover / pressed accent |
-| `accent.bright` | `#7CEDEB` | Accent on the deepest chrome; highlight particles |
-| `second` | `#7C9EFF` | Secondary hue — **never a second CTA colour**; only to separate one data channel from another |
-| `second.soft` | `#A9BEFF` | Lighter step of the secondary hue |
-| `thinking` | `#7C9EFF` | Reasoning in progress |
-| `knowledge` | `#3DDBD9` | Knowledge, sources, retrieval, citations |
-| `knowledge.dark` | `#7CEDEB` | Knowledge on the deepest surfaces |
-| `success` | `#34D399` | Success, completion, approval |
-| `warning` | `#FBBF24` | Warnings, attention |
-| `danger` | `#F87171` | Errors, failures, rejection |
+| `--accent` | `#3B6FF5` (electric blue) | Primary actions, active navigation, focus, AI presence |
+| `--accent-hover` | `#5583FF` | Hover / pressed accent |
+| `--accent-contrast` | `#8DAAFF` | Accent used as **text** — clears contrast on `--bg` |
+| `--accent-subtle` | `rgb(59 111 245 / 0.12)` | Tinted fills, low-emphasis backgrounds |
+| `--second` | `#22D3A7` | Secondary hue — **never a second CTA colour**; only to separate one data channel from another |
+| `--success` | `#34D399` | Success, completion, approval |
+| `--warning` | `#F5B544` | Warnings, attention |
+| `--danger` | `#F87171` | Errors, failures, rejection |
+| `--info` | `#60A5FA` | Informational |
 
 ### 10.5 Accent-to-State Mapping
 
-One Ice Cyan accent carries all interaction; semantic colours carry state —
+One electric-blue accent carries all interaction; semantic colours carry state —
 colour is never decorative. The AI presence (the Zero Orb, §7.3) maps to state
 through its **core luminance and halo hue**, never through facial features:
 
 | State | Colour |
 |---|---|
-| Idle | neutral `faint` `#6B8085` |
-| Listening · Speaking | `accent` `#3DDBD9` |
-| Thinking | `thinking` `#7C9EFF` |
-| Researching | `knowledge` `#3DDBD9`, dimmed and dispersed |
-| Success | `success` `#34D399` |
-| Warning | `warning` `#FBBF24` |
-| Error | `danger` `#F87171` |
+| Idle | `--text-faint` `#676D7A` |
+| Listening · Speaking | `--accent` `#3B6FF5` |
+| Thinking | `--accent` `#3B6FF5`, concentrated inward |
+| Researching | `--second` `#22D3A7`, dimmed and dispersed |
+| Success | `--success` `#34D399` |
+| Warning | `--warning` `#F5B544` |
+| Error | `--danger` `#F87171` |
 
 ### 10.6 Token Scales
 
@@ -363,7 +362,7 @@ The token system defines full scales for systematic use: **Accent (base / strong
 Tight letter-spacing applies to headings only (`2xl` and above); body text keeps
 default tracking for legibility in long sessions.
 - **Character:** premium, restrained, highly legible across the full surface ladder — from `void` `#060E10` through `raised` `#1C2E32` (§10.1); generous line height for long sessions; responsive typography scales with breakpoints (Section 24). Single family — no decorative or serif typefaces.
-- **Dark-theme weight rule:** light text on dark surfaces optically thickens. Prefer weight 400–500 for body on the Deep Teal ground where a light theme would have used 500–600; reserve 600–700 for headings and emphasis. Over-bolding is the most common way a dark UI starts to feel heavy.
+- **Dark-theme weight rule:** light text on dark surfaces optically thickens. Prefer weight 400–500 for body on the Obsidian ground where a light theme would have used 500–600; reserve 600–700 for headings and emphasis. Over-bolding is the most common way a dark UI starts to feel heavy.
 - Typography is a primary design tool (Section 5): hierarchy is achieved through scale and weight before color or decoration.
 
 ---
@@ -373,7 +372,7 @@ default tracking for legibility in long sessions.
 Every visual property in the product resolves to a token — color (Section 10), typography (Section 11), spacing, radius, elevation (Section 13), motion durations/easings (Section 15). Rules:
 
 1. **Every UI change must use approved design tokens** (governance rule — Section 26).
-2. Tokens are the single bridge between design and code. **In code the single source of truth is `frontend/tailwind.config.ts`**; a small set of CSS custom properties in `frontend/src/styles/globals.css` mirrors the accent, zone, and line values for the few places Tailwind utilities cannot reach (canvas gradients, scrollbars, selection).
+2. Tokens are the single bridge between design and code. **In code the single source of truth is `frontend/src/themes/obsidian.css`**, whose token names are fixed by `frontend/src/themes/contract.ts`; `frontend/src/styles/index.css` maps every Tailwind utility onto those variables, so a theme change is one attribute on the root element and never a component edit.
 3. **Hard-coded values in components are defects.** This includes hex literals, pixel sizes outside the spacing scale, and inline `cubic-bezier` values.
 4. **This document and the config must agree.** If they diverge, the config is authoritative and the document is the defect — fix it in the same PR (§26).
 5. **Token names are theme-independent** (§9). Rename a token only when its *role* changes, never when its colour does.
@@ -655,13 +654,13 @@ A brand-new workspace — before any connector is linked — is a **designed exp
 
 Requirements: keyboard navigation everywhere (the entire product operable without a mouse); screen reader support (semantic HTML first, ARIA labels where required); scalable typography; consistent interaction behavior; decorative icons hidden from assistive tech; colour never the sole carrier of meaning (Section 10.7); accessible charts on dashboards.
 
-### 25.1 Contrast Obligations (Deep Teal Theme)
+### 25.1 Contrast Obligations (Obsidian Theme)
 
-*Corrected in v5.1 — this section previously required "the deep-space palette" to meet AA. That palette was retired two themes ago. The obligations below apply to the live Deep Teal theme (§10).*
+*Corrected in v5.1 — this section previously required "the deep-space palette" to meet AA. That palette was retired two themes ago. The obligations below apply to the live Obsidian theme (§10).*
 
-- **Text (SC 1.4.3, AA):** every `ink` / `muted` / `faint` pairing against every surface in the §10.1 ladder must be validated. `faint` `#6B8085` is the tightest case — it is permitted for tertiary content only, never for body text or anything a user must read to act.
-- **Non-text (SC 1.4.11, AA):** interactive bounds use `line-strong` `#4F7A82`, which must clear **3:1** against both `cream` `#0D1719` and `card` `#142225`. Decorative `line` `#314E53` is exempt because it carries no information — using it on an interactive control converts an exempt element into a failing one (§10.3).
-- **Focus (SC 2.4.11/2.4.13):** focus is a **designed state and is never suppressed**. The canonical treatment is `outline: 2px solid var(--accent); outline-offset: 2px` — an Ice Cyan ring with clearance so it reads against both cards and chrome.
+- **Text (SC 1.4.3, AA):** every `ink` / `muted` / `faint` pairing against every surface in the §10.1 ladder must be validated. `--text-faint` `#676D7A` is the tightest case — it is permitted for tertiary content only, never for body text or anything a user must read to act.
+- **Non-text (SC 1.4.11, AA):** interactive bounds use `--line-strong` `#333947`, which must clear **3:1** against both `--bg` `#08090B` and `--surface` `#0F1115`. Decorative `--line-subtle` `#1C1F26` is exempt because it carries no information — using it on an interactive control converts an exempt element into a failing one (§10.3).
+- **Focus (SC 2.4.11/2.4.13):** focus is a **designed state and is never suppressed**. The canonical treatment is `outline: 2px solid var(--accent); outline-offset: 2px` — an electric-blue ring with clearance so it reads against both cards and chrome.
 - **Reduced motion (SC 2.3.3):** every animation has a reduced or static alternative, including the AI identity. Implemented as a global rule (§15.4), not per component.
 
 Contrast validation runs at the component lifecycle's Accessibility Review stage (§27) and is a release gate (*Engineering Playbook* §20).
@@ -708,7 +707,7 @@ Accessibility review is a stage in the component lifecycle (Section 27) and a re
 
 > **Users should recognize Project Zero from its experience alone — even without the logo.**
 
-The elevated deep-teal surfaces, the Ice Cyan accent, the abstract MindCore identity, the evidence-forward answers, and the calm purposeful motion together form an identity no competitor screenshot could be mistaken for.
+The near-black Obsidian surfaces, the electric blue accent, the abstract MindCore identity, the evidence-forward answers, and the calm purposeful motion together form an identity no competitor screenshot could be mistaken for.
 
 ---
 

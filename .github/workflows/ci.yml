@@ -47,7 +47,7 @@ jobs:
       - name: No retired design tokens outside revision history
         run: |
           set +e
-          HITS=$(grep -rn -E '#7C3AED|#FAFAFB|#101114|Zoned Graphite|deep-space palette' \
+          HITS=$(grep -rn -E '#7C3AED|#FAFAFB|#101114|#3DDBD9|#0D1719|Zoned Graphite|Ice Cyan|deep-space palette' \
                    --include='*.md' docs/ README.md \
                  | grep -v 'docs/master-documents/04_' )
           if [ -n "$HITS" ]; then
