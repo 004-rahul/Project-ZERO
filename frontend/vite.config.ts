@@ -20,14 +20,19 @@ export default defineConfig({
 
   build: {
     target: "es2022",
-    // Motion and WebGL are the two heavy dependencies. Splitting them keeps
-    // three.js out of the initial bundle entirely — it is only fetched when a
-    // scene actually mounts (see src/three/Canvas.tsx).
+    // Motion is the one heavy always-on dependency, so it gets its own chunk
+    // and its own cache lifetime.
+    //
+    // three.js is deliberately NOT listed here. Naming a package in
+    // manualChunks forces Rollup to resolve and emit it even when nothing
+    // imports it — which is exactly what was happening: a 193 kB chunk for a
+    // library the page no longer used. When 3D returns it should arrive via a
+    // dynamic import(), which code-splits it automatically and only for the
+    // route that needs it.
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ["three", "@react-three/fiber", "@react-three/drei"],
-          motion: ["motion", "gsap", "lenis"],
+          motion: ["motion", "lenis"],
         },
       },
     },

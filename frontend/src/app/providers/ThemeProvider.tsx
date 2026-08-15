@@ -1,14 +1,6 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DEFAULT_THEME, THEME_STORAGE_KEY, isValidTheme } from "@/themes/registry";
-
-interface Ctx {
-  theme: string;
-  setTheme: (id: string) => void;
-}
-
-const ThemeContext = createContext<Ctx>({ theme: DEFAULT_THEME, setTheme: () => {} });
-
-export const useTheme = () => useContext(ThemeContext);
+import { ThemeContext } from "./theme-context";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState(() => {
