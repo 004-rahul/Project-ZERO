@@ -42,6 +42,10 @@ export const THEME_TOKENS = [
   "--line-subtle",
   "--line-strong",
 
+  /* Specular top edge. A dark panel needs a lit edge to sit above the
+     page; a light one needs none, so light themes set this transparent. */
+  "--edge",
+
   /* ── Semantic. Separate from accent by rule — a status colour is not
         a brand colour. ───────────────────────────────────────────── */
   "--success",

@@ -18,8 +18,9 @@ import { duration } from "@/motion/durations";
  *    mono metadata — instead of three sizes that are all roughly similar.
  * 3. The panel overlaps the baseline rule and bleeds past the grid column.
  *    Nothing that reads as designed sits politely inside its box.
- * 4. Structural hairlines run full-bleed, edge to edge, so the page has a
- *    frame rather than floating in a centred container.
+ * 4. Depth comes from a graded ambient field, not from drawn rules. An
+ *    earlier version had vertical hairlines at the gutters; they read as
+ *    arbitrary because they marked nothing. A line has to mean something.
  * 5. Density is deliberately uneven: an airy left column against a dense
  *    right panel. Even distribution is what makes a layout feel automated.
  */
@@ -36,16 +37,20 @@ export function Hero() {
 
   return (
     <section ref={section} className="relative overflow-hidden pt-32 pb-0 md:pt-40">
-      {/* Full-bleed vertical rules. Structure, not decoration — they give the
-          page a measure the eye can hold onto at any scroll position. */}
+      {/* Ambient grade rather than drawn rules. The previous version had
+          vertical hairlines at the gutters and the two-thirds column; they
+          read as arbitrary lines because they marked nothing the reader
+          could act on. Colour depth does the same job — giving the frame a
+          shape — without asking the eye to explain a line. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="mx-auto h-full w-full max-w-[86rem] px-[5vw] md:px-[4vw]">
-          <div className="relative h-full">
-            <span className="absolute inset-y-0 left-0 w-px bg-line-subtle" />
-            <span className="absolute inset-y-0 right-0 w-px bg-line-subtle" />
-            <span className="absolute inset-y-0 left-2/3 hidden w-px bg-line-subtle lg:block" />
-          </div>
-        </div>
+        <div className="wash-cool absolute inset-0" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(48% 38% at 78% 34%, var(--second-subtle), transparent 68%)",
+          }}
+        />
       </div>
 
       <Container className="relative">

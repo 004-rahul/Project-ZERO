@@ -36,6 +36,7 @@
 
   --color-line-subtle: var(--line-subtle);
   --color-line-strong: var(--line-strong);
+  --color-edge: var(--edge);
 
   --color-success: var(--success);
   --color-warning: var(--warning);
@@ -104,6 +105,38 @@
 }
 
 @layer utilities {
+  /* Panel with a lit top edge and a graded face.
+     Replaces `border border-line-subtle` as the default panel treatment:
+     a uniform 1px box on four sides is the flattest possible way to
+     describe a surface, and it is most of what made the page read as
+     boxes. Light falls from above, so only the top edge is lit. */
+  .panel {
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--surface-raised) 55%, transparent),
+        var(--surface) 42%);
+    border: 1px solid var(--line-subtle);
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+  .panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--edge) 18%, var(--edge) 82%, transparent);
+    pointer-events: none;
+  }
+
+  /* Ambient wash. Large, low-opacity colour fields that stop a dark page
+     being one flat black — the single cheapest thing that reads as grading. */
+  .wash-cool {
+    background: radial-gradient(60% 50% at 50% 0%, var(--accent-subtle), transparent 70%);
+  }
+  .wash-warm {
+    background: radial-gradient(55% 45% at 50% 100%, var(--second-subtle), transparent 70%);
+  }
+
   .tabular {
     font-variant-numeric: tabular-nums;
   }

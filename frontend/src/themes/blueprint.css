@@ -40,6 +40,8 @@
 
   --line-subtle: #dfe4ec;
   --line-strong: #a9b3c4;
+  /* Light ground: depth comes from a cast shadow, not a lit edge. */
+  --edge: transparent;
 
   --success: #12805a;
   --warning: #8a5a06;

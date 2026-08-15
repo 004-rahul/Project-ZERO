@@ -34,7 +34,7 @@ function Cell({
       viewport={viewport}
       transition={{ duration: duration.slow, ease: easeOutExpo, delay }}
       className={cn(
-        "group relative overflow-hidden rounded-xl border border-line-subtle bg-surface p-6 transition-colors duration-500 hover:border-line-strong",
+        "group relative overflow-hidden panel rounded-xl p-6 transition-colors duration-500 hover:border-line-strong",
         className,
       )}
     >

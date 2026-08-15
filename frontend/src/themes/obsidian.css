@@ -1,54 +1,83 @@
 /**
- * OBSIDIAN — candidate 1
+ * OBSIDIAN — graded.
  *
- * Character: engineered, cold, precise. Near-black ground that is *not*
- * pure #000, so surfaces separate by lightness and hairlines can carry
- * structure rather than propping up contrast. One confident electric blue
- * doing all the interaction work; everything else is neutral.
+ * ── What was wrong before ───────────────────────────────────────────────
+ * The neutrals were dead neutral (#08090B is grey with no hue), the accent
+ * and secondary were unrelated saturated hues that fought each other (blue
+ * against teal-green), and there were no mid-tones — just near-black, then
+ * a bright accent, with nothing in between. That is an un-graded palette,
+ * and it is why the page read as flat no matter how the layout moved.
  *
- * Use when the product should read as infrastructure — serious, fast,
- * built by engineers. Least decorative of the three.
+ * ── The grade ───────────────────────────────────────────────────────────
+ * 1. Every neutral is biased cool. The ground is not grey, it is a very
+ *    desaturated blue. This is what gives a dark page a temperature instead
+ *    of looking like the monitor is off.
+ *
+ * 2. The palette is a cinematic cool/warm grade: a cold blue ground and
+ *    accent, against a single warm highlight reserved for resolved states —
+ *    the answer, arrived evidence, confidence. Cool means "working", warm
+ *    means "resolved". The colour carries meaning rather than decorating.
+ *
+ * 3. There is a real ramp between ground and text, so surfaces can separate
+ *    by lightness alone and borders become optional rather than structural.
+ *
+ * 4. Shadows are tinted with the ground hue, never pure black. A pure black
+ *    shadow on a coloured dark ground reads as a hole.
  */
 
 [data-theme="obsidian"] {
   color-scheme: dark;
 
-  --bg: #08090b;
-  --surface: #0f1115;
-  --surface-raised: #171a20;
-  --surface-sunken: #050608;
-  --overlay: rgb(4 5 7 / 0.72);
+  /* Ground ramp — cool-biased, evenly stepped so elevation is legible
+     without a single border. */
+  --bg: #07080D;
+  --surface: #0C0E15;
+  --surface-raised: #13161F;
+  --surface-sunken: #04050A;
+  --overlay: rgb(4 5 10 / 0.76);
 
-  --text: #f1f3f6;
-  --text-muted: #9aa0ad;
-  --text-faint: #676d7a;
-  --text-on-accent: #f5f8ff;
+  /* Text ramp — blue-white, not paper-white. Pure white on a cool ground
+     reads as a different material. */
+  --text: #EDEFF6;
+  --text-muted: #8E95A6;
+  --text-faint: #5E6577;
+  --text-on-accent: #F6F8FF;
 
-  --accent: #3b6ff5;
-  --accent-hover: #5583ff;
-  --accent-subtle: rgb(59 111 245 / 0.12);
-  --accent-contrast: #8daaff;
+  /* Cold half of the grade — interaction, focus, anything in progress. */
+  --accent: #3D6FF6;
+  --accent-hover: #5C88FF;
+  --accent-subtle: rgb(61 111 246 / 0.11);
+  --accent-contrast: #93AEFF;
 
-  --second: #22d3a7;
-  --second-subtle: rgb(34 211 167 / 0.12);
+  /* Warm half — reserved for resolved states only: the answer, arrived
+     evidence, confidence. Never a second call-to-action colour. */
+  --second: #E9A05C;
+  --second-subtle: rgb(233 160 92 / 0.11);
 
-  --line-subtle: #1c1f26;
-  --line-strong: #333947;
+  /* Lines. Both are now barely-there: with a real ground ramp, a border is
+     a refinement rather than the thing holding the layout up. */
+  --line-subtle: #171A24;
+  --line-strong: #2A2F3D;
 
-  --success: #34d399;
-  --warning: #f5b544;
-  --danger: #f87171;
-  --info: #60a5fa;
+  /* Specular edge — the lit top edge that makes a panel sit above the page
+     rather than look like a hole cut into it. */
+  --edge: rgb(255 255 255 / 0.07);
 
-  /* On a dark ground a cast shadow alone is invisible — depth comes from a
-     top inset highlight plus a deeper cast beneath. */
-  --shadow-sm: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.4);
-  --shadow-md: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 4px 16px rgb(0 0 0 / 0.45);
-  --shadow-lg: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 18px 48px rgb(0 0 0 / 0.55);
-  --glow: 0 0 40px rgb(59 111 245 / 0.28);
-  --grain-opacity: 0.035;
+  /* Semantics, desaturated to sit in the same world as the grade rather
+     than arriving from a default palette. */
+  --success: #3ECF8E;
+  --warning: #E5B84B;
+  --danger: #F2685F;
+  --info: #6E9BFF;
 
-  --scene-fog: #08090b;
-  --scene-key: #3b6ff5;
-  --scene-rim: #22d3a7;
+  /* Shadows carry the ground hue. */
+  --shadow-sm: inset 0 1px 0 var(--edge), 0 1px 2px rgb(3 4 9 / 0.6);
+  --shadow-md: inset 0 1px 0 var(--edge), 0 6px 20px rgb(3 4 9 / 0.55);
+  --shadow-lg: inset 0 1px 0 var(--edge), 0 24px 60px rgb(3 4 9 / 0.7);
+  --glow: 0 0 44px rgb(61 111 246 / 0.26);
+  --grain-opacity: 0.028;
+
+  --scene-fog: #07080D;
+  --scene-key: #3D6FF6;
+  --scene-rim: #E9A05C;
 }

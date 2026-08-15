@@ -53,7 +53,7 @@ export function DecisionBrief({ className }: { className?: string }) {
     >
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative rounded-xl border border-line-strong bg-surface"
+        className="relative panel rounded-xl"
       >
         {/* Specular top edge. On a near-black ground a panel needs a lit edge
             to sit above the page rather than look like a hole cut in it. */}

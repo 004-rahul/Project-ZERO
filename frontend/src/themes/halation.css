@@ -38,6 +38,7 @@
 
   --line-subtle: #241d3a;
   --line-strong: #453a63;
+  --edge: rgb(255 255 255 / 0.08);
 
   --success: #4ade80;
   --warning: #ffb347;
