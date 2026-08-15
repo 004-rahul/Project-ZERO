@@ -62,36 +62,48 @@ export function Shell({ children, className }: { children: ReactNode; className?
   );
 }
 
-/** Numbered section eyebrow — the rule draws itself, so the label has an entrance. */
+/**
+ * Section marker. Every section on the page uses this, so it carries the
+ * page's structural language: a full-measure rule the section hangs from, an
+ * oversized ghosted index numeral in the gutter, and the label set small and
+ * wide against it. The scale contrast between a 44px numeral and an 11px
+ * label is doing the design work — a small mono index and a short dash reads
+ * as decoration, not structure.
+ *
+ * Colours are all `currentColor`, so the same component sits correctly on the
+ * cream canvas and on the graphite inversion bands without a tone prop.
+ */
 export function Eyebrow({ index, children }: { index: string; children: string }) {
   const reduced = useReducedMotion();
   return (
     <motion.div
-      className="flex items-center gap-4"
+      className="relative"
       initial={reduced ? undefined : "hidden"}
       whileInView={reduced ? undefined : "show"}
       viewport={VIEWPORT}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
     >
       <motion.span
-        className="pz-num text-2xs font-bold tracking-[.2em] text-accent"
-        variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-        transition={{ duration: DUR.component, ease: EASE_OUT }}
-      >
-        {index}
-      </motion.span>
-      <motion.span
-        className="h-px w-10 origin-left bg-accent/30"
+        className="block h-px w-full origin-left bg-current opacity-[.14]"
         variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1 } }}
-        transition={{ duration: DUR.componentSlow, ease: EASE_OUT }}
+        transition={{ duration: DUR.cinematic, ease: EASE_OUT }}
       />
-      <motion.span
-        className="text-2xs font-extrabold uppercase tracking-[.26em] text-muted"
-        variants={{ hidden: { opacity: 0, x: -6 }, show: { opacity: 1, x: 0 } }}
-        transition={{ duration: DUR.component, ease: EASE_OUT }}
-      >
-        {children}
-      </motion.span>
+      <div className="flex items-start gap-5 pt-5">
+        <motion.span
+          className="pz-num select-none text-[clamp(30px,3.6vw,46px)] font-black leading-[0.8] tracking-tight opacity-[.16]"
+          variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 0.16, y: 0 } }}
+          transition={{ duration: DUR.componentSlow, ease: EASE_OUT }}
+        >
+          {index}
+        </motion.span>
+        <motion.span
+          className="pt-1.5 text-2xs font-extrabold uppercase tracking-[.3em] opacity-70"
+          variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 0.7, x: 0 } }}
+          transition={{ duration: DUR.component, ease: EASE_OUT }}
+        >
+          {children}
+        </motion.span>
+      </div>
     </motion.div>
   );
 }
