@@ -51,7 +51,7 @@ export function AnswerWindow({
   const busy = state.phase === "thinking" || state.phase === "evidence";
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-line bg-card shadow-[0_1px_2px_rgba(20,20,25,.04),0_24px_70px_-20px_rgba(23,24,28,.22)]">
+    <div className="relative overflow-hidden rounded-xl border border-line bg-card shadow-[0_1px_2px_rgba(0,0,0,.4),0_24px_70px_-20px_rgba(0,0,0,.55)]">
       <span
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
@@ -59,7 +59,7 @@ export function AnswerWindow({
 
       {/* chrome */}
       <div className="flex items-center gap-3 border-b border-line bg-cream/70 px-4 py-3">
-        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-2xs font-black text-white">
+        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-2xs font-black text-void">
           Z
         </span>
         <span className="pz-num text-2xs font-semibold tracking-wide text-muted">

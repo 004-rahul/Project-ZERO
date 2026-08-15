@@ -2,7 +2,15 @@ import type { Config } from "tailwindcss";
 
 /**
  * Project Zero design tokens — the single source of truth in code for the
- * Experience & Design Bible v3.1 (Zoned Graphite theme, Violet accent).
+ * Experience & Design Bible (v5.0 · Deep Teal theme, Ice Cyan accent).
+ *
+ * The theme is DARK-FIRST and deliberately elevated: the base is #0D1719, not
+ * near-black, so surfaces above it can separate by lightness alone without
+ * needing heavy borders. Token NAMES are unchanged from the light theme on
+ * purpose — `cream` is the page, `card` is a surface, `ink` is primary text —
+ * so the whole product re-themes from this file instead of section by section.
+ * Their VALUES are what carry the theme.
+ *
  * Design governance rule: every UI change must use these tokens; hard-coded
  * values in components are defects.
  */
@@ -11,43 +19,53 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /* Elevation ladder. Surfaces separate by lightness, so the design can
+           use hairlines for structure rather than to prop up contrast. */
         zone: {
-          header: "#101114",
-          sidebar: "#17181C",
-          canvas: "#FAFAFB",
-          footer: "#0B0C0E",
+          header: "#0A1315", // chrome, deepest
+          sidebar: "#101B1E",
+          canvas: "#0D1719",
+          footer: "#081113",
         },
-        card: "#FFFFFF",
-        cream: "#FAF7F0",
-        void: "#080709",
-        aurora: {
-          violet: "#C084FC",
-          magenta: "#E45FBC",
-          amber: "#F2A65A",
-          bright: "#D9A1F5",
-          strong: "#C55FD6",
-          pink: "#E4599C",
-        },
-        ink: "#17181C",
-        muted: "#5F6168",
-        faint: "#989AA2",
-        "on-dark": "#F4F4F5",
-        "on-dark-muted": "#9EA0A8",
-        line: "#E8E8EA",
-        "line-strong": "#DCDCDF",
+        cream: "#0D1719", // page base   (was the light canvas)
+        card: "#142225", // surface      +1 step
+        raised: "#1C2E32", // hover / nav  +2 steps
+        void: "#060E10",
+
+        ink: "#EAF2F2", // primary text (inverted: this is now near-white)
+        muted: "#8FA3A6",
+        faint: "#6B8085",
+        "on-dark": "#EAF2F2",
+        "on-dark-muted": "#8FA3A6",
+
+        /* Two hairline weights, split by WCAG 1.4.11. `line` is decorative
+           (dividers, the page grid, section rules) and is exempt from the 3:1
+           non-text minimum. `line-strong` bounds INTERACTIVE controls — cards,
+           inputs, secondary buttons — and clears 3:1 against both the page base
+           and card surface. Using one weight for both would either fail the
+           audit or make every divider look like wireframe. */
+        line: "#314E53",
+        "line-strong": "#4F7A82",
+
         accent: {
-          DEFAULT: "#7C3AED",
-          strong: "#6D28D9",
-          bright: "#A78BFA",
+          DEFAULT: "#3DDBD9", // ice cyan
+          strong: "#2BB8B6",
+          bright: "#7CEDEB",
         },
-        thinking: "#8B5CF6",
+        /* Secondary hue, used sparingly: never as a second CTA colour, only to
+           separate one data channel from another. */
+        second: {
+          DEFAULT: "#7C9EFF",
+          soft: "#A9BEFF",
+        },
+        thinking: "#7C9EFF",
         knowledge: {
-          DEFAULT: "#0E7490",
-          dark: "#22A3BF",
+          DEFAULT: "#3DDBD9",
+          dark: "#7CEDEB",
         },
-        success: "#16A34A",
-        warning: "#D97706",
-        danger: "#DC2626",
+        success: "#34D399",
+        warning: "#FBBF24",
+        danger: "#F87171",
       },
       fontFamily: {
         sans: [
@@ -84,10 +102,14 @@ const config: Config = {
         lg: "12px",
         xl: "16px",
       },
+      /* On a dark canvas a drop shadow is invisible — depth has to come from a
+         top inset highlight (the edge catching light) plus a deeper cast
+         below. Without the inset, dark cards read as flat holes. */
       boxShadow: {
-        card: "0 1px 2px rgba(20,20,25,.05), 0 4px 16px rgba(20,20,25,.05)",
-        lift: "0 2px 6px rgba(20,20,25,.07), 0 16px 44px rgba(20,20,25,.10)",
-        "accent-glow": "0 4px 20px rgba(124,58,237,.35)",
+        card: "inset 0 1px 0 rgba(255,255,255,.045), 0 2px 8px rgba(0,0,0,.35)",
+        lift: "inset 0 1px 0 rgba(255,255,255,.07), 0 10px 34px rgba(0,0,0,.5)",
+        "accent-glow": "0 6px 26px rgba(61,219,217,.28)",
+        ring: "0 0 0 1px rgba(61,219,217,.35)",
       },
       keyframes: {
         "fade-up": {

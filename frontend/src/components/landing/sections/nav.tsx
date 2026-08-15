@@ -58,7 +58,7 @@ export function LandingNav() {
         <Link href="/" className="group flex items-center gap-2.5">
           <span
             className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-black transition-colors ${
-              solid ? "bg-accent text-white" : "bg-ink text-white"
+              solid ? "bg-accent text-void" : "bg-ink text-void"
             }`}
           >
             Z
@@ -115,7 +115,7 @@ export function LandingNav() {
           <Magnetic strength={0.18}>
             <Link
               href="/register"
-              className="group relative block overflow-hidden rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white shadow-[0_4px_18px_rgba(124,58,237,.35),inset_0_1px_0_rgba(255,255,255,.3)] transition-colors hover:bg-accent-strong"
+              className="group relative block overflow-hidden rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-void shadow-[0_4px_18px_rgba(61,219,217,.35),inset_0_1px_0_rgba(255,255,255,.3)] transition-colors hover:bg-accent-strong"
             >
               <span
                 aria-hidden

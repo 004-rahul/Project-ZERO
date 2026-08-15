@@ -76,7 +76,7 @@ export function Pricing() {
                   />
                   <div className="relative">
                     <div className="flex items-center gap-2">
-                      <span className="rounded-md bg-accent px-2.5 py-1 text-2xs font-extrabold uppercase tracking-[.14em] text-white">
+                      <span className="rounded-md bg-accent px-2.5 py-1 text-2xs font-extrabold uppercase tracking-[.14em] text-void">
                         Most popular
                       </span>
                     </div>
@@ -99,7 +99,7 @@ export function Pricing() {
                     <Magnetic strength={0.16}>
                       <Link
                         href="/register"
-                        className="group relative mt-8 block overflow-hidden rounded-lg bg-accent py-3 text-center text-sm font-bold text-white shadow-[0_6px_22px_rgba(124,58,237,.4),inset_0_1px_0_rgba(255,255,255,.3)] transition-colors hover:bg-accent-bright hover:text-ink"
+                        className="group relative mt-8 block overflow-hidden rounded-lg bg-accent py-3 text-center text-sm font-bold text-void shadow-[0_6px_22px_rgba(61,219,217,.4),inset_0_1px_0_rgba(255,255,255,.3)] transition-colors hover:bg-accent-bright hover:text-ink"
                       >
                         <span
                           aria-hidden

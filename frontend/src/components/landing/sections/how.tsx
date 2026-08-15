@@ -100,7 +100,7 @@ function RememberStage() {
       </div>
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(124,58,237,.10),transparent)]"
+        className="pointer-events-none absolute inset-x-0 h-24 bg-[linear-gradient(180deg,transparent,rgba(61,219,217,.10),transparent)]"
         animate={{ y: ["-15%", "115%"] }}
         transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -262,7 +262,7 @@ export function How() {
 
               {/* stage */}
               <div className="col-span-12 lg:col-span-7">
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-line bg-card shadow-[0_1px_2px_rgba(20,20,25,.04),0_24px_70px_-24px_rgba(23,24,28,.2)] lg:aspect-[16/11]">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-line bg-card shadow-[0_1px_2px_rgba(0,0,0,.4),0_24px_70px_-24px_rgba(0,0,0,.55)] lg:aspect-[16/11]">
                   <div aria-hidden className="pz-grid pointer-events-none absolute inset-0" />
                   <div className="absolute inset-x-0 top-0 flex items-center gap-2 border-b border-line bg-cream/70 px-4 py-2.5">
                     <span className="pz-num text-2xs font-bold uppercase tracking-[.16em] text-accent">

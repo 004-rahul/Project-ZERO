@@ -58,7 +58,7 @@ export function Cta() {
                 <Magnetic strength={0.22}>
                   <Link
                     href="/register"
-                    className="group relative block overflow-hidden rounded-lg bg-accent px-7 py-3.5 text-base font-bold text-white shadow-[0_8px_30px_rgba(124,58,237,.45),inset_0_1px_0_rgba(255,255,255,.35)] transition-colors hover:bg-accent-bright hover:text-ink"
+                    className="group relative block overflow-hidden rounded-lg bg-accent px-7 py-3.5 text-base font-bold text-void shadow-[0_8px_30px_rgba(61,219,217,.45),inset_0_1px_0_rgba(255,255,255,.28)] transition-colors hover:bg-accent-bright hover:text-ink"
                   >
                     <span
                       aria-hidden

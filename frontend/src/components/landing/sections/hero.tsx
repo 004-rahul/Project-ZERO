@@ -129,7 +129,7 @@ export function Hero() {
                   <Pressable>
                     <Link
                       href="/register"
-                      className="pz-sheen group block rounded-lg bg-accent px-7 py-3.5 text-base font-bold text-white shadow-[0_8px_28px_rgba(124,58,237,.35),inset_0_1px_0_rgba(255,255,255,.35)] transition-colors hover:bg-accent-strong"
+                      className="pz-sheen group block rounded-lg bg-accent px-7 py-3.5 text-base font-bold text-void shadow-[0_8px_28px_rgba(61,219,217,.35),inset_0_1px_0_rgba(255,255,255,.28)] transition-colors hover:bg-accent-strong"
                     >
                       Start free
                     </Link>

@@ -44,7 +44,7 @@ export function AiIdentity({ className }: { className?: string }) {
     >
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(130%_95%_at_38%_34%,rgba(124,58,237,.20),rgba(34,211,238,.06)_46%,transparent_72%)]"
+        className="absolute inset-0 bg-[radial-gradient(130%_95%_at_38%_34%,rgba(61,219,217,.20),rgba(124,158,255,.08)_46%,transparent_72%)]"
       />
       {state !== "off" && <MindCore still={state === "still"} />}
     </div>

@@ -13,9 +13,12 @@ import * as THREE from "three";
  * cheap enough to hold 60fps on integrated graphics.
  */
 
+/* Both tones now sit on a dark canvas, so both are emissive. `light` is the
+   quieter of the two for the page base; `dark` is for the deeper chrome bands
+   where the lattice can carry more presence. */
 const PALETTE = {
-  light: { node: "#7C3AED", edge: "#7C3AED", nodeOpacity: 0.5, edgeOpacity: 0.16, size: 0.045 },
-  dark: { node: "#C4B5FD", edge: "#8B5CF6", nodeOpacity: 0.95, edgeOpacity: 0.3, size: 0.06 },
+  light: { node: "#3DDBD9", edge: "#2BB8B6", nodeOpacity: 0.62, edgeOpacity: 0.16, size: 0.05 },
+  dark: { node: "#7CEDEB", edge: "#3DDBD9", nodeOpacity: 0.95, edgeOpacity: 0.28, size: 0.062 },
 } as const;
 
 function buildGraph(count: number, radius: number, linkDist: number) {
@@ -85,7 +88,7 @@ function Graph({ tone }: { tone: "light" | "dark" }) {
           transparent
           opacity={c.nodeOpacity}
           depthWrite={false}
-          blending={tone === "dark" ? THREE.AdditiveBlending : THREE.NormalBlending}
+          blending={THREE.AdditiveBlending}
         />
       </points>
       <lineSegments>
@@ -97,7 +100,7 @@ function Graph({ tone }: { tone: "light" | "dark" }) {
           transparent
           opacity={c.edgeOpacity}
           depthWrite={false}
-          blending={tone === "dark" ? THREE.AdditiveBlending : THREE.NormalBlending}
+          blending={THREE.AdditiveBlending}
         />
       </lineSegments>
     </group>

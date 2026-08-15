@@ -47,7 +47,7 @@ export function Curtain() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: DUR.component, ease: EASE_OUT }}
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-sm font-black text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-sm font-black text-void">
                 Z
               </span>
               <span className="text-md font-bold tracking-tight text-on-dark">Project Zero</span>

@@ -2,17 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Project Zero — Zoned Graphite theme (Design Bible v3.1).
+/* Project Zero — Deep Teal theme (Design Bible v5.0).
    Tokens live in tailwind.config.ts; these variables exist for the rare
    cases (canvas gradients, scrollbars) Tailwind utilities cannot reach. */
 :root {
-  --accent: #7c3aed;
-  --accent-strong: #6d28d9;
-  --accent-bright: #a78bfa;
-  --zone-header: #101114;
-  --zone-sidebar: #17181c;
-  --zone-canvas: #fafafb;
-  --zone-footer: #0b0c0e;
+  color-scheme: dark;
+  --accent: #3ddbd9;
+  --accent-strong: #2bb8b6;
+  --accent-bright: #7cedeb;
+  --second: #7c9eff;
+  --zone-header: #0a1315;
+  --zone-sidebar: #101b1e;
+  --zone-canvas: #0d1719;
+  --zone-footer: #081113;
+  --line: #294044;
 }
 
 html,
@@ -33,11 +36,12 @@ body {
 
 /* ── Landing surface utilities (§19.4). Structure only — no new colors. ── */
 
-/* Fine technical grid, faded at the edges. */
+/* Fine technical grid, faded at the edges. Emits light rather than ink —
+   an ink grid is simply invisible on a dark base. */
 .pz-grid {
   background-image:
-    linear-gradient(to right, rgba(23, 24, 28, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(23, 24, 28, 0.045) 1px, transparent 1px);
+    linear-gradient(to right, rgba(61, 219, 217, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(61, 219, 217, 0.055) 1px, transparent 1px);
   background-size: 72px 72px;
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
   mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
@@ -58,7 +62,7 @@ body {
   inset: 0;
   pointer-events: none;
   opacity: 0.4;
-  background-image: radial-gradient(rgba(23, 24, 28, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
   background-size: 3px 3px;
 }
 
@@ -71,7 +75,7 @@ body {
 /* Hairline that fades out at both ends. */
 .pz-rule {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(23, 24, 28, 0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(234, 242, 242, 0.16), transparent);
 }
 
 /* Tabular figures for metrics and prices. */
@@ -149,4 +153,29 @@ body {
     transition: none !important;
     transform: none !important;
   }
+}
+
+/* The browser's default light scrollbar is a tell on a dark page. */
+* {
+  scrollbar-color: #294044 transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #294044;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #35525a;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Selection carries the accent instead of the OS default blue. */
+::selection {
+  background: rgba(61, 219, 217, 0.26);
+  color: #eaf2f2;
 }

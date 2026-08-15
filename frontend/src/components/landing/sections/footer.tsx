@@ -21,7 +21,7 @@ export function Footer() {
         <div className="grid grid-cols-12 gap-x-8 gap-y-10">
           <div className="col-span-12 md:col-span-5">
             <Link href="/" className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-void">
                 Z
               </span>
               <span className="text-md font-bold text-on-dark">Project Zero</span>

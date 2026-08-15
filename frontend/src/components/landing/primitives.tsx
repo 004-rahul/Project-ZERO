@@ -418,7 +418,7 @@ export function SpotlightCard({
   const reduced = useReducedMotion();
   const mx = useMotionValue(-999);
   const my = useMotionValue(-999);
-  const bg = useMotionTemplate`radial-gradient(340px circle at ${mx}px ${my}px, rgba(124,58,237,.10), transparent 72%)`;
+  const bg = useMotionTemplate`radial-gradient(340px circle at ${mx}px ${my}px, rgba(61,219,217,.10), transparent 72%)`;
   const frame = useRef(0);
 
   return (

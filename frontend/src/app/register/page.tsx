@@ -34,7 +34,7 @@ export default function RegisterPage() {
             <span
               className={`relative z-10 mx-auto flex h-6 w-6 items-center justify-center rounded-full text-2xs font-bold ${
                 index === 0
-                  ? "bg-accent text-white"
+                  ? "bg-accent text-void"
                   : "border-2 border-line-strong bg-card text-faint"
               }`}
             >

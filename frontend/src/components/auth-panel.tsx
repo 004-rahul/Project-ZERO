@@ -27,7 +27,7 @@ export function AuthPanel({
         <AiIdentity className="absolute inset-0 h-full w-full" />
 
         <Link href="/" className="relative z-10 flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35)]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-black text-void shadow-[inset_0_1px_0_rgba(255,255,255,.28)]">
             Z
           </span>
           <span className="text-md font-bold text-on-dark">Project Zero</span>
@@ -67,7 +67,7 @@ export function SsoButtons() {
         <button
           key={provider}
           type="button"
-          className="rounded-lg border border-line bg-cream py-2.5 text-xs font-semibold text-ink transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-card"
+          className="rounded-lg border border-line-strong bg-cream py-2.5 text-xs font-semibold text-ink transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-card"
         >
           {provider}
         </button>
@@ -104,7 +104,7 @@ export function Field({
         type={type}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="w-full rounded-lg border border-line bg-cream px-3.5 py-2.5 text-sm text-ink outline-none transition-shadow placeholder:text-faint focus:border-accent focus:bg-card focus:shadow-[0_0_0_3px_rgba(124,58,237,.12)]"
+        className="w-full rounded-lg border border-line-strong bg-cream px-3.5 py-2.5 text-sm text-ink outline-none transition-shadow placeholder:text-faint focus:border-accent focus:bg-card focus:shadow-[0_0_0_3px_rgba(61,219,217,.12)]"
       />
     </label>
   );
@@ -115,7 +115,7 @@ export function AuthSubmit({ children }: { children: ReactNode }) {
   return (
     <button
       type="submit"
-      className="w-full rounded-lg bg-accent py-3 text-base font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,.35),inset_0_1px_0_rgba(255,255,255,.35)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong"
+      className="w-full rounded-lg bg-accent py-3 text-base font-bold text-void shadow-[0_4px_20px_rgba(61,219,217,.35),inset_0_1px_0_rgba(255,255,255,.28)] transition-all hover:-translate-y-0.5 hover:bg-accent-strong"
     >
       {children}
     </button>

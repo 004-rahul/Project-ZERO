@@ -35,7 +35,7 @@ export function AppShell({ active, children }: { active: string; children: React
       {/* header */}
       <header className="z-10 flex items-center gap-6 border-b border-white/10 bg-zone-header px-5 lg:[grid-area:header]">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded bg-accent text-sm font-extrabold text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded bg-accent text-sm font-extrabold text-void">
             Z
           </span>
           <span className="text-base font-bold text-on-dark">Project Zero</span>
@@ -49,7 +49,7 @@ export function AppShell({ active, children }: { active: string; children: React
             <ParticleFace state="idle" size={24} lines={false} />
             AI Ready
           </span>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-strong text-xs font-bold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-strong text-xs font-bold text-void">
             ZO
           </span>
         </div>
@@ -70,7 +70,7 @@ export function AppShell({ active, children }: { active: string; children: React
                   href={item.href}
                   className={`relative my-px flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ${
                     isActive
-                      ? "bg-white/10 text-white before:absolute before:-left-2 before:bottom-1.5 before:top-1.5 before:w-0.5 before:rounded before:bg-accent"
+                      ? "bg-white/10 text-void before:absolute before:-left-2 before:bottom-1.5 before:top-1.5 before:w-0.5 before:rounded before:bg-accent"
                       : "text-on-dark-muted hover:bg-white/5 hover:text-on-dark"
                   }`}
                 >
